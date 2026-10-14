@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carefund.ai/contracts/schemas/evidence.schema.json",
+  "title": "CareFund Evidence Contract V1",
+  "$ref": "#/$defs/Fact",
+  "$defs": {
+    "FactSourceType": {
+      "type": "string",
+      "enum": ["user_input", "document", "user_correction"]
+    },
+    "FactVerificationStatus": {
+      "type": "string",
+      "enum": ["pending", "supported", "unsupported", "conflicting"],
+      "description": "supported means only that submitted material supports the field content; it is not authoritative authenticity verification."
+    },
+    "DocumentProcessingStatus": {
+      "type": "string",
+      "enum": ["uploaded", "processing", "processed", "failed"]
+    },
+    "UploadedDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document_id",
+        "application_id",
+        "filename",
+        "media_type",
+        "size_bytes",
+        "uploaded_at",
+        "processing_status"
+      ],
+      "properties": {
+        "document_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "filename": {"type": "string", "minLength": 1, "maxLength": 255},
+        "media_type": {
+          "type": "string",
+          "enum": ["image/jpeg", "image/png", "application/pdf"]
+        },
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "uploaded_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"},
+        "processing_status": {"$ref": "#/$defs/DocumentProcessingStatus"}
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "document_id",
+        "source_type",
+        "page",
+        "text_excerpt",
+        "extraction_method"
+      ],
+      "properties": {
+        "evidence_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "document_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "source_type": {"type": "string", "const": "document"},
+        "page": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "description": "1-based document page when known; null means the source has no reliable page number."
+        },
+        "text_excerpt": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "extraction_method": {
+          "type": "string",
+          "enum": ["ocr", "manual", "structured_import"]
+        }
+      }
+    },
+    "DateValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {"type": "string", "const": "date"},
+        "value": {"$ref": "common.schema.json#/$defs/CalendarDate"}
+      }
+    },
+    "TextValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {"type": "string", "const": "text"},
+        "value": {"type": "string", "minLength": 1, "maxLength": 5000}
+      }
+    },
+    "BooleanValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {"type": "string", "const": "boolean"},
+        "value": {"type": "boolean"}
+      }
+    },
+    "IntegerValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {"type": "string", "const": "integer"},
+        "value": {"type": "integer"}
+      }
+    },
+    "MoneyValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "value"],
+      "properties": {
+        "kind": {"type": "string", "const": "money"},
+        "value": {"$ref": "common.schema.json#/$defs/Money"}
+      }
+    },
+    "FactValue": {
+      "oneOf": [
+        {"$ref": "#/$defs/TextValue"},
+        {"$ref": "#/$defs/DateValue"},
+        {"$ref": "#/$defs/BooleanValue"},
+        {"$ref": "#/$defs/IntegerValue"},
+        {"$ref": "#/$defs/MoneyValue"}
+      ]
+    },
+    "Fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact_id",
+        "field",
+        "value",
+        "source_type",
+        "evidence_ids",
+        "verification_status",
+        "user_confirmed"
+      ],
+      "properties": {
+        "fact_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "field": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.]{1,127}$"
+        },
+        "value": {"$ref": "#/$defs/FactValue"},
+        "source_type": {"$ref": "#/$defs/FactSourceType"},
+        "evidence_ids": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/$defs/Identifier"},
+          "uniqueItems": true,
+          "default": []
+        },
+        "verification_status": {"$ref": "#/$defs/FactVerificationStatus"},
+        "user_confirmed": {
+          "type": "boolean",
+          "description": "Only records that the user accepts the wording; it does not mean platform approval or evidence authenticity."
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"source_type": {"const": "document"}}, "required": ["source_type"]},
+          "then": {"properties": {"evidence_ids": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"source_type": {"enum": ["user_input", "user_correction"]}}, "required": ["source_type"]},
+          "then": {
+            "description": "User statements remain user-sourced even when confirmed and must not be represented as document proof."
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carefund.ai/contracts/schemas/validation.schema.json",
+  "title": "CareFund Validation Contract V1",
+  "$ref": "#/$defs/ValidationResult",
+  "$defs": {
+    "ValidationIssueType": {
+      "type": "string",
+      "enum": [
+        "missing",
+        "conflict",
+        "unsupported",
+        "invalid_format",
+        "inconsistent_amount",
+        "inconsistent_date"
+      ]
+    },
+    "ValidationSeverity": {
+      "type": "string",
+      "enum": ["info", "warning", "blocking"]
+    },
+    "ValidationIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["issue_id", "type", "severity", "field", "message", "related_fact_ids"],
+      "properties": {
+        "issue_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "type": {"$ref": "#/$defs/ValidationIssueType"},
+        "severity": {"$ref": "#/$defs/ValidationSeverity"},
+        "field": {"type": "string", "pattern": "^[a-z][a-z0-9_.]{1,127}$"},
+        "message": {"type": "string", "minLength": 1, "maxLength": 1000},
+        "related_fact_ids": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/$defs/Identifier"},
+          "uniqueItems": true,
+          "default": []
+        }
+      }
+    },
+    "ValidationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "application_id",
+        "application_revision",
+        "documents",
+        "evidence",
+        "facts"
+      ],
+      "properties": {
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "documents": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/UploadedDocument"},
+          "default": []
+        },
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Evidence"},
+          "default": []
+        },
+        "facts": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Fact"},
+          "default": []
+        }
+      }
+    },
+    "ValidationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "validation_id",
+        "application_id",
+        "application_revision",
+        "issues",
+        "can_finalize",
+        "evaluated_at"
+      ],
+      "properties": {
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "validation_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "issues": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/ValidationIssue"},
+          "default": []
+        },
+        "can_finalize": {
+          "type": "boolean",
+          "description": "Must be computed by deterministic Backend/Validation rules; an LLM boolean is never authoritative."
+        },
+        "evaluated_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"}
+      },
+      "description": "OCR output supports extraction only and never establishes document authenticity."
+    },
+    "AnalysisJobStatus": {
+      "type": "string",
+      "enum": ["queued", "running", "succeeded", "failed"]
+    },
+    "AnalyzeRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_revision", "idempotency_key"],
+      "properties": {
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "description": "Client-generated key reused for a retry of the same analysis intent."
+        }
+      }
+    },
+    "AnalysisJob": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "job_id",
+        "application_id",
+        "application_revision",
+        "status",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "job_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "status": {"$ref": "#/$defs/AnalysisJobStatus"},
+        "created_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"},
+        "updated_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"},
+        "error": {
+          "oneOf": [
+            {"$ref": "common.schema.json#/$defs/Error"},
+            {"type": "null"}
+          ],
+          "default": null
+        }
+      }
+    },
+    "AnalysisResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "application_id",
+        "application_revision",
+        "facts",
+        "evidence",
+        "questions",
+        "validation"
+      ],
+      "properties": {
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "facts": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Fact"},
+          "default": []
+        },
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Evidence"},
+          "default": []
+        },
+        "questions": {
+          "type": "array",
+          "items": {"$ref": "agent.schema.json#/$defs/AgentQuestion"},
+          "default": []
+        },
+        "validation": {"$ref": "#/$defs/ValidationResult"}
+      }
+    }
+  }
+}

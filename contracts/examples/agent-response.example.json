@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_demo_001",
+  "application_revision": 2,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_demo_001",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "用户自述正在接受示例性治疗。"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": true
+    },
+    {
+      "fact_id": "fact_demo_002",
+      "field": "treatment.estimated_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 1250000
+        }
+      },
+      "source_type": "document",
+      "evidence_ids": ["ev_demo_001"],
+      "verification_status": "supported",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_demo_003",
+      "field": "treatment.recorded_date",
+      "value": {
+        "kind": "date",
+        "value": "2026-10-18"
+      },
+      "source_type": "document",
+      "evidence_ids": ["ev_demo_002"],
+      "verification_status": "conflicting",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_demo_001",
+      "field": "treatment.recorded_date",
+      "question": "请确认材料中的日期是否为本次治疗记录日期。",
+      "reason": "该日期与用户填写的时间描述不一致，需要用户澄清。",
+      "required": true
+    },
+    {
+      "question_id": "question_demo_002",
+      "field": "contact.city",
+      "question": "请补充当前所在城市。",
+      "reason": "申请资料中缺少演示流程所需的城市信息。",
+      "required": true
+    }
+  ],
+  "warnings": [
+    "候选事实仅供后端校验，不代表医疗诊断、材料真伪确认或平台审核结论。"
+  ]
+}

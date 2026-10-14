@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carefund.ai/contracts/schemas/application.schema.json",
+  "title": "CareFund Application Contract V1",
+  "$ref": "#/$defs/ApplicationResponse",
+  "$defs": {
+    "ApplicationStatus": {
+      "type": "string",
+      "enum": [
+        "collecting",
+        "reviewing",
+        "ready_for_draft",
+        "draft_ready",
+        "confirmed",
+        "exported"
+      ],
+      "description": "Backend-owned state. Clients and agents cannot transition it directly."
+    },
+    "PatientInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["display_name", "medical_summary"],
+      "properties": {
+        "display_name": {"type": "string", "minLength": 1, "maxLength": 100},
+        "age_group": {
+          "type": ["string", "null"],
+          "enum": ["child", "adult", "older_adult", "unknown", null],
+          "description": "null means not supplied; clients must not infer age."
+        },
+        "medical_summary": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 2000,
+          "description": "User-provided summary, not a diagnosis. null means not supplied."
+        }
+      }
+    },
+    "PatientInfoPatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "display_name": {"type": "string", "minLength": 1, "maxLength": 100},
+        "age_group": {
+          "type": ["string", "null"],
+          "enum": ["child", "adult", "older_adult", "unknown", null]
+        },
+        "medical_summary": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "description": "Partial patient information update. Omitted properties remain unchanged; null explicitly clears an allowed nullable value."
+    },
+    "Application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "application_id",
+        "schema_version",
+        "revision",
+        "status",
+        "patient_info",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Backend-owned, monotonically increasing version of user input and the attachment set."
+        },
+        "status": {"$ref": "#/$defs/ApplicationStatus"},
+        "patient_info": {"$ref": "#/$defs/PatientInfo"},
+        "created_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"},
+        "updated_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"}
+      }
+    },
+    "CreateApplicationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["patient_info"],
+      "properties": {
+        "patient_info": {"$ref": "#/$defs/PatientInfo"}
+      }
+    },
+    "UpdateApplicationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_revision", "patient_info"],
+      "properties": {
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Optimistic concurrency token. A mismatch must return HTTP 409 STATE_CONFLICT."
+        },
+        "patient_info": {"$ref": "#/$defs/PatientInfoPatch"}
+      }
+    },
+    "ApplicationResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["application", "documents", "evidence"],
+      "properties": {
+        "application": {"$ref": "#/$defs/Application"},
+        "documents": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/UploadedDocument"},
+          "default": []
+        },
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Evidence"},
+          "default": []
+        }
+      }
+    }
+  }
+}
