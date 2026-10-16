@@ -1,0 +1,331 @@
+{
+  "source": "https://zenodo.org/records/8287320",
+  "authors": "Xovee Xu, Jiayang Li, Fan Zhou",
+  "license": "CC BY-NC 4.0; author states academic research use",
+  "scope": "Status and hashes only. Real excerpts, source records and responses intentionally excluded. Not full-corpus or clinical accuracy.",
+  "original_report_sha256": "0e0b7e9a644af8e31bc3b3589e589ee7aa1f6d9ce6d9a06df43cae547c4c11ae",
+  "suite_sha256": "b9f5811aa3c3d256b33c99db35f09b913650ed27d6622543905b762f6f537fa1",
+  "status": "stopped_on_error_no_retry",
+  "started_at": "2026-10-16T09:59:23.872271+00:00",
+  "completed_at": "2026-10-16T10:11:52.249747+00:00",
+  "planned_cases": 60,
+  "planned_operations": {
+    "extract": 50,
+    "draft": 10
+  },
+  "attempted": 23,
+  "returned_original_partial_checks_passed": 22,
+  "post_run_wording_findings": 3,
+  "transport_rejected": 1,
+  "unattempted": 37,
+  "unattempted_operations": {
+    "extract": 27,
+    "draft": 10
+  },
+  "dataset_profile": {
+    "source": "https://zenodo.org/records/8287320",
+    "csv_sha256": "28656b9827076b7780f00f7edb4b0ba9ab6f4f4a9d09ed7fc25c03557a5d310b",
+    "md5_verified": true,
+    "rows": 14961,
+    "categories": {
+      "Medical": 3580,
+      "Animals": 2879,
+      "Emergency": 2526,
+      "Memorial": 4632,
+      "Financial Emergency": 1344
+    },
+    "local_real_request_schema_checks_passed": 200
+  },
+  "browser_observation": {
+    "model": "gpt-4.1",
+    "ai_message_quota_used": 200,
+    "ai_message_quota_total": 200,
+    "quota_exhausted_visible": true,
+    "no_configured_model_provider_visible": true,
+    "source": "Read-only observation of user-connected Dify browser UI on 2026-10-16",
+    "failed_request_error_code_not_recovered": true,
+    "interpretation": "Current quota exhaustion confirmed; cause of historical HTTP400 inferred from UI, not recovered response body."
+  },
+  "cases": [
+    {
+      "case_id": "extract_0001",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "b9cab4c372986e19542f245c1d2f5d472bec2f8ab95f11321bfd259b683d55b4",
+      "elapsed_seconds": 6.43,
+      "original_review_flags": [],
+      "response_sha256": "cd41c787876a965af6b26a700666b5b730df293871301eca1d0c43939926d50c",
+      "post_run_review_flags": [
+        "approval_effect_claim_needs_context_review"
+      ],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0002",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "c1a75a4fbf441eceee24d4850669131e37fbfda60dfdcb5ed3d52fe48271910e",
+      "elapsed_seconds": 6.58,
+      "original_review_flags": [],
+      "response_sha256": "67e697d8ff7243bfc7367421cba74c4e9f69a29ca6cfe5aefab36d3e8d1fc414",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0003",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "33a06c44c2b4b1f6aa110fb923a4570653c4ea91e8590827c4b8785cc398664f",
+      "elapsed_seconds": 5.24,
+      "original_review_flags": [],
+      "response_sha256": "cc8607332a787adb3acdb4fef61f6d357176fe07514708b53053658ecebe0d3a",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0004",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "b6159e3f45c253b7463e53e419669415ef908649d531d7a7929abae2f5ad73de",
+      "elapsed_seconds": 5.86,
+      "original_review_flags": [],
+      "response_sha256": "66126ecd70b512bb0747bcbcf4499d1275e5f782a1151b9562a22b6d9bbfa0fd",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0005",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "39d7d9bf2200a43a3905e50d8c2aeb3ede085cf577a31718a33e16ab9b4465d4",
+      "elapsed_seconds": 7.82,
+      "original_review_flags": [],
+      "response_sha256": "c2fbfd22b0e6a88500ccabb711e3949c739b694d26e75d2efe5b7f20414a67cb",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0006",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "f9aa24320b1518178b1a2a02db50d2ff4611159ef1b795262c80415b2fbf4d03",
+      "elapsed_seconds": 5.49,
+      "original_review_flags": [],
+      "response_sha256": "1c8def0ffe80131e59cc2bbfe239aa950c878d8c12b10a4a4bf3019a2cb3605f",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0007",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "4a24dc838f933b86a02fef59a5f1a31311f602eeb093ae1d2ef95d58d71d7854",
+      "elapsed_seconds": 5.5,
+      "original_review_flags": [],
+      "response_sha256": "873cf1747a14433fc3debd3fc6b66a8e13927b4b43b10b0a6aa5261a9501901f",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0008",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "febe8c1e2d78ed727409b699d36217aaa1768ec247249f6e0d7725c670b7b4f3",
+      "elapsed_seconds": 5.7,
+      "original_review_flags": [],
+      "response_sha256": "22c4409ad60e136486b4f2aa05eecb3c29bb1ce5561481879154643497783c77",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0009",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "b7fb15d054433b6bb8fddd5197cf5ab5bab4d70aa92aeec8bc98bb4649229231",
+      "elapsed_seconds": 5.23,
+      "original_review_flags": [],
+      "response_sha256": "224245116eb34553cc5d3dde5d008c3b9a8cfbdb488421bf34e0ce0da78540fd",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0010",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "895b8ad32657ffe614aee29be671dfcdde36cccfdddae7cb88db3416342818f5",
+      "elapsed_seconds": 4.47,
+      "original_review_flags": [],
+      "response_sha256": "b3272b03442ef6f8c138038c733bd554ba63649f9d785c780378031518fbcefc",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0011",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "18183d08d68ae70235706754da4c763a47e77c3ff1e2b84d3487fed1ebda2246",
+      "elapsed_seconds": 4.59,
+      "original_review_flags": [],
+      "response_sha256": "ec8987520c83dc8d190e125ea17dc2e4e35e18eb5de9487862061526ccbe9cd8",
+      "post_run_review_flags": [
+        "approval_effect_claim_needs_context_review"
+      ],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0012",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "96927443b201648f7e3bebd1fd438683e8700bdca35facd06f027193880c73dc",
+      "elapsed_seconds": 6.05,
+      "original_review_flags": [],
+      "response_sha256": "4277b40ba6644e946cca98c02f5aad151cad715490f8e3604fce9fd42c5c0671",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0013",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "fedaa7e00d01c49c93e28f51c1649e84f138145f5d3e5510b5680c3ec9c4479f",
+      "elapsed_seconds": 13.69,
+      "original_review_flags": [],
+      "response_sha256": "63a664ff4b1d2bdb5b549af36fda1dc39fecc19e5f5f15e6c14ac4d87059adc9",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0014",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "d3b75f1488cd8de33f4d3d559e35fe2b6d5be04c88e117e969fd96403de991b1",
+      "elapsed_seconds": 5.72,
+      "original_review_flags": [],
+      "response_sha256": "bd68f21713090933730c2c89f6f7bbd547cc9c7339983ec693ee9271de61182b",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0015",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "73c6ac6ff6a44daf2a5e41bb71a051be0e41cb4175a1a27537c72cad8ba3d4cf",
+      "elapsed_seconds": 13.74,
+      "original_review_flags": [],
+      "response_sha256": "57ae5c71be01163079c871086a3fae8d793a5291724bbf7e0feacd2adf2884c5",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0016",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "3276cd695eec503cd9f18b8f702cf4cd1a114b425a3bcbd390f10e9d0dec6b24",
+      "elapsed_seconds": 4.5,
+      "original_review_flags": [],
+      "response_sha256": "71852fba14bf430759bc7ebdb900ff8fdaab21800a55897c8d7d95c4cd844c75",
+      "post_run_review_flags": [
+        "approval_effect_claim_needs_context_review"
+      ],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0017",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "87930a404add1dfcd18befa164a27478f6b4ae32b0572b327c55555064bf01e2",
+      "elapsed_seconds": 9.7,
+      "original_review_flags": [],
+      "response_sha256": "65df30dbd735d77655f6ed882d995154d265e256ffb12acc4bf1ee9bad6497ed",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0018",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "948aeaad806bb1da065b3562e3b3fbbd603d4fe09ac3c464f178cffee06fa41a",
+      "elapsed_seconds": 6.25,
+      "original_review_flags": [],
+      "response_sha256": "a9132fa908a79dd6dc70c93bd25e8c81635ad35d75e22aa945e4090687889769",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0019",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "8ee611f276af7570b649c6241277bec5f222c17c4e8b5875edc6d34c5cccc6eb",
+      "elapsed_seconds": 5.12,
+      "original_review_flags": [],
+      "response_sha256": "4f71190d5c02a3ccc5449a161034bb5e75c7f9904b42639f6cc598691e3d6c96",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0020",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "843c43784b007425d386f990cdb7003737cec0438915e4223b85a07956a972a1",
+      "elapsed_seconds": 4.43,
+      "original_review_flags": [],
+      "response_sha256": "02003d750fd236084bcee17d41a0951f6098b69b10fe2afb1f2bb60f379f9923",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0021",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "0604a93ed0cfa30b1e4009ba45319c3c47950cec1f69946557ce286ad35da75a",
+      "elapsed_seconds": 5.63,
+      "original_review_flags": [],
+      "response_sha256": "c4bf4897da1d2621553c9227afb519f79eea6cea870d4727f61770e1ae35a426",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0022",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "automatic_checks_passed",
+      "request_sha256": "e554b086cdbdfde91fa21b47b2e92f99006753b28416604cbbf19a0911b67962",
+      "elapsed_seconds": 7.1,
+      "original_review_flags": [],
+      "response_sha256": "b377c98dccc2ffa283b360fe95d583561233e79ec91c29034b8fb07e091282b5",
+      "post_run_review_flags": [],
+      "post_run_partial_failures": []
+    },
+    {
+      "case_id": "extract_0023",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "status": "boundary_or_transport_rejected",
+      "request_sha256": "a649b9309ee0447c28397a4b184372be2256ede1664155eb3c8dcf3d81f62ea0",
+      "elapsed_seconds": 2.63,
+      "original_review_flags": [],
+      "error": "Dify HTTP error: 400"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "started_at": "2026-10-15T15:15:02.044086+00:00",
+  "python": "3.13.15",
+  "transport": "real_dify_api",
+  "status": "completed_core_cases_passed_with_wording_observation",
+  "cases": [
+    {
+      "case": "01_uncertain_paid",
+      "application_id": "app_demo_003",
+      "application_revision": 1,
+      "request_sha256": "a3ed38f5082f12ba1fc1ed68f32a0873e6d40a1d47544f99174bbe080acb0abb",
+      "status": "schema_and_references_passed",
+      "response_file": "agent/verification/extract/01_uncertain_paid.response.json",
+      "elapsed_seconds": 35.08,
+      "semantic_review": "core_handoff_expectations_passed",
+      "review_method": "Codex text review plus deterministic checks; not independent human verification",
+      "review_notes": "2000000 minor units; possible/unconfirmed diagnosis retained; only current lack of attachment stated; no repeat relationship question.",
+      "request_file": "agent/verification/extract/01_uncertain_paid.request.json"
+    },
+    {
+      "case": "02_preserve_existing",
+      "application_id": "app_demo_003",
+      "application_revision": 2,
+      "request_sha256": "f2502202628709be94635e3068001fc644610fca8f594bdff4c02bd9401fed48",
+      "status": "schema_and_references_passed",
+      "response_file": "agent/verification/extract/02_preserve_existing.response.json",
+      "elapsed_seconds": 6.56,
+      "semantic_review": "core_handoff_expectations_passed",
+      "review_method": "Codex text review plus deterministic checks; not independent human verification",
+      "review_notes": "fact_003 preserved exactly; revision 2; Xian and mother extracted; no repeat question about existence of estimate sheet.",
+      "request_file": "agent/verification/extract/02_preserve_existing.request.json"
+    },
+    {
+      "case": "03_document_evidence",
+      "application_id": "app_demo_004",
+      "application_revision": 1,
+      "request_sha256": "e821355733d4197ff4a930c56ff38c1efc1220baa1cc062dadf4447a4ee4d6c9",
+      "status": "schema_and_references_passed",
+      "response_file": "agent/verification/extract/03_document_evidence.response.json",
+      "elapsed_seconds": 6.39,
+      "semantic_review": "core_handoff_expectations_passed",
+      "review_method": "Codex text review plus deterministic checks; not independent human verification",
+      "review_notes": "Document estimate 3000000 minor units cites ev_demo_001; no paid cost or diagnosis invented.",
+      "request_file": "agent/verification/extract/03_document_evidence.request.json"
+    },
+    {
+      "case": "04_conflicting_amount",
+      "application_id": "app_demo_004",
+      "application_revision": 1,
+      "request_sha256": "f37a5cdb62ff7d412949d6161afbc2569a56f0c29da9ebcc09e53b34bc01779f",
+      "status": "schema_and_references_passed",
+      "response_file": "agent/verification/extract/04_conflicting_amount.response.json",
+      "elapsed_seconds": 34.01,
+      "semantic_review": "core_handoff_expectations_passed",
+      "review_method": "Codex text review plus deterministic checks; not independent human verification",
+      "review_notes": "Document 3000000 and user 5000000 preserved separately; conflict warning and first follow-up; no winner selected.",
+      "request_file": "agent/verification/extract/04_conflicting_amount.request.json"
+    }
+  ],
+  "reviewed_at": "2026-10-15T15:18:15.366540+00:00",
+  "observations": [
+    {
+      "case": "02_preserve_existing",
+      "kind": "wording",
+      "detail": "Question reason says 平台建议补充 without a provided platform rule. required remains false; facts and core acceptance criteria pass. Revise wording in a future published workflow iteration."
+    }
+  ],
+  "scope_limit": "Four single synthetic runs; not proof of general accuracy, prompt-injection resistance, draft readiness, or end-to-end integration.",
+  "packaging_note": "Only response paths rewritten; original local report retained. Synthetic inputs only.",
+  "repository_migration_note": "Evidence paths adapted from standalone ZIP to agent/verification/."
+}

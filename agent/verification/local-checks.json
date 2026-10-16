@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-16",
+  "timezone": "Asia/Shanghai",
+  "python": "3.13.15",
+  "scope": "Offline checks of staged package with matching team contracts; not new Dify calls.",
+  "checks": [
+    {
+      "check": "agent_offline_tests",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "usage: batch_check [-h] [--suite SUITE] [--operation {all,extract,draft}]\n                   [--limit LIMIT] [--gui] [--report REPORT]\nbatch_check: error: Report already exists; use --report with a new path to preserve previous attempts\n----------------------------------------------------------------------\nRan 62 tests in 0.703s\n\nOK"
+    },
+    {
+      "check": "contract_tests",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 10 tests in 0.130s\n\nOK"
+    },
+    {
+      "check": "dependency_check",
+      "exit_code": 0,
+      "stdout": "No broken requirements found.",
+      "stderr": ""
+    },
+    {
+      "check": "saved_response_offline_revalidation",
+      "exit_code": 0,
+      "stdout": "Seven saved real responses revalidated offline; no API calls.",
+      "stderr": ""
+    },
+    {
+      "check": "synthetic_fixture_preflight",
+      "exit_code": 0,
+      "stdout": "30 packaged synthetic batch cases passed preflight; no API calls.",
+      "stderr": ""
+    }
+  ]
+}
