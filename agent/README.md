@@ -163,3 +163,5 @@ DIFY_DRAFT_API_KEY 供独立草稿工作流使用，未配置时明确报错；�
 ## GitHub 仓库交付入口
 
 本分支的迁移与离线复验步骤见 [GITHUB_DELIVERY.md](GITHUB_DELIVERY.md)，已知问题见 [KNOWN_ISSUES.md](KNOWN_ISSUES.md)。历史ZIP的 verification/ 在仓库内置于 agent/verification/；真实医疗摘录及本地运行目录未上传。
+
+2026-10-16收到D代码后的首轮离线接口检查、严重性门槛差异及材料核对流程待确认项见[AD_INTEGRATION_STATUS.md](AD_INTEGRATION_STATUS.md)。这次补充更新交接状态，生产代码和放行规则保持原样。
