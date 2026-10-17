@@ -34,20 +34,41 @@ export type ApplicationStatus =
   | 'confirmed'
   | 'exported'
 
+export type AgeGroup = 'child' | 'adult' | 'older_adult' | 'unknown'
+
+export interface PatientInfo {
+  display_name: string
+  age_group?: AgeGroup | null
+  medical_summary: string | null
+}
+
+export interface PatientInfoPatch {
+  display_name?: string
+  age_group?: AgeGroup | null
+  medical_summary?: string | null
+}
+
+export interface Application {
+  application_id: string
+  schema_version: '1.0'
+  revision: number
+  status: ApplicationStatus
+  patient_info: PatientInfo
+  created_at: string
+  updated_at: string
+}
+
+export interface CreateApplicationRequest {
+  patient_info: PatientInfo
+}
+
+export interface UpdateApplicationRequest {
+  expected_revision: number
+  patient_info: PatientInfoPatch
+}
+
 export interface ApplicationResponse {
-  application: {
-    application_id: string
-    schema_version: '1.0'
-    revision: number
-    status: ApplicationStatus
-    patient_info: {
-      display_name: string
-      age_group?: 'child' | 'adult' | 'older_adult' | 'unknown' | null
-      medical_summary: string | null
-    }
-    created_at: string
-    updated_at: string
-  }
+  application: Application
   documents: Array<{
     document_id: string
     application_id: string

@@ -19,7 +19,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         <div className="mb-10">
           <p className="text-sm font-medium text-blue-700">申请流程</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">清晰整理每一步</h1>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">从填写信息到确认草稿，逐步整理申请所需内容。当前为前端基础页面，业务操作将在后续阶段开放。</p>
+          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">从填写信息到确认草稿，逐步整理申请所需内容。当前进行第一阶段“申请信息”，材料上传等后续功能尚未开放。</p>
         </div>
 
         <nav aria-label="申请流程步骤" className="mb-10">
