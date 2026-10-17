@@ -93,7 +93,7 @@ export function DocumentManager({
       <div className="flex flex-col gap-3 border-b border-slate-100 pb-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm font-medium text-blue-700">申请流程 · 材料上传</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="documents-title">上传医疗材料</h2>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="documents-title" tabIndex={-1}>上传医疗材料</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">仅上传申请所需材料。上传和处理状态不代表真实性核验、医疗判断或审核通过。</p>
         </div>
         {mockMode && <span className="w-fit rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-900">Mock 模式 · 文件仅模拟上传</span>}

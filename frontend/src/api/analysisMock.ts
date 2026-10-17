@@ -167,3 +167,8 @@ export function resetMockAnalysis(): void {
   latestByApplication.clear()
   sequence = 0
 }
+
+export function getMockLatestAnalysis(applicationId: string): AnalysisResult | null {
+  const result = latestByApplication.get(applicationId)
+  return result ? structuredClone(result) : null
+}

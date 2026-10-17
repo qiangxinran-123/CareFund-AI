@@ -161,7 +161,7 @@ export function ApplicationForm({
       <div className="flex flex-col gap-4 border-b border-slate-100 pb-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm font-medium text-blue-700">申请流程 · 信息填写</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="application-form-title">填写申请信息</h2>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="application-form-title" tabIndex={-1}>填写申请信息</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">请如实填写相关信息。AI 仅辅助整理申请内容，具体事实及材料仍需您核对确认。</p>
         </div>
         {mockMode && <span className="w-fit rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-900">Mock 模式 · 未连接真实后端</span>}

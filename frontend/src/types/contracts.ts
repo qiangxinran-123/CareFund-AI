@@ -190,3 +190,47 @@ export interface ApplicationResponse {
   evidence: Evidence[]
 }
 
+export type DraftStatus = 'generated' | 'confirmed' | 'stale'
+
+export interface DraftSection {
+  section_id: string
+  title: string
+  content: string
+  fact_ids: string[]
+}
+
+export interface Draft {
+  schema_version: '1.0'
+  draft_id: string
+  application_id: string
+  application_revision: number
+  draft_revision: number
+  status: DraftStatus
+  sections: DraftSection[]
+  created_at: string
+  confirmed_at?: string | null
+}
+
+export interface DraftGenerationRequest {
+  expected_revision: number
+}
+
+export interface DraftConfirmationRequest {
+  draft_id: string
+  draft_revision: number
+  expected_application_revision: number
+}
+
+export interface ExportRequest extends DraftConfirmationRequest {
+  format: 'json'
+}
+
+export interface ExportResponse {
+  export_id: string
+  application_id: string
+  draft_id: string
+  format: 'json'
+  created_at: string
+  download_url: string | null
+}
+

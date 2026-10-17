@@ -16,6 +16,7 @@ interface Props {
   maxPollAttempts?: number
   mockMode?: boolean
   onRefreshApplication?: () => Promise<void>
+  onAnalysisChange?: (result: AnalysisResult | null) => void
   pollIntervalMs?: number
 }
 
@@ -67,6 +68,7 @@ export function AnalysisPanel({
   maxPollAttempts = 60,
   mockMode = defaultMockMode,
   onRefreshApplication,
+  onAnalysisChange,
   pollIntervalMs = 2000,
 }: Props) {
   const [phase, setPhase] = useState<Phase>('idle')
@@ -81,6 +83,10 @@ export function AnalysisPanel({
   const applicationId = application?.application_id
   const applicationRevision = application?.revision
   const busy = phase === 'loading' || phase === 'submitting' || phase === 'queued' || phase === 'running'
+
+  useEffect(() => {
+    onAnalysisChange?.(result)
+  }, [onAnalysisChange, result])
 
   useEffect(() => {
     controllerRef.current?.abort()
@@ -248,7 +254,7 @@ export function AnalysisPanel({
       <div className="flex flex-col gap-4 border-b border-slate-100 pb-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm font-medium text-blue-700">申请流程 · AI 分析与补充</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="analysis-title">核对申请信息</h2>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="analysis-title" tabIndex={-1}>核对申请信息</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">系统将根据您填写的信息和已上传的材料，协助整理申请信息并提示需要核对的内容。</p>
         </div>
         {mockMode && <span className="w-fit rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-900">Mock 模式 · 结果为虚构演示数据</span>}
