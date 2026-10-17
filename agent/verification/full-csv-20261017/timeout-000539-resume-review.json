@@ -1,0 +1,24 @@
+{
+  "reviewed_at": "2026-10-17T11:26:56.357182+00:00",
+  "source_row": 539,
+  "inspection_file": "agent/verification/full-csv-20261017/failure-inspection-row000539.json",
+  "generation_calls": 0,
+  "remote_execution_status": "succeeded",
+  "recovered_result_checks": {
+    "total_tokens": 2436,
+    "recovered_status": "partial_checks_passed",
+    "failures": [],
+    "review_flags": [
+      "free_text_semantics_not_independently_annotated"
+    ],
+    "question_format_version": "optional-question-required-v1",
+    "question_policy_inserted_false_paths": [],
+    "raw_model_contract_valid": true
+  },
+  "original_transport_status_and_full_reservation_preserved": true,
+  "failed_row_retried": false,
+  "cumulative_calls": 538,
+  "cumulative_cost_upper_bound_cny": 10.76557,
+  "actual_bill_read": false,
+  "next_action": "Continue only unattempted rows, one worker, same cumulative CNY20 cap; stop on findings."
+}

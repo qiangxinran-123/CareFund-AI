@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-10-17T09:48:44.992496+00:00",
+  "saved_configuration_export_verified": true,
+  "export_sha256": "560dc5f38b81d1ac9752eef123357fcfd7c6b2d25e8593214afdf0c5c3a0eae3",
+  "timeout_rows_reviewed": [
+    87,
+    88
+  ],
+  "remote_execution_still_unknown": true,
+  "full_unknown_usage_reservations_preserved": true,
+  "original_results_unchanged": true,
+  "cumulative_calls": 88,
+  "cumulative_cost_upper_bound_cny": 1.822656,
+  "next_step": "One new independent row with one worker, stop on first finding; no failed rows retried.",
+  "generation_calls": 0,
+  "actual_bill_read": false
+}

@@ -1,0 +1,1432 @@
+{
+  "mode": "offline_actual_D_for_accepted_extract_outputs",
+  "new_model_calls": 0,
+  "policy": "D demonstration only; not team-approved production policy",
+  "policy_sha256": "4e61dbf16969134b603d63b346abe563e7c6d9daf87b0700194d340c1b57b8f5",
+  "shared_schema_JSON_semantics_match": true,
+  "D_source_sha256": {
+    "validation/evidence_tracker.py": "695b43a59c494e641c3f7cd37cac98fb5a97fb01434c3694a58cd30e2963d961",
+    "validation/export_checker.py": "84d5df6ed55106c215058eacab0981700c9c500db2ddea3caddb4dbea63830ae",
+    "validation/fact_checker.py": "dba43dedb33de4c981ed2e6d5ccc0aeedf6f6545b407add5f8c43f936f697230",
+    "validation/issues.py": "0dfcbacca275503efedf94922153c046239ead88ce0b1f72d5a44ec665c5c545",
+    "validation/schema.py": "ae7618342a934d2a617bdb29d8bb3d80e6a3e220b6dd0dc1bf922e64bdebc18a",
+    "validation/__init__.py": "b92959cfa418c8470b9e09ccb2a81ad7d8decc47f68e2491fc5a65092313247c",
+    "validation/__main__.py": "4a219fd508b74a6146df58db719f8262e0aa81304000e36f19680ce2ec88ae44",
+    "validation/rules/policy.py": "e812f71bc0f24ab386117089e8cceb9498fac15128bde7bdd44a34671cb49dbd",
+    "validation/rules/values.py": "5908db0f90a965ea66712acbd0d1461c086f8b0df7b48b405ae543bed23fe581",
+    "validation/rules/__init__.py": "5015e386df17e08fed680b77e491fdea1a975ec889e8d61cc04a62755a107f96"
+  },
+  "cases": [
+    {
+      "case_id": "expand_synthetic_extract_004",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "93ff33ab37457c7e3da859f5f56a3c4d82906805d791c0682a63633ccd0ea0c8",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_010",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "9ac5016f15061409b3de9886779b93b356ce6695f8360e557fecd1155cd88b8a",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_052",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "9def35c91b3001b4e4f5ede58134ea3c8f25f335782283cba05b5e953b85cf3b",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_030",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "686a8dfc2ef81cff0e343f807a24a35ae870748887b8eeb3df41b0e1c5f6f375",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_039",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "48a4e3eaecd24f0de14976d2d2cde2fe5260e4d91736be4437028321b5856602",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_009",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "2177535040a124b50f6fd93f5db159639cdfaefe5c161b2f112d9e9392d51180",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_007",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "d4430af729e7430dc78b947e57ee12c4514b3c20260d08657971d7f5f9e172eb",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_011",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "b334379252c68db4510152ab747cfa0813a0dbab71a123b00ed319d6681aa087",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_040",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "2c692926788af9f72bc8bd38b6fa785046f30830adcd57c32d722fe82f718cfc",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_021",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "18953383dda1b305f846768a42e4b01a698351395b10facc3741d94706647230",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_011",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "37f364e55480067988e737f70dbcac235085624ceda3e6153f9b7c469ec702f4",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_034",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "b04d1dc1fdefe29bcfafc009b72f49ac189914f2bc3c05cf5a37def860877d70",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_028",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "38b340492bd329bc8cd782b8c090b36a3ed45778f190e62b7b72523ca5be7bbe",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_013",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "efada19925492e17027db4354a4d091a1f401a2336de29f58605d339c1666b1d",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_014",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "f6bd6825e64bba3a7646b348831af9e382c25116a0af9889ab9cbac762882319",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_027",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "b82899744d193d5f43d8cea6b2f7743b59dcf7bc87a1a6661044b33ffd45d7f7",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_055",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "9f13564e35f58c513ccb7e737f2ad2c8d5d1d901ab61c46c24dbf87585cd0e39",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_015",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "131ae3c2a671b026f9e5bcb7fb89e4786ad903fd9fe1cb8d7f63ac13676f7e77",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_049",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "fad62f6518f2db89bb716efd460a59700d2058b47ce827c5af8f6ebee0c2c8a5",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_001",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "78d796fbeb949bc704fd9312ae80ee99066efd26a49ccaaa6231054d6ce6e1d5",
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_056",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "7a28c8ea3876e6193717a8e139af2677b41301f852cae43a4afe739bac2f76a4",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_044",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "49d9da0322e2372eba83385a6da3b2f909a6b3cada6b11979fa36a4c3c97905f",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_038",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "4a85646c39e5d422496a6e58a9aec54dd1fd453ff315bb5763f625fab8ff3a82",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_016",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "002119c5df336f69b7643c592f637772ea8bdb19ab20c9b0636b99ac1168b3b3",
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_018",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "6592a4772951cf4b57b89cfd0db1c733ee0f6dfa4c19d257d28d3aea56b2f01f",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_036",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "31f455d269f8643ff2a4858c8fc9f165e4b8541bdb231483e44863f568946dd2",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_006",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "49443057e0c8728afd2e2aa8076ed441e8fa52ab65ec8b63b130bb5037e6565d",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_002",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "ca8e3d6b8aa20f0af41a290a1a820f037f449798e6d893dd542458b1657d5e52",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_060",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "49d7665c9c249b4b7b55c2df6212739901dfb5f4f6b218b6ec7aa14474a68a55",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_003",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "06398032afa22826781963c374cac5bfedb6b9942e76aaa6c8c748155380e915",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_047",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "ed597e58fc52df05c6dc941d40c3eb09609120eb1c8afa846c3aec18a74ecf3b",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_002",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "3c7176f29eb874c4e121411f8335e485a6cf25a0b7197c929ccc513bfbe02073",
+      "issue_counts_by_type": {
+        "unsupported": 3,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 4
+      }
+    },
+    {
+      "case_id": "expand_cn_059",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "42722a81c1c2567ce65f2e0c1a30bc5c4a096946e369633c4c57dafa101969d4",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_041",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "b890c3ad0c4644a7ec377a38a19cc327153ef2b71b9684a901855f7c80ac83d2",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_025",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "c40e423c1892951296411b5f6f8e6dae8aaeb75b31ea5b83e128a8fc781ea212",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_014",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "4253ab85e5e1e126b7ce5791d752e2dee40ee097048e832705183f5ef9a899a2",
+      "issue_counts_by_type": {
+        "unsupported": 3,
+        "invalid_format": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 5
+      }
+    },
+    {
+      "case_id": "expand_cn_026",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "9999561ed7e36c18a352eb930e92c3e7fa6d6e8a2a97a0ef8b8fca1f8ff60bee",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_013",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "772c0747c7879584c426ea4a7e02fb6b197accc3e25978f756b5d37aeb1c9dd7",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_012",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "c1461120a95fefba42c29aecf5f1d4f956ae84b31e319eda17cf8fb4b8916d38",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_053",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "d820725489404cdc5fa1f14eb65c523c2cbe8eaeb9878a768ae705b4eebf0ae7",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_012",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "8844c085ff733a8b8eb5a42742141f30a3a8ef8343e6106cf56627fc986791a8",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_020",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "d8c02da25f5a48ac343789dc966a9bae88ea034c04dda0642766276bef95e8a1",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_051",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "e0648342f5ca040212b13233e7612c34d66be016d1d8ea52d126217bfc836770",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_012",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "60fb5b980692192a9dc26d5330e635b3ad4c2bb57e6106264329f62fbbc65985",
+      "issue_counts_by_type": {
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_009",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "3ac5b25843f3660c23820cf195be25c270c334ef844ba93b4089156a96e2bc6b",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_042",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "447d5137d59256fc9ce17d8f9c551acd2d8d07522239313dc0d054efc22624ae",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_032",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "06af8f99b15f1c9eb48559bbc06075cffacf3f2a0bc8e056a33faa8dbae2992d",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_008",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "ad8f038501a3835b251e860f52e450ed685f3f3de32a82796a78636fce9165c8",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_046",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "04607b910d07f5534c0e68696b422b62eda4e6b91defa1f032164f7947077cd1",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_024",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "83e57ab570a3f9cffbb3a57719458e28d4ddef96833509d3cf6d4ce08755267b",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_010",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "a064b7404bf7e0af55b0427265c75487e2bb3205491ed0dfeaf7b43a4ca26dd1",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_005",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "76784f20ab4ba968a3b4f70db5b75c221fa415b514ecd20b1f72d20b2a474761",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_008",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "679d588762366ee12d88f897b9561f3a16255a9ddd67bafa6ae444337fffb40f",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_054",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "d36a4fe1a7fbe3ef2115cb4da6d73eacfbfffa0940da3fc55608b7fb92683b68",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_037",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "08ed7fbdb6cf98f9a2dbc73b6d8fc90340c56483a82c279ba5d7793d10b4bc84",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_016",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "a708a375358d6f1806aa9611671c9e7231e156911f62984140c9659ad2517242",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_018",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "36bbc918cc04eeb2a40e8c0b84a4a94aaf87914db0f201a7998e312197c71e40",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_008",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "932ce85b8667881234c0066fe4e88157e8ea37eeae3fe9dfaa33d898c5ab8006",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_010",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "eb1a229477c4a4189cba5c208a1738a9d0d4b737a1746b33958813ff79c0ce5f",
+      "issue_counts_by_type": {
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_050",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "8f771d5b5dc571aba91f4099739076d729d2bad08e3c2d57ca87497bb5ce72e8",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_023",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "bd9276a125d7832b419a7f08fdfe7a997ec3071a2295440e09b6401f03ab7995",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_004",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "44becf656db2621a99fa5ae9f91c4ae3b2d4a1232e01e849354fdd6b0d44052a",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_006",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "77d0b855f4f997c4adb3b41d86476f5307598df3186b93217374c829ffdedf0e",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_048",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "bfa0e5464875880ac96c371f07adaca2e8dccb85064df8cf7b31c1cc554ed86a",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_005",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "816d03b3bc95eb532a1b6dc1de5710f0277b76304eb53ab599df39bd4ad71663",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_045",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "edd129b8fdecc1873eba3ef3771f2c4527529fd84f4c68d8d95e48c9ab82a6b8",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_003",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "85496a50f62b7238d068ae311c98a0140a56fee6eeeb5fb91120d256fce11476",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_007",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "d9b40045699155b03874e9eddeb8518d5d3d4021f9cfb47ffcb177fe10f3b33a",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_019",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "ed840e9153e17bf331a5374f3a18c852dcdea785168154fd7eacdb58be03a524",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_015",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "fc398c06b6e237f152e4acca17e64aac69a2ec4c6be403a9673ba0261507de5c",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_003",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "788836869e263d4750b7ee06a300100a0f2c13fa261490b2a9fc9eccdf9b89b6",
+      "issue_counts_by_type": {
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_013",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "398298d1cc73a828c8bd5a5dd3900762f2f14e80dac6f5e0a73c32216968302b",
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "inconsistent_amount": 1,
+        "missing": 2
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 4
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_009",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "c52810b4d38ff19da33f48b9ab2ec59ef582c26cfd7ebf9797df0868db62f257",
+      "issue_counts_by_type": {
+        "invalid_format": 1,
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "blocking": 4,
+        "info": 1
+      }
+    },
+    {
+      "case_id": "expand_cn_033",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "46ad9d25b28ec90f2ad50bc1838d2c4ce5a0e47ec0d604f87c617a424cb097c0",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_001",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "503a30bef689ba8c9e112ab2e7282000f8766b7599bcc98d3b6e5772cc0cee2c",
+      "issue_counts_by_type": {
+        "unsupported": 4,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 3,
+        "blocking": 4
+      }
+    },
+    {
+      "case_id": "expand_cn_043",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "92915fb6fb95c33741e39bbf1b8242f89189475c310a591952fccd5c0b1b7489",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_029",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "8c7d352b771e9c06e149d67044f56b8df24e53c29e92283eec4b90734b7ad437",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_007",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "53d941404190d906a5010bfd80c68143f17a142cce2535d83e3660656f643c94",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_015",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "4a3aaa41a53507c7b11094a8b309913f4f465fd08d0d42781a7e3f25a804a78e",
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_005",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "4e2fa2e3812de3759c3caf05b4f1cabcaa1cb453504af8c220a14fea38ee4e1e",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_001",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "17b29331708e95496ac1547d168e4bc85801e8b5b4510be5a30ea9c677091bd3",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_031",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "34c63f64fb7ca19f87a79c10a2e83b9ba080c8be8bd51ad1898a95cb17c05ba8",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_017",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "d618cce63a7018ad3f4ee18cac2c8ffcebdc9982c1a0217fc31b5ab9c6ae83ee",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_022",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "f35b543f2adb8d136f39e21ef5c9cc1719d305dd2b535d3c6c6c8f35a5542906",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_002",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "156dcc472ca3d456754af4d4e5b4634b2e96eff1adb6dbf9e20b756240da5fb3",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_019",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "deae2e443b6b52b6e6e9acb7bcfce6463ab1d80c94a9b875d5dbe2b41d0a204f",
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_058",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "7b16fa7e5b1c91a628a8dc9f39e1df63f9f10a786433794d73975380cf3d09a7",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_006",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "43b377d1497091c5ff6eb360e13cd8cb32bcae7d10df578475ccd54bc4b0af8d",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_004",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "39d38d3680ca9b634924abc46341b725956910be5543c7ddf8cbd3572ac123e6",
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_017",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "5e15ef7892e0edb85db16c9fb31343d073b5ebb7dfc16b5050c23ea38d695c5f",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_035",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "1e3eb3f894678e1e1dfff3ef3dd947b157ec699c81533235bf9e3e82cac62744",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_cn_057",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "536e4a6d7f87eb47d4fe47f4800b4bced22be9ad60e3dc949a7558146aed951c",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_synthetic_extract_011",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "fc32a4c51ecdd45a46ff38af81bae4f1429eb1e0b29793af8f5bf846903cc86e",
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 3
+      }
+    },
+    {
+      "case_id": "expand_mdcc_014",
+      "contracts": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "private_replay_sha256": "0308b836b7b01ff12f2f491305f479da9d49fd263a699608efd9399c58bcd2bf",
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      }
+    }
+  ],
+  "mapped_extract_cases": 94,
+  "can_finalize_true": 0,
+  "accepted_draft_cases_not_mapped": 6,
+  "contains_patient_text": false
+}

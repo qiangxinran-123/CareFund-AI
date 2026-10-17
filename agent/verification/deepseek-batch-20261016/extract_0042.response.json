@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0042",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "fundraising.target_amount",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 3000000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_002",
+      "field": "fundraising.raised_amount",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 400000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "patient.medical_summary",
+      "question": "请描述患者目前的病情、诊断或正在接受的检查，以及是否已有明确诊断。",
+      "reason": "当前申请未提供任何病情或诊断信息，需要了解患者医疗情况以便整理申请资料。",
+      "required": false
+    },
+    {
+      "question_id": "question_002",
+      "field": "treatment.paid_cost",
+      "question": "目前已经支付的医疗费用大约是多少？如有费用清单或发票，可一并提供。",
+      "reason": "当前申请未提供已支付医疗费用信息，需要了解以便整理费用相关事实。",
+      "required": false
+    },
+    {
+      "question_id": "question_003",
+      "field": "treatment.estimated_cost",
+      "question": "后续预估治疗费用大约是多少？是否已有医院出具的费用预估单？",
+      "reason": "当前申请未提供后续预估治疗费用信息，需要了解以便整理费用相关事实。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附任何材料，无法核对用户自述的筹款目标金额和已募集金额。",
+    "用户自述中未提供病情、诊断、医疗费用、患者与申请人关系、所在城市等信息，相关字段未生成事实。",
+    "用户自述中的筹款目标金额和已募集金额均为用户陈述，尚未经材料证实。"
+  ]
+}

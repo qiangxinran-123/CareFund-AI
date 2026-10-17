@@ -1,4 +1,4 @@
-"""Run three synthetic requests against a separately published draft workflow."""
+"""Run two eligible synthetic drafts; injection fixtures are local negative tests."""
 import argparse
 from datetime import datetime, timezone
 import hashlib
@@ -13,7 +13,7 @@ from .live_check import credentials
 
 ROOT = Path(__file__).resolve().parent
 REPORT = ROOT / '.local' / 'draft-live-status.json'
-CASE_NAMES = ('draft-request.json', 'draft-uncertain-request.json', 'draft-injection-request.json')
+CASE_NAMES = ('draft-request.json', 'draft-uncertain-request.json')
 
 
 def save(report):
@@ -70,15 +70,15 @@ def main():
             record.update(status='schema_references_and_literal_content_passed',
                           response_file=str(destination), elapsed_seconds=round(time.monotonic() - start, 2))
             save(report)
-        report.update(status='three_synthetic_draft_calls_passed',
+        report.update(status='two_synthetic_draft_calls_passed',
                       completed_at=datetime.now(timezone.utc).isoformat(),
-                      scope_limit='Exact literal fidelity only; not independent truth or evidence-support verification. Injection text stays quoted as test data, never a new factual claim.')
+                      scope_limit='Exact literal fidelity only; not independent truth or evidence-support verification. The injection fixture is rejected locally before generation.')
     except AgentError as exc:
         report.update(status='failed', error=str(exc))
     except Exception as exc:
         report.update(status='local_error', error_type=type(exc).__name__)
     save(report)
-    return 0 if report['status'] == 'three_synthetic_draft_calls_passed' else 1
+    return 0 if report['status'] == 'two_synthetic_draft_calls_passed' else 1
 
 
 if __name__ == '__main__':

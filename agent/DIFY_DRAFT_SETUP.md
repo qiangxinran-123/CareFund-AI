@@ -1,5 +1,7 @@
 # 独立草稿工作流导入与真实验证
 
+2026-10-16 补充：线上两个应用已改用 DeepSeek V4.1 Flash，7 次合成编辑器运行及 2 次 Service API 冒烟复测通过，最新导出已核对并同步。当前草稿文件为 [workflow.deepseek-draft.yml](workflow.deepseek-draft.yml)，配置见 [DEEPSEEK_SETUP.md](DEEPSEEK_SETUP.md)。以下为原 GPT 版本的导入及历史验证说明，不能重新导入后直接视为 DeepSeek 配置。
+
 导入文件是 `agent/workflow.draft.yml`，应用名为 **CareFund-已确认事实草稿-首版**。它沿用已成功抽取应用导出的 DSL 0.7.0、gpt-4.1 和 OpenAI 插件标识，不包含任何密钥。新文件是 JSON 形式的 YAML；Dify 的导入器使用 YAML 解析器读取。参考：[Dify 官方导入实现](https://github.com/langgenius/dify/blob/main/api/services/app_dsl_service.py)。当前用户实例已完成导入、发布及三个合成草稿案例的真实调用（2026-10-16），详见 DRAFT_IMPLEMENTATION_STATUS.md；其他实例仍须核对依赖和模型配置。
 
 ## 在 Dify 中的操作

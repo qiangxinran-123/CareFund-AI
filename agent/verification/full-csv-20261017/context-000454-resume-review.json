@@ -1,0 +1,15 @@
+{
+  "reviewed_at": "2026-10-17T11:13:04.977571+00:00",
+  "source_row": 454,
+  "classification": "negated_platform_warning_false_positive",
+  "warning_index": 2,
+  "reviewed_disclaimer": "不代表平台要求或审核结论。",
+  "original_status_preserved": true,
+  "original_cost_preserved": true,
+  "generation_calls": 0,
+  "cumulative_calls": 453,
+  "cumulative_cost_upper_bound_cny": 8.995338,
+  "failed_row_retried": false,
+  "global_detector_unchanged": true,
+  "next_action": "Continue only unattempted rows, one worker, same cumulative CNY20 cap; stop on new findings."
+}

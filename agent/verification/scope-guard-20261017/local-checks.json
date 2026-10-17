@@ -1,0 +1,15 @@
+{
+  "new_model_calls": 0,
+  "tested_deepseek_prompt_scope_matches_python_policy": true,
+  "tested_workflow_export_hashes_unchanged": 2,
+  "git_diff_whitespace_check": "passed",
+  "shared_contracts_and_other_member_code_unchanged": true,
+  "code_fingerprints_match_replay_manifest": true,
+  "credential_pattern_scan": "passed",
+  "agent_tests": 71,
+  "contract_tests": 10,
+  "saved_response_replay": {
+    "accepted": 45,
+    "rejected_as_expected": 1
+  }
+}

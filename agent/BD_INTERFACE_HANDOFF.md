@@ -1,3 +1,5 @@
+> **2026-10-17 修复后交付入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [代码修复报告](verification/content-fix-20261017/README.md)。此前警告、追问和指令草稿问题已由 A 代码处理，108 项单元测试通过；原 87 份结果及全部 1,341 份可解析批量响应已离线回归，0 次新 API 调用。以下问题和计数保留各历史阶段状态，不代表本轮仍未修复。
+
 # A → B / D 接口交接与待确认清单
 
 状态：接口待确认提案，不是团队决议或新的共享契约。2026-10-16已收到D的源码并完成首轮离线接口检查；实际结果及两处流程衔接问题见 [AD_INTEGRATION_STATUS.md](AD_INTEGRATION_STATUS.md)。

@@ -27,7 +27,7 @@ class DraftEntrypointTests(unittest.TestCase):
                 patch.object(draft_live_check, 'credentials', return_value=(None, None)) as credentials, \
                 patch.object(draft_live_check, 'DifyRunner') as runner:
             self.assertEqual(draft_live_check.main(), 1)
-            credentials.assert_called_once_with(True, operation='draft', case_count=3)
+            credentials.assert_called_once_with(True, operation='draft', case_count=2)
             runner.assert_not_called()
         self.assertEqual(json.loads(self.report.read_text(encoding='utf-8'))['status'], 'cancelled_before_api_call')
 
@@ -42,7 +42,7 @@ class DraftEntrypointTests(unittest.TestCase):
         self.assertNotIn('draft-test-secret', text)
         self.assertEqual(json.loads(text)['status'], 'stopped_on_failure_no_retry')
 
-    def test_live_mocked_three_cases_reach_content_guard(self):
+    def test_live_mocked_two_eligible_cases_reach_content_guard(self):
         def response(operation, request):
             self.assertEqual(operation, 'draft')
             return {k: request[k] for k in ('schema_version', 'application_id', 'application_revision')} | {
@@ -52,9 +52,9 @@ class DraftEntrypointTests(unittest.TestCase):
                 patch.object(draft_live_check, 'DifyRunner') as runner:
             runner.return_value.side_effect = response
             self.assertEqual(draft_live_check.main(), 0)
-            self.assertEqual(runner.return_value.call_count, 3)
+            self.assertEqual(runner.return_value.call_count, 2)
         report = json.loads(self.report.read_text(encoding='utf-8'))
-        self.assertEqual(report['status'], 'three_synthetic_draft_calls_passed')
+        self.assertEqual(report['status'], 'two_synthetic_draft_calls_passed')
         for record in report['cases']:
             self.assertEqual(record['status'], 'schema_references_and_literal_content_passed')
 

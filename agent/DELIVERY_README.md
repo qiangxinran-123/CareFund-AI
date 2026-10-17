@@ -1,4 +1,10 @@
+> **2026-10-17 修复后交付入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [代码修复报告](verification/content-fix-20261017/README.md)。此前警告、追问和指令草稿问题已由 A 代码处理，108 项单元测试通过；原 87 份结果及全部 1,341 份可解析批量响应已离线回归，0 次新 API 调用。以下问题和计数保留各历史阶段状态，不代表本轮仍未修复。
+
 # A 模块交付入口（v2）
+
+2026-10-17 补充：已增加抽取新事实与追问字段范围门槛，A 71 项与契约 10 项测试通过；历史响应离线回放接受 45 份、准确拒绝 1 份已知越界响应，未新增 API 调用。见 [修复记录](verification/scope-guard-20261017/README.md)。本轮源码尚未推送，旧冻结 ZIP 不含这次修复。
+
+2026-10-16 更新：以下为 v2 冻结交付记录。最新 DeepSeek 切换、9 次真实运行和 DSL 同步见 [DEEPSEEK_SETUP.md](DEEPSEEK_SETUP.md)；当前工作流为 [抽取](workflow.deepseek-extract.yml)、[草稿](workflow.deepseek-draft.yml)。原冻结压缩包保留，本轮本地更新尚未提交或推送。
 
 交付日期：2026-10-16，Asia/Shanghai。文件名：CareFund-A-20261016-v2.zip。范围为 agent/；接收方为 B（后端集成）、D（独立校验）及 E（协调验收）。本包未发送给队友、未提交或推送。旧 v1 ZIP 保持原样，不用新版说明改写旧版验收结果。
 

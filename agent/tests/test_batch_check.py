@@ -29,9 +29,17 @@ class BatchChecks(unittest.TestCase):
         return path
 
     def test_generated_cases_preflight_without_parent_handoff_directory(self):
-        _, cases = batch_check.load_cases(self.write_suite(self.cases))
-        self.assertEqual(len(cases), 30)
-        self.assertEqual(sum(c['operation']=='draft' for c in cases), 10)
+        eligible = [c for c in self.cases if c['group'] != 'literal_draft_with_injection']
+        _, cases = batch_check.load_cases(self.write_suite(eligible))
+        self.assertEqual(len(cases), 25)
+        self.assertEqual(sum(c['operation']=='draft' for c in cases), 5)
+
+    def test_historical_injection_drafts_are_now_negative_preflight_cases(self):
+        unsafe = [c for c in self.cases if c['group'] == 'literal_draft_with_injection']
+        self.assertEqual(len(unsafe), 5)
+        for case in unsafe:
+            with self.subTest(case=case['case_id']), self.assertRaisesRegex(AgentError, 'generation instructions'):
+                batch_check.load_cases(self.write_suite([case]))
 
     def test_raw_narrative_class_cannot_be_sent(self):
         case = copy.deepcopy(self.cases[0])

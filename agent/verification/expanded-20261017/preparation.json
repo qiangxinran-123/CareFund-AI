@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-17",
+  "planned_generation_calls": 100,
+  "counts": {
+    "MDCC_rows": 14961,
+    "MDCC_medical_nonempty": 3580,
+    "MDCC_medical_local_schema_passed": 3580
+  },
+  "case_counts_by_source": {
+    "paid_vs_fundraising": 1,
+    "new_MDCC_minimal_clause": 19,
+    "new_csv_disease_cell": 60,
+    "synthetic_literal_draft": 6,
+    "ruled_out_diagnosis": 1,
+    "large_cost_units": 1,
+    "vague_costs": 1,
+    "already_no_estimate_document": 1,
+    "ambiguous_currency": 1,
+    "uncertain_diagnosis": 1,
+    "instruction_injection": 1,
+    "fundraising_is_not_cost": 1,
+    "conflicting_estimate": 1,
+    "partial_calendar_date": 1,
+    "exact_cost_roles": 1,
+    "foreign_currency": 1,
+    "long_synthetic_narrative": 1,
+    "preserve_existing": 1
+  },
+  "case_counts_by_operation": {
+    "extract": 94,
+    "draft": 6
+  },
+  "new_real_minimal_inputs": 79,
+  "new_synthetic_inputs": 21,
+  "CN_remaining_candidates_before_selection": 209,
+  "CN_previously_tested_unique_cells": 20,
+  "CN_selected_distinct_disease_terms": 54,
+  "CN_selected_with_status": 0,
+  "CN_selected_with_stage": 32,
+  "MDCC_unattempted_minimal_clauses": 19,
+  "no_minimal_phrase_reused_from_previous_plans": true,
+  "suite_file": "agent/.local/expanded-20261017/suite.json",
+  "suite_sha256": "1f21a35c8d376bb2d5e32ebad4e811f1fb0c81b81f28b77216caaf805dabd739",
+  "source_sha256": {
+    "user_csv": "fbcd57439ad7c1b02ae34078990c4042a7e3193977e49bb0a9b5e93bac5b2cc2",
+    "MDCC": "28656b9827076b7780f00f7edb4b0ba9ab6f4f4a9d09ed7fc25c03557a5d310b"
+  },
+  "source_URL": "https://zenodo.org/records/8287320",
+  "MDCC_attribution": "Xovee Xu, Jiayang Li, Fan Zhou; MDCC; academic research; CC BY-NC 4.0 per author repository",
+  "new_API_calls_by_preparation": 0,
+  "full_original_records_sent": 0,
+  "limits": [
+    "All-row local schema checks are not AI accuracy.",
+    "Dictionary selection is not representative and loses context.",
+    "Source statements are not clinical truth.",
+    "No full raw CSV, identities, locations, dates, contacts or project IDs in real model inputs."
+  ]
+}

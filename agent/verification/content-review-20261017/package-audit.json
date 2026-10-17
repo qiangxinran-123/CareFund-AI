@@ -1,0 +1,19 @@
+{
+  "audited_at": "2026-10-17T13:35:45.655630+00:00",
+  "new_model_calls": 0,
+  "batch_attempts": 1350,
+  "ledger_counts": {
+    "partial_checks_passed": 1338,
+    "boundary_or_transport_rejected": 11,
+    "needs_context_review": 1
+  },
+  "saved_bulk_responses_hash_verified": 1341,
+  "private_ignored_untracked_files": 2656,
+  "public_agent_files_scanned": 264,
+  "credential_pattern_hits": 0,
+  "known_real_request_or_response_objects_in_public_files": 0,
+  "raw_csv_files_in_package": 0,
+  "non_agent_team_modules_in_package": 0,
+  "privacy_limits": "Credential patterns and known payload fingerprints supplement the explicit A-only file selection; not a universal deidentification proof.",
+  "committed_or_pushed": false
+}

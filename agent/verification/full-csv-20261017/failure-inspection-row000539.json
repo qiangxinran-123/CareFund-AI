@@ -1,0 +1,17 @@
+{
+  "generation_calls": 0,
+  "status": "recovered_exact_failed_request",
+  "read_only_endpoints": [
+    "/workflows/logs",
+    "/workflows/run/8b022a08-6de1-430f-b6fd-0f3e0023f0d4"
+  ],
+  "matched_current_run_logs": 100,
+  "source_row": 539,
+  "detail_file": "agent/.local/full-csv-20261017/failure-000539.dify-detail.json",
+  "detail_sha256": "9337bc6d811ee8f56acb593d86dc01f4bb9c8f433677b75235c1bdba9af8fa8c",
+  "workflow_status": "succeeded",
+  "total_tokens": 2436,
+  "result_type": "str",
+  "result_bytes": 1501,
+  "strict_result_json": "valid_on_recovered_detail"
+}

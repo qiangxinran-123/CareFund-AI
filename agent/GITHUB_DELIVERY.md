@@ -1,4 +1,8 @@
+> **2026-10-17 修复后交付入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [代码修复报告](verification/content-fix-20261017/README.md)。此前警告、追问和指令草稿问题已由 A 代码处理，108 项单元测试通过；原 87 份结果及全部 1,341 份可解析批量响应已离线回归，0 次新 API 调用。以下问题和计数保留各历史阶段状态，不代表本轮仍未修复。
+
 # A 模块 GitHub 交付说明
+
+2026-10-16 更新：以下为原 GitHub 交付及 A/D 首轮适配记录。最新本地 DeepSeek 配置、9 次真实运行及两份 DSL 同步见 [DEEPSEEK_SETUP.md](DEEPSEEK_SETUP.md)，这些更新尚未提交或推送，不能据此认为远程 PR 已包含它们。
 
 本次将已验收的本地 v2 交付内容迁入团队 `feature/agent` 分支，基于2026-10-16拉取的 `main`（`fe89bd1b857b5142365ffefc2286a8fe5f7024f7`）。仅新增/修改 `agent/`，不修改共享契约及其他成员模块；合并需非作者成员审查。
 

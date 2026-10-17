@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0049",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_preserved_1",
+      "field": "patient.relationship_to_applicant",
+      "value": {
+        "kind": "text",
+        "value": "母亲"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": true
+    },
+    {
+      "fact_id": "fact_001",
+      "field": "contact.city",
+      "value": {
+        "kind": "text",
+        "value": "西安市"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "patient.medical_summary",
+      "question": "请说明患者目前的病情、诊断名称及确诊情况（例如是否已确诊、正在检查或尚未确诊）。",
+      "reason": "当前申请缺少病情与诊断信息，无法核对已有陈述。",
+      "required": false
+    },
+    {
+      "question_id": "question_002",
+      "field": "treatment.estimated_cost",
+      "question": "您提到后续费用未知，是否已有医院出具的费用预估单或医生对后续治疗费用的说明？如有，请提供相关材料。",
+      "reason": "后续预估治疗费是理解本次申请所需的关键信息，补充材料便于核对已有陈述。",
+      "required": false
+    },
+    {
+      "question_id": "question_003",
+      "field": "documents.diagnosis_proof",
+      "question": "是否已有诊断证明、检查报告或病历等材料可以补充？",
+      "reason": "本次输入未附材料，补充诊断或检查材料便于核对病情陈述。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附任何材料（extracted_documents 为空），仅能说明本次输入未附材料，不代表用户没有材料或医院尚未出具材料。",
+    "用户自述“后续费用未知”，未生成后续预估治疗费事实，保留为未知。",
+    "用户自述“当前在西安市”，已提取为 contact.city，待确认。",
+    "用户自述“测试序号2”属于测试标记，未作为申请事实提取。"
+  ]
+}

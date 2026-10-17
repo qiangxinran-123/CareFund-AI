@@ -1,8 +1,11 @@
-"""Contract boundary only. Runner must be supplied; no implicit mock fallback."""
+"""Schema and local policy boundary. Runner required; no implicit mock fallback."""
 import copy
 import json
 from pathlib import Path
 from .draft_policy import DRAFT_WARNING, sections_for_facts
+from .extract_policy import EXTRACT_FACT_FIELDS, EXTRACT_QUESTION_FIELDS
+from .extract_presentation import present
+from .draft_input_policy import contains_generation_instruction
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
 
@@ -12,6 +15,8 @@ class AgentError(ValueError):
 class AgentService:
     def __init__(self, runner, schema_dir=None):
         self.runner = runner
+        self.last_extract_raw_response = None
+        self.last_extract_presentation_report = None
         directory = Path(schema_dir) if schema_dir else Path(__file__).resolve().parents[1] / 'contracts' / 'schemas'
         schemas = [json.loads(p.read_text(encoding='utf-8')) for p in directory.glob('*.json')]
         self.registry = Registry().with_resources((s['$id'], Resource.from_contents(s)) for s in schemas)
@@ -52,6 +57,8 @@ class AgentService:
         return copy.deepcopy(result)
 
     def extract(self, request):
+        self.last_extract_raw_response = None
+        self.last_extract_presentation_report = None
         self.validate(request, 'AgentExtractRequest')
         self.unique(request['candidate_facts'], 'fact_id')
         docs = request['extracted_documents']
@@ -82,9 +89,21 @@ class AgentService:
             if fact['fact_id'] in previous:
                 if fact != previous[fact['fact_id']]:
                     raise AgentError('Existing fact changed; create a new candidate instead')
+            elif fact['field'] not in EXTRACT_FACT_FIELDS:
+                raise AgentError('New candidate field is outside the extraction scope')
             elif fact['user_confirmed'] or fact['verification_status'] != 'pending':
                 raise AgentError('New candidate cannot confirm or verify itself')
-        return result
+        for question in result['questions']:
+            if question['field'] not in EXTRACT_QUESTION_FIELDS:
+                raise AgentError('Question field is outside the extraction scope')
+        # Validate the entire raw model response before rendering reviewed prose.
+        # Preserve facts and raw output; never use presentation to bypass a rejection.
+        rendered, report = present(request, result)
+        self.validate(rendered, 'AgentExtractResponse')
+        self.unique(rendered['questions'], 'question_id')
+        self.last_extract_raw_response = copy.deepcopy(result)
+        self.last_extract_presentation_report = report
+        return rendered
 
     def validate_draft_request(self, request):
         """Validate local draft prerequisites before credentials or network access."""
@@ -96,6 +115,8 @@ class AgentService:
         eligible = {f['fact_id'] for f in request['candidate_facts'] if f['user_confirmed'] and f['verification_status'] not in ('conflicting', 'unsupported')}
         if not eligible or len(eligible) != len(request['candidate_facts']):
             raise AgentError('Provide only confirmed, non-conflicting facts')
+        if contains_generation_instruction(request['candidate_facts']):
+            raise AgentError('Draft fact contains generation instructions; review the source fact before drafting')
         values_by_field = {}
         for fact in request['candidate_facts']:
             value = fact['value']

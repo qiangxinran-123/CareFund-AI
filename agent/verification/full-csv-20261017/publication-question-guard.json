@@ -1,0 +1,21 @@
+{
+  "epoch": "question-format-guard-v1-user-reported",
+  "recorded_at": "2026-10-17T06:33:31.121972+00:00",
+  "user_statement": "所有步骤都弄好了，发布过了，接下来干什么",
+  "publication_verified_by_export": false,
+  "original_attempts": 85,
+  "starts_after_source_row": 85,
+  "question_format_version": "optional-question-required-v1",
+  "candidate_dsl_file": "agent/workflow.deepseek-extract.question-guard-candidate.yml",
+  "candidate_dsl_sha256": "09e3707fb4ccecd0277e5fd0b13c9404e0b390dacb6b6accb85d8e1a337345b2",
+  "code_file": "agent/dify_question_format.py",
+  "code_sha256": "f06a039b91d659b3ddcfac37b489105940a2533fb5d6b06dfdedbbd7d5aff972",
+  "append_file": "agent/prompts/extract-json-v4-append.md",
+  "append_sha256": "0ce980fc13187b99d1b5b910cd8a13bd214c04bf7a766058dce1cf8003fc82fb",
+  "original_budget_and_call_cap_preserved": true,
+  "cumulative_budget_cny": 20,
+  "cumulative_call_cap": 84712,
+  "retry_failed_rows": false,
+  "verification_plan": "One unattempted row first. Require raw_result and normalization_report, compare with exact local guard; then review before dispatching more.",
+  "note": "Publication based on user statement, no fresh DSL yet. Runtime verification is per response; it does not prove all editor settings."
+}

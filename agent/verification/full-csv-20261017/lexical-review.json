@@ -1,0 +1,9 @@
+{
+  "kind": "supplemental_lexical_review",
+  "counts": {
+    "saved_responses_checked": 1341
+  },
+  "findings": [],
+  "external_calls": 0,
+  "limits": "Keyword matches can flag aliases or different phrasing; inspect context before deciding correctness."
+}

@@ -1,0 +1,64 @@
+{
+"schema_version": "1.0",
+"application_id": "app_demo_004",
+"application_revision": 1,
+"candidate_facts": [
+{
+"fact_id": "fact_001",
+"field": "patient.relationship_to_applicant",
+"value": {
+"kind": "text",
+"value": "母亲"
+},
+"source_type": "user_input",
+"evidence_ids": [],
+"verification_status": "pending",
+"user_confirmed": false
+},
+{
+"fact_id": "fact_002",
+"field": "treatment.estimated_cost",
+"value": {
+"kind": "money",
+"value": {
+"currency": "CNY",
+"amount_minor": 3000000
+}
+},
+"source_type": "document",
+"evidence_ids": [
+"ev_demo_001"
+],
+"verification_status": "pending",
+"user_confirmed": false
+}
+],
+"questions": [
+{
+"question_id": "question_001",
+"field": "patient.medical_summary",
+"question": "您母亲的病情、诊断名称或目前治疗情况是什么？如果尚未确诊，也请说明医生目前的判断和检查进展。",
+"reason": "当前申请中缺少患者病情与诊断信息，补充后便于核对已有陈述。",
+"required": false
+},
+{
+"question_id": "question_002",
+"field": "treatment.paid_cost",
+"question": "目前已经支付的医疗费用大约是多少？如有票据或结算单，可一并提供。",
+"reason": "当前申请中缺少已支付医疗费信息，补充后便于核对已有陈述。",
+"required": false
+},
+{
+"question_id": "question_003",
+"field": "documents.diagnosis_proof",
+"question": "是否已有诊断证明或检查报告等材料可以补充？",
+"reason": "当前输入未附诊断或检查材料，补充后便于核对已有陈述。",
+"required": false
+}
+],
+"warnings": [
+"用户自述为母亲申请筹款，已提取患者与申请人关系为“母亲”，该信息来自用户自述，尚未经材料证实。",
+"费用预估单为虚构测试材料，其中“后续治疗预计费用：人民币30000元”已按3000000分提取，该金额为预估，实际费用以结算为准。",
+"本次输入未附诊断或检查材料，无法据此判断病情或诊断情况。"
+]
+}

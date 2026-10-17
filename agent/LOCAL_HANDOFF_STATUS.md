@@ -1,4 +1,8 @@
+> **2026-10-17 修复后交付入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [代码修复报告](verification/content-fix-20261017/README.md)。此前警告、追问和指令草稿问题已由 A 代码处理，108 项单元测试通过；原 87 份结果及全部 1,341 份可解析批量响应已离线回归，0 次新 API 调用。以下问题和计数保留各历史阶段状态，不代表本轮仍未修复。
+
 # A 模块本地接手记录
+
+后续 DeepSeek 切换、9 次真实运行及最新 DSL 同步见 [DEEPSEEK_SETUP.md](DEEPSEEK_SETUP.md)。以下保留原接手与 GPT/MDCC 验证记录。
 
 首次接手：2026-10-15；更新：2026-10-16，Asia/Shanghai。
 

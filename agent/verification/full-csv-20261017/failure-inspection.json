@@ -1,0 +1,9 @@
+{
+  "generation_calls": 0,
+  "status": "not_recovered",
+  "read_only_endpoints": [
+    "/workflows/logs",
+    "/workflows/run/89afbd57-b67e-45e9-b215-5a447bafa62d"
+  ],
+  "matched_current_run_logs": 45
+}
