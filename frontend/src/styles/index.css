@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  font-family: "Inter", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  color: #172b4d;
+  background: #f4f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
