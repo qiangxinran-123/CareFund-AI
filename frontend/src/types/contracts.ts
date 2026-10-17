@@ -67,17 +67,23 @@ export interface UpdateApplicationRequest {
   patient_info: PatientInfoPatch
 }
 
+export type DocumentMediaType = 'image/jpeg' | 'image/png' | 'application/pdf'
+
+export type DocumentProcessingStatus = 'uploaded' | 'processing' | 'processed' | 'failed'
+
+export interface UploadedDocument {
+  document_id: string
+  application_id: string
+  filename: string
+  media_type: DocumentMediaType
+  size_bytes: number
+  uploaded_at: string
+  processing_status: DocumentProcessingStatus
+}
+
 export interface ApplicationResponse {
   application: Application
-  documents: Array<{
-    document_id: string
-    application_id: string
-    filename: string
-    media_type: 'image/jpeg' | 'image/png' | 'application/pdf'
-    size_bytes: number
-    uploaded_at: string
-    processing_status: 'uploaded' | 'processing' | 'processed' | 'failed'
-  }>
+  documents: UploadedDocument[]
   evidence: Array<{
     evidence_id: string
     document_id: string

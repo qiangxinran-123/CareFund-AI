@@ -1,6 +1,6 @@
 # CareFund-AI 前端
 
-已完成第二阶段申请信息填写流程。技术栈：React、Vite、TypeScript（strict）、Tailwind CSS、原生 Fetch API、Vitest 和 React Testing Library。
+已完成第三阶段申请信息衔接、医疗材料上传与状态管理。技术栈：React、Vite、TypeScript（strict）、Tailwind CSS、原生 Fetch API、Vitest 和 React Testing Library。
 
 ## 环境与命令
 
@@ -26,6 +26,7 @@ npm run build
 - `src/api/`：统一 Fetch 请求、JSON 和错误处理。
 - `src/components/layout/`：可复用页面布局和流程展示。
 - `src/features/application/`：三步申请表单、集中校验和交互测试。
+- `src/features/documents/`：文件校验、上传状态、文件列表及后端处理状态展示。
 - `src/types/`：当前需要的契约类型。
 - `src/mocks/`：从 `contracts/examples/application.example.json` 复制的虚构样例，仅供测试与后续开发。
 - `src/styles/`：基础样式及 Tailwind 入口。
@@ -36,7 +37,9 @@ npm run build
 
 已完成基本信息、医疗情况、资金情况三步导航，及创建、更新和恢复申请的 API 调用。当前正式申请契约仅包含 `display_name`、`age_group`、`medical_summary`；资金字段、治疗时间和费用尚未定义，因此资金步骤只显示契约缺口，不收集或提交自创字段。
 
-材料上传、OCR、AI 分析、追问、草稿确认和导出均未实现。
+材料上传使用正式契约中的单文件 multipart 接口与幂等键；支持 JPEG、PNG、PDF，空文件在前端拒绝。契约未定义固定大小数值，因此前端不虚构平台上限，后端仍通过 413 和统一错误结构执行真实限制。Mock 仅在内存中保存文件元数据，不保存文件内容，页面完整刷新后允许丢失。
+
+OCR 结果展示、AI 分析、追问、草稿确认和导出均未实现。
 
 前端后续仅调用 FastAPI 的 `/api/v1` REST 接口。公共路径、请求与响应结构以仓库 `contracts/openapi.yaml` 和 `contracts/schemas/` 为准。业务 Mock 不参与生产页面逻辑，也不代表真实后端响应。
 

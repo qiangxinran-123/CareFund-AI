@@ -20,7 +20,9 @@ const storageKey = 'carefund.application_id'
 
 interface Props {
   api?: ApplicationApi
+  applicationSnapshot?: Application | null
   mockMode?: boolean
+  onApplicationChange?: (application: Application | null) => void
 }
 
 function describeError(error: unknown): string {
@@ -35,7 +37,12 @@ function describeError(error: unknown): string {
   return error instanceof Error ? error.message : '操作失败，请稍后重试。'
 }
 
-export function ApplicationForm({ api = defaultApi, mockMode = defaultMockMode }: Props) {
+export function ApplicationForm({
+  api = defaultApi,
+  applicationSnapshot,
+  mockMode = defaultMockMode,
+  onApplicationChange,
+}: Props) {
   const [currentStep, setCurrentStep] = useState(0)
   const [values, setValues] = useState<ApplicationFormValues>(initialFormValues)
   const [errors, setErrors] = useState<FormErrors>({})
@@ -43,6 +50,13 @@ export function ApplicationForm({ api = defaultApi, mockMode = defaultMockMode }
   const [isRestoring, setIsRestoring] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState<{ kind: 'success' | 'error'; text: string } | null>(null)
+
+  useEffect(() => {
+    if (!applicationSnapshot) return
+    setSavedApplication((current) => current?.application_id === applicationSnapshot.application_id
+      ? applicationSnapshot
+      : current)
+  }, [applicationSnapshot])
 
   useEffect(() => {
     const applicationId = window.localStorage.getItem(storageKey)
@@ -54,6 +68,7 @@ export function ApplicationForm({ api = defaultApi, mockMode = defaultMockMode }
       .then((response) => {
         if (!active) return
         setSavedApplication(response.application)
+        onApplicationChange?.(response.application)
         setValues(fromPatientInfo(response.application.patient_info))
         setMessage({ kind: 'success', text: `已恢复已保存的申请（版本 ${response.application.revision}）。` })
       })
@@ -61,6 +76,7 @@ export function ApplicationForm({ api = defaultApi, mockMode = defaultMockMode }
         if (!active) return
         if ((error instanceof ApiError && error.status === 404) || mockMode) {
           window.localStorage.removeItem(storageKey)
+          onApplicationChange?.(null)
         }
         setMessage({ kind: 'error', text: `无法恢复已保存的申请：${describeError(error)}` })
       })
@@ -117,6 +133,7 @@ export function ApplicationForm({ api = defaultApi, mockMode = defaultMockMode }
         : await api.create({ patient_info: patientInfo })
 
       setSavedApplication(response.application)
+      onApplicationChange?.(response.application)
       setValues(fromPatientInfo(response.application.patient_info))
       window.localStorage.setItem(storageKey, response.application.application_id)
       setMessage({
