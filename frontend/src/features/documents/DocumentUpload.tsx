@@ -57,9 +57,12 @@ export function DocumentUpload({
   const mountedRef = useRef(true)
   const uploadController = useRef<AbortController | null>(null)
 
-  useEffect(() => () => {
-    mountedRef.current = false
-    uploadController.current?.abort()
+  useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+      uploadController.current?.abort()
+    }
   }, [])
 
   function selectFile(file: File | undefined) {
@@ -94,12 +97,12 @@ export function DocumentUpload({
         signal: controller.signal,
       })
       if (controller.signal.aborted || !mountedRef.current) return
-      await onUploaded(document)
+      void Promise.resolve(onUploaded(document)).catch(() => undefined)
       if (!mountedRef.current) return
       setSelection(null)
       setValidationError(null)
       if (inputRef.current) inputRef.current.value = ''
-      setMessage({ kind: 'success', text: '文件上传成功，后续处理状态请以列表为准。' })
+      setMessage({ kind: 'success', text: '材料上传成功！您可以继续上传其他医疗材料。后续处理状态请以列表为准。' })
     } catch (error) {
       if (!controller.signal.aborted) {
         setMessage({ kind: 'error', text: describeUploadError(error) })
@@ -138,7 +141,7 @@ export function DocumentUpload({
       )}
 
       <button className="button-primary mt-4" disabled={disabled || uploading || !selection} onClick={() => void upload()} type="button">
-        {uploading ? '上传中…' : message?.kind === 'error' ? '使用同一幂等键重试' : '上传文件'}
+        {uploading ? '上传中…' : message?.kind === 'error' ? '使用同一幂等键重试' : message?.kind === 'success' ? '继续上传材料' : '上传文件'}
       </button>
     </div>
   )

@@ -94,7 +94,7 @@ it('shows and then clears a long-text validation error', () => {
 it('prevents duplicate submission while saving', async () => {
   let finish!: (value: ApplicationResponse) => void
   const create = vi.fn(() => new Promise<ApplicationResponse>((resolve) => { finish = resolve }))
-  render(<ApplicationForm api={api({ create })} />)
+  render(<ApplicationForm api={api({ create })} mockMode={false} />)
   fillRequiredAndReachFinalStep()
 
   fireEvent.click(screen.getByRole('button', { name: '保存申请' }))
@@ -104,7 +104,8 @@ it('prevents duplicate submission while saving', async () => {
   expect(create).toHaveBeenCalledTimes(1)
 
   await act(async () => { finish(response()) })
-  expect(await screen.findByText('申请已保存（版本 1）。')).toBeTruthy()
+  expect(await screen.findByText('申请信息已保存（版本 1）。')).toBeTruthy()
+  expect(screen.getByRole('status')).toHaveProperty('textContent', '申请信息已保存（版本 1）。')
   expect(window.localStorage.getItem('carefund.application_id')).toBe('app_test_001')
 })
 
@@ -124,14 +125,14 @@ it('restores saved server data and updates with the current revision', async () 
   window.localStorage.setItem('carefund.application_id', 'app_test_001')
   const get = vi.fn().mockResolvedValue(response(4, '服务端保存称呼'))
   const update = vi.fn().mockResolvedValue(response(5, '服务端保存称呼'))
-  render(<ApplicationForm api={api({ get, update })} />)
+  render(<ApplicationForm api={api({ get, update })} mockMode={false} />)
 
   expect(await screen.findByText('已恢复已保存的申请（版本 4）。')).toBeTruthy()
   expect((screen.getByLabelText(/患者称呼/) as HTMLInputElement).value).toBe('服务端保存称呼')
   fireEvent.click(screen.getByRole('button', { name: '下一步' }))
   fireEvent.click(screen.getByRole('button', { name: '下一步' }))
   fireEvent.click(screen.getByRole('button', { name: '保存修改' }))
-  await screen.findByText('申请已保存（版本 5）。')
+  await screen.findByText('申请信息已保存（版本 5）。')
   expect(update).toHaveBeenCalledWith('app_test_001', expect.objectContaining({ expected_revision: 4 }))
 })
 
@@ -139,15 +140,43 @@ it('uses a refreshed attachment revision without overwriting current form input'
   window.localStorage.setItem('carefund.application_id', 'app_test_001')
   const update = vi.fn().mockResolvedValue(response(6, '用户正在编辑的称呼'))
   const applicationApi = api({ get: vi.fn().mockResolvedValue(response(4, '初始称呼')), update })
-  const { rerender } = render(<ApplicationForm api={applicationApi} />)
+  const { rerender } = render(<ApplicationForm api={applicationApi} mockMode={false} />)
   await screen.findByText('已恢复已保存的申请（版本 4）。')
   fireEvent.change(screen.getByLabelText(/患者称呼/), { target: { value: '用户正在编辑的称呼' } })
 
-  rerender(<ApplicationForm api={applicationApi} applicationSnapshot={response(5).application} />)
+  rerender(<ApplicationForm api={applicationApi} applicationSnapshot={response(5).application} mockMode={false} />)
   expect((screen.getByLabelText(/患者称呼/) as HTMLInputElement).value).toBe('用户正在编辑的称呼')
   fireEvent.click(screen.getByRole('button', { name: '下一步' }))
   fireEvent.click(screen.getByRole('button', { name: '下一步' }))
   fireEvent.click(screen.getByRole('button', { name: '保存修改' }))
-  await screen.findByText('申请已保存（版本 6）。')
+  await screen.findByText('申请信息已保存（版本 6）。')
   expect(update).toHaveBeenCalledWith('app_test_001', expect.objectContaining({ expected_revision: 5 }))
+})
+
+it('clears the saved success feedback when the user edits again', async () => {
+  const create = vi.fn().mockResolvedValue(response())
+  render(<ApplicationForm api={api({ create })} mockMode={false} />)
+  fillRequiredAndReachFinalStep()
+  fireEvent.click(screen.getByRole('button', { name: '保存申请' }))
+  await screen.findByText('申请信息已保存（版本 1）。')
+
+  fireEvent.click(screen.getByRole('button', { name: '上一步' }))
+  fireEvent.click(screen.getByRole('button', { name: '上一步' }))
+  fireEvent.change(screen.getByLabelText(/患者称呼/), { target: { value: '再次修改的称呼' } })
+  expect(screen.queryByText('申请信息已保存（版本 1）。')).toBeNull()
+})
+
+it('does not mark new edits as saved when an older save resolves', async () => {
+  let finish!: (value: ApplicationResponse) => void
+  const create = vi.fn(() => new Promise<ApplicationResponse>((resolve) => { finish = resolve }))
+  render(<ApplicationForm api={api({ create })} />)
+  fillRequiredAndReachFinalStep()
+  fireEvent.click(screen.getByRole('button', { name: '保存申请' }))
+
+  fireEvent.click(screen.getByRole('button', { name: '上一步' }))
+  fireEvent.click(screen.getByRole('button', { name: '上一步' }))
+  fireEvent.change(screen.getByLabelText(/患者称呼/), { target: { value: '请求期间的新修改' } })
+  await act(async () => { finish(response()) })
+  expect(await screen.findByText('保存请求已完成，但当前仍有未保存的修改。')).toBeTruthy()
+  expect(screen.queryByText('申请信息已保存（版本 1）。')).toBeNull()
 })

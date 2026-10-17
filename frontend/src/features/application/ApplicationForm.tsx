@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { applicationApi as defaultApi, isMockMode as defaultMockMode } from '../../api'
 import { ApiError } from '../../api/client'
 import type { ApplicationApi } from '../../api/application'
@@ -50,6 +50,7 @@ export function ApplicationForm({
   const [isRestoring, setIsRestoring] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState<{ kind: 'success' | 'error'; text: string } | null>(null)
+  const editGeneration = useRef(0)
 
   useEffect(() => {
     if (!applicationSnapshot) return
@@ -88,6 +89,7 @@ export function ApplicationForm({
   }, [api, mockMode])
 
   function updateField(field: keyof ApplicationFormValues, value: string) {
+    editGeneration.current += 1
     setValues((previous) => ({ ...previous, [field]: value }))
     setErrors((previous) => {
       if (!previous[field]) return previous
@@ -123,6 +125,7 @@ export function ApplicationForm({
 
     setIsSaving(true)
     setMessage(null)
+    const saveGeneration = editGeneration.current
     try {
       const patientInfo = toPatientInfo(values)
       const response = savedApplication
@@ -134,14 +137,18 @@ export function ApplicationForm({
 
       setSavedApplication(response.application)
       onApplicationChange?.(response.application)
-      setValues(fromPatientInfo(response.application.patient_info))
       window.localStorage.setItem(storageKey, response.application.application_id)
-      setMessage({
-        kind: 'success',
-        text: mockMode
-          ? `已保存到本地 Mock 服务（版本 ${response.application.revision}），不代表真实后端已持久化。`
-          : `申请已保存（版本 ${response.application.revision}）。`,
-      })
+      if (editGeneration.current === saveGeneration) {
+        setValues(fromPatientInfo(response.application.patient_info))
+        setMessage({
+          kind: 'success',
+          text: mockMode
+            ? `申请信息已保存到本地 Mock 服务（版本 ${response.application.revision}），不代表真实后端已持久化。`
+            : `申请信息已保存（版本 ${response.application.revision}）。`,
+        })
+      } else {
+        setMessage({ kind: 'success', text: '保存请求已完成，但当前仍有未保存的修改。' })
+      }
     } catch (error) {
       setMessage({ kind: 'error', text: describeError(error) })
     } finally {
@@ -166,7 +173,7 @@ export function ApplicationForm({
         else void saveApplication()
       }}>
         <StepIndicator currentStep={currentStep} />
-        <fieldset disabled={isRestoring || isSaving}>
+        <fieldset disabled={isRestoring}>
           <legend className="sr-only">申请信息</legend>
           {currentStep === 0 && <BasicInfoStep errors={errors} onChange={updateField} values={values} />}
           {currentStep === 1 && <MedicalInfoStep errors={errors} onChange={updateField} values={values} />}
@@ -179,7 +186,7 @@ export function ApplicationForm({
         </div>
 
         <div className="mt-5 flex flex-col-reverse gap-3 border-t border-slate-100 pt-6 sm:flex-row sm:justify-between">
-          <button className="button-secondary" disabled={currentStep === 0 || isSaving || isRestoring} onClick={goBack} type="button">上一步</button>
+          <button className="button-secondary" disabled={currentStep === 0 || isRestoring} onClick={goBack} type="button">上一步</button>
           {currentStep < 2
             ? <button className="button-primary" disabled={isRestoring} onClick={goNext} type="button">下一步</button>
             : <button className="button-primary" disabled={isSaving || isRestoring} type="submit">{isSaving ? '保存中…' : savedApplication ? '保存修改' : '保存申请'}</button>}

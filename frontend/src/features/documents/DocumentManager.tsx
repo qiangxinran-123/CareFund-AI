@@ -9,6 +9,7 @@ interface Props {
   api?: DocumentApi
   application: Application | null
   mockMode?: boolean
+  onDocumentsChange?: (documents: UploadedDocument[]) => void
   onRefreshApplication?: () => Promise<void>
 }
 
@@ -21,6 +22,7 @@ export function DocumentManager({
   api = defaultApi,
   application,
   mockMode = defaultMockMode,
+  onDocumentsChange,
   onRefreshApplication,
 }: Props) {
   const [documents, setDocuments] = useState<UploadedDocument[]>([])
@@ -42,7 +44,10 @@ export function DocumentManager({
     setListError(null)
     try {
       const result = await api.list(applicationId, controller.signal)
-      if (request === requestRef.current) setDocuments(result)
+      if (request === requestRef.current) {
+        setDocuments(result)
+        onDocumentsChange?.(result)
+      }
     } catch (error) {
       if (request === requestRef.current && !controller.signal.aborted) {
         setListError(describeListError(error))
@@ -50,11 +55,12 @@ export function DocumentManager({
     } finally {
       if (request === requestRef.current) setLoading(false)
     }
-  }, [api, applicationId])
+  }, [api, applicationId, onDocumentsChange])
 
   useEffect(() => {
     if (!applicationId) {
       setDocuments([])
+      onDocumentsChange?.([])
       setListError(null)
       setLoading(false)
       return
@@ -62,12 +68,15 @@ export function DocumentManager({
     setDocuments([])
     void loadDocuments()
     return () => controllerRef.current?.abort()
-  }, [applicationId, loadDocuments])
+  }, [applicationId, loadDocuments, onDocumentsChange])
 
   async function handleUploaded(document: UploadedDocument) {
     setDocuments((current) => current.some((item) => item.document_id === document.document_id)
       ? current
       : [document, ...current])
+    onDocumentsChange?.(documents.some((item) => item.document_id === document.document_id)
+      ? documents
+      : [document, ...documents])
     if (!onRefreshApplication) return
     setRevisionReady(false)
     setRevisionError(null)

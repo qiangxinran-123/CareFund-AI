@@ -85,6 +85,21 @@ export function appendMockDocument(
   }
 }
 
+export function advanceMockApplicationRevision(applicationId: string, expectedRevision: number): number {
+  if (!current || current.application.application_id !== applicationId) {
+    throw mockError(404, 'RESOURCE_NOT_FOUND', 'Mock 模式中没有对应申请。')
+  }
+  if (current.application.revision !== expectedRevision) {
+    throw mockError(409, 'STATE_CONFLICT', '申请版本已变化，请先刷新申请后再提交。')
+  }
+  const revision = expectedRevision + 1
+  current = {
+    ...current,
+    application: { ...current.application, revision, updated_at: now() },
+  }
+  return revision
+}
+
 export function resetMockApplication(): void {
   current = null
 }

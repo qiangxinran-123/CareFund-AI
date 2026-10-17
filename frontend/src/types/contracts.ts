@@ -81,16 +81,112 @@ export interface UploadedDocument {
   processing_status: DocumentProcessingStatus
 }
 
+export interface Evidence {
+  evidence_id: string
+  document_id: string
+  source_type: 'document'
+  page: number | null
+  text_excerpt: string
+  extraction_method: 'ocr' | 'manual' | 'structured_import'
+}
+
+export type FactSourceType = 'user_input' | 'document' | 'user_correction'
+export type FactVerificationStatus = 'pending' | 'supported' | 'unsupported' | 'conflicting'
+
+export type FactValue =
+  | { kind: 'text'; value: string }
+  | { kind: 'date'; value: string }
+  | { kind: 'boolean'; value: boolean }
+  | { kind: 'integer'; value: number }
+  | { kind: 'money'; value: { currency: string; amount_minor: number } }
+
+export interface Fact {
+  fact_id: string
+  field: string
+  value: FactValue
+  source_type: FactSourceType
+  evidence_ids: string[]
+  verification_status: FactVerificationStatus
+  user_confirmed: boolean
+}
+
+export interface AgentQuestion {
+  question_id: string
+  field: string
+  question: string
+  reason: string
+  required: boolean
+}
+
+export type ValidationIssueType =
+  | 'missing'
+  | 'conflict'
+  | 'unsupported'
+  | 'invalid_format'
+  | 'inconsistent_amount'
+  | 'inconsistent_date'
+
+export type ValidationSeverity = 'info' | 'warning' | 'blocking'
+
+export interface ValidationIssue {
+  issue_id: string
+  type: ValidationIssueType
+  severity: ValidationSeverity
+  field: string
+  message: string
+  related_fact_ids: string[]
+}
+
+export interface ValidationResult {
+  schema_version: '1.0'
+  validation_id: string
+  application_id: string
+  application_revision: number
+  issues: ValidationIssue[]
+  can_finalize: boolean
+  evaluated_at: string
+}
+
+export type AnalysisJobStatus = 'queued' | 'running' | 'succeeded' | 'failed'
+
+export interface AnalysisJob {
+  job_id: string
+  application_id: string
+  application_revision: number
+  status: AnalysisJobStatus
+  created_at: string
+  updated_at: string
+  error?: ErrorResponse['error'] | null
+}
+
+export interface AnalyzeRequest {
+  expected_revision: number
+  idempotency_key: string
+}
+
+export interface AnalysisResult {
+  schema_version: '1.0'
+  application_id: string
+  application_revision: number
+  facts: Fact[]
+  evidence: Evidence[]
+  questions: AgentQuestion[]
+  validation: ValidationResult
+}
+
+export interface Answer {
+  question_id: string
+  answer: string
+}
+
+export interface AnswerSubmissionRequest {
+  expected_revision: number
+  answers: Answer[]
+}
+
 export interface ApplicationResponse {
   application: Application
   documents: UploadedDocument[]
-  evidence: Array<{
-    evidence_id: string
-    document_id: string
-    source_type: 'document'
-    page: number | null
-    text_excerpt: string
-    extraction_method: 'ocr' | 'manual' | 'structured_import'
-  }>
+  evidence: Evidence[]
 }
 

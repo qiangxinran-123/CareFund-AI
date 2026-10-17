@@ -1,4 +1,5 @@
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { StrictMode } from 'react'
 import { afterEach, expect, it, vi } from 'vitest'
 import type { DocumentApi } from '../../api/documents'
 import type { Application, UploadedDocument } from '../../types/contracts'
@@ -91,13 +92,64 @@ it('shows returned metadata after upload and refreshes the application revision'
     target: { files: [new File(['record'], 'record.pdf', { type: 'application/pdf' })] },
   })
   fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
-  expect(await screen.findByText('文件上传成功，后续处理状态请以列表为准。')).toBeTruthy()
+  expect(await screen.findByText('材料上传成功！您可以继续上传其他医疗材料。后续处理状态请以列表为准。')).toBeTruthy()
   expect(screen.getByText('record.pdf')).toBeTruthy()
   expect(screen.getByText('已上传，等待处理')).toBeTruthy()
   expect(refresh).toHaveBeenCalledTimes(1)
   expect(documentApi.upload).toHaveBeenCalledWith(expect.objectContaining({
     applicationId: 'app_test_001', expectedRevision: 3,
   }))
+})
+
+it('exits uploading in Strict Mode and supports consecutive uploads', async () => {
+  const first = uploaded({ document_id: 'doc_first', filename: 'first.pdf' })
+  const second = uploaded({ document_id: 'doc_second', filename: 'second.jpg', media_type: 'image/jpeg' })
+  const upload = vi.fn().mockResolvedValueOnce(first).mockResolvedValueOnce(second)
+  const documentApi = api({ upload })
+  render(<StrictMode><DocumentManager api={documentApi} application={application} /></StrictMode>)
+  await waitForEmptyList()
+  const input = screen.getByLabelText('选择医疗材料') as HTMLInputElement
+
+  fireEvent.change(input, { target: { files: [new File(['one'], 'first.pdf', { type: 'application/pdf' })] } })
+  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  expect(await screen.findByText('first.pdf')).toBeTruthy()
+  expect(screen.getByRole('button', { name: '继续上传材料' })).toBeTruthy()
+  expect(input.disabled).toBe(false)
+  expect(input.value).toBe('')
+
+  fireEvent.change(input, { target: { files: [new File(['two'], 'second.jpg', { type: 'image/jpeg' })] } })
+  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  await waitFor(() => expect(upload).toHaveBeenCalledTimes(2))
+  expect(screen.getByText('first.pdf')).toBeTruthy()
+  expect(screen.getByText('second.jpg')).toBeTruthy()
+  expect(screen.getByRole('button', { name: '继续上传材料' })).toBeTruthy()
+})
+
+it('creates a new idempotency key when the same file is selected again', async () => {
+  const upload = vi.fn()
+    .mockResolvedValueOnce(uploaded({ document_id: 'doc_first' }))
+    .mockResolvedValueOnce(uploaded({ document_id: 'doc_second' }))
+  const documentApi = api({ upload })
+  render(<DocumentManager api={documentApi} application={application} />)
+  await waitForEmptyList()
+  const input = screen.getByLabelText('选择医疗材料')
+  const file = new File(['same'], 'same.pdf', { type: 'application/pdf' })
+  fireEvent.change(input, { target: { files: [file] } })
+  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  await screen.findByText('材料上传成功！您可以继续上传其他医疗材料。后续处理状态请以列表为准。')
+  fireEvent.change(input, { target: { files: [file] } })
+  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  await waitFor(() => expect(upload).toHaveBeenCalledTimes(2))
+  const firstKey = (upload.mock.calls[0][0] as { idempotencyKey: string }).idempotencyKey
+  const secondKey = (upload.mock.calls[1][0] as { idempotencyKey: string }).idempotencyKey
+  expect(secondKey).not.toBe(firstKey)
+})
+
+it('does not use processing status as the upload loading state', async () => {
+  const documentApi = api({ list: vi.fn().mockResolvedValue([uploaded({ processing_status: 'processing' })]) })
+  render(<DocumentManager api={documentApi} application={application} />)
+  expect(await screen.findByText('处理中')).toBeTruthy()
+  expect(screen.getByRole('button', { name: '上传文件' })).toBeTruthy()
 })
 
 it('shows an upload failure and offers an idempotent manual retry', async () => {
@@ -109,6 +161,22 @@ it('shows an upload failure and offers an idempotent manual retry', async () => 
   fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
   expect(await screen.findByRole('alert')).toHaveProperty('textContent', '服务暂不可用')
   expect(screen.getByRole('button', { name: '使用同一幂等键重试' })).toBeTruthy()
+})
+
+it('allows selecting a new file after a failed upload and retrying', async () => {
+  const upload = vi.fn()
+    .mockRejectedValueOnce(new Error('服务暂不可用'))
+    .mockResolvedValueOnce(uploaded({ filename: 'retry.png', media_type: 'image/png' }))
+  render(<DocumentManager api={api({ upload })} application={application} />)
+  await waitForEmptyList()
+  const input = screen.getByLabelText('选择医疗材料')
+  fireEvent.change(input, { target: { files: [new File(['bad'], 'first.pdf', { type: 'application/pdf' })] } })
+  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  await screen.findByRole('alert')
+  fireEvent.change(input, { target: { files: [new File(['retry'], 'retry.png', { type: 'image/png' })] } })
+  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  await waitFor(() => expect(upload).toHaveBeenCalledTimes(2))
+  expect(screen.getByText('retry.png')).toBeTruthy()
 })
 
 it('shows a list loading failure and allows refresh', async () => {
