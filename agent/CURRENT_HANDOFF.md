@@ -57,4 +57,4 @@ draft = service.draft(draft_request)
 
 上述已发现的 A 内容问题已完成本轮修复。B/D 负责数据库事务、有效事实快照、确认流程、严重性映射、OCR 和最终导出；这属于完整集成验收，不是本次遗留的 A 修复待办。A 保持保守门槛：有未解决 issue ID 仍阻止草稿，不擅自删除 D 的 info 问题以放行。候选事实仍需用户核对及 D 验证，代码通过不等于材料真实或可以批准导出。
 
-交付包可供队友接入和复验；本次未提交、推送或合并 GitHub。
+代码与脱敏结果已上传小组 GitHub 的 `feature/agent` 分支，功能提交为 `755a0c2`，现有 [PR #1](https://github.com/qiangxinran-123/CareFund-AI/pull/1) 已包含本次更新，供非作者成员审查。尚未合并 main。ZIP 内的“未上传”说明是打包时快照；GitHub 发布状态以本段为准，本次发布没有新增模型调用。

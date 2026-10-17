@@ -2,6 +2,8 @@
 
 # A 模块 GitHub 交付说明
 
+2026-10-17 发布：当前 DeepSeek 工作流、A 内容修复代码、脱敏测试结果及复验工具已推送到 `feature/agent`，功能提交为 `755a0c2`，现有 [PR #1](https://github.com/qiangxinran-123/CareFund-AI/pull/1) 已包含更新。A 108 项、契约 10 项、批量控制工具 20 项离线测试通过；87 个重点案例及全部 1,341 份可解析批量保存响应已回归，历史非法响应仍拒绝，详见本页顶部的当前交接入口。仅更新 agent/，未上传真实医疗原文、完整 CSV、密钥或 .local/，未合并 main。本次 GitHub 发布没有新增 API 调用；下面是此前交付的历史记录。
+
 2026-10-16 更新：以下为原 GitHub 交付及 A/D 首轮适配记录。最新本地 DeepSeek 配置、9 次真实运行及两份 DSL 同步见 [DEEPSEEK_SETUP.md](DEEPSEEK_SETUP.md)，这些更新尚未提交或推送，不能据此认为远程 PR 已包含它们。
 
 本次将已验收的本地 v2 交付内容迁入团队 `feature/agent` 分支，基于2026-10-16拉取的 `main`（`fe89bd1b857b5142365ffefc2286a8fe5f7024f7`）。仅新增/修改 `agent/`，不修改共享契约及其他成员模块；合并需非作者成员审查。
