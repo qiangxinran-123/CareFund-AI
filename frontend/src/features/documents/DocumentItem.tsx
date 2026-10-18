@@ -22,17 +22,17 @@ function formatUploadTime(value: string): string {
 
 export function DocumentItem({ document }: { document: UploadedDocument }) {
   return (
-    <li className="rounded-xl border border-slate-200 p-4">
+    <li className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="min-w-0">
-          <p className="break-all text-sm font-medium text-slate-900">{document.filename}</p>
+        <div className="min-w-0 flex-1">
+          <p className="break-words text-sm font-medium leading-6 text-slate-900">{document.filename}</p>
           <dl className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
             <div><dt className="sr-only">文件类型</dt><dd>{document.media_type}</dd></div>
             <div><dt className="sr-only">文件大小</dt><dd>{formatFileSize(document.size_bytes)}</dd></div>
             <div><dt className="sr-only">上传时间</dt><dd>{formatUploadTime(document.uploaded_at)}</dd></div>
           </dl>
         </div>
-        <span className={`w-fit shrink-0 rounded-full px-3 py-1 text-xs font-medium ${statusClasses[document.processing_status]}`}>
+        <span className={`w-fit shrink-0 rounded-full px-3 py-1 text-xs font-medium leading-5 ${statusClasses[document.processing_status]}`}>
           {statusLabels[document.processing_status]}
         </span>
       </div>

@@ -6,19 +6,24 @@ import App from '../../App'
 const mounts = vi.hoisted(() => ({ analysis: 0, documents: 0, draft: 0 }))
 
 vi.mock('../application/ApplicationForm', () => ({
-  ApplicationForm: ({ onApplicationChange }: { onApplicationChange?: (application: unknown) => void }) => (
+  ApplicationForm: ({ onApplicationChange, onStateChange }: { onApplicationChange?: (application: unknown) => void; onStateChange?: (state: unknown) => void }) => (
     <section>
-      <h2 tabIndex={-1}>填写申请信息</h2>
+      <h2 tabIndex={-1}>填写求助信息</h2>
       <label>测试申请内容<input aria-label="测试申请内容" /></label>
-      <button onClick={() => onApplicationChange?.({
-        application_id: 'app_test_001',
-        schema_version: '1.0',
-        revision: 1,
-        status: 'collecting',
-        patient_info: { display_name: '测试', age_group: null, medical_summary: '测试病情' },
-        created_at: '2026-10-17T01:00:00Z',
-        updated_at: '2026-10-17T01:00:00Z',
-      })} type="button">模拟保存申请</button>
+      <button onClick={() => {
+        onApplicationChange?.({
+          application_id: 'app_test_001',
+          schema_version: '1.0',
+          revision: 1,
+          status: 'collecting',
+          patient_info: { display_name: '测试', age_group: null, medical_summary: '测试病情' },
+          created_at: '2026-10-17T01:00:00Z',
+          updated_at: '2026-10-17T01:00:00Z',
+        })
+        onStateChange?.({ busy: false, dirty: false, savedRevision: 1 })
+      }} type="button">模拟保存申请</button>
+      <button onClick={() => onStateChange?.({ busy: false, dirty: true, savedRevision: 1 })} type="button">模拟修改申请</button>
+      <button onClick={() => onStateChange?.({ busy: true, dirty: false, savedRevision: 1 })} type="button">模拟保存中</button>
     </section>
   ),
 }))
@@ -27,21 +32,21 @@ vi.mock('../documents/DocumentManager', () => ({
   DocumentManager: () => {
     useEffect(() => { mounts.documents += 1 }, [])
     const [value, setValue] = useState('')
-    return <section><h2 tabIndex={-1}>上传医疗材料</h2><input aria-label="待上传材料说明" onChange={(event) => setValue(event.target.value)} value={value} /></section>
+    return <section><h2 tabIndex={-1}>上传证明材料</h2><input aria-label="待上传材料说明" onChange={(event) => setValue(event.target.value)} value={value} /></section>
   },
 }))
 
 vi.mock('../analysis/AnalysisPanel', () => ({
-  AnalysisPanel: () => {
+  AnalysisPanel: ({ onStateChange }: { onStateChange?: (state: unknown) => void }) => {
     useEffect(() => { mounts.analysis += 1 }, [])
-    return <section><h2 tabIndex={-1}>核对申请信息</h2></section>
+    return <section><h2 tabIndex={-1}>核对并补充信息</h2><button onClick={() => onStateChange?.({ answersSubmitting: false, hasUnsavedAnswers: true, phase: 'succeeded' })} type="button">模拟填写追问</button></section>
   },
 }))
 
 vi.mock('../draft/DraftPanel', () => ({
   DraftPanel: () => {
     useEffect(() => { mounts.draft += 1 }, [])
-    return <section><h2 tabIndex={-1}>预览并确认申请草稿</h2></section>
+    return <section><h2 tabIndex={-1}>确认并导出申请</h2></section>
   },
 }))
 
@@ -109,6 +114,59 @@ describe('four-step application workflow', () => {
     expect((screen.getByRole('button', { name: /步骤 3.*核对并补充信息/ }) as HTMLButtonElement).disabled).toBe(true)
   })
 
+  it('does not mark a step complete merely because the user navigated forward', () => {
+    render(<App />)
+    saveApplication()
+    next()
+    expect(screen.getByRole('button', { name: /步骤 1.*填写求助信息.*已完成.*已保存/ })).toBeTruthy()
+    expect(screen.getByRole('button', { name: /步骤 2.*上传证明材料.*当前步骤.*尚未处理/ })).toBeTruthy()
+  })
+
+  it('blocks navigation after saved application data is edited again', () => {
+    render(<App />)
+    saveApplication()
+    next()
+    fireEvent.click(screen.getByRole('button', { name: /上一步：填写求助信息/ }))
+    fireEvent.click(screen.getByRole('button', { name: '模拟修改申请' }))
+    expect(screen.getByRole('button', { name: /步骤 1.*填写求助信息.*当前步骤.*有未保存修改/ })).toBeTruthy()
+    expect((screen.getByRole('button', { name: /下一步：上传证明材料/ }) as HTMLButtonElement).disabled).toBe(true)
+    expect(workflowPanel('application').hidden).toBe(false)
+  })
+
+  it('blocks unsafe navigation while application saving is in progress', () => {
+    render(<App />)
+    saveApplication()
+    fireEvent.click(screen.getByRole('button', { name: '模拟保存中' }))
+    expect(screen.getByRole('alert')).toHaveProperty('textContent', '申请信息正在保存或恢复，请等待操作完成后再离开。')
+    expect((screen.getByRole('button', { name: /下一步：上传证明材料/ }) as HTMLButtonElement).disabled).toBe(true)
+  })
+
+  it('protects an unsubmitted follow-up answer from step navigation', () => {
+    render(<App />)
+    saveApplication()
+    next()
+    next()
+    fireEvent.click(screen.getByRole('button', { name: '模拟填写追问' }))
+    expect(screen.getByRole('alert')).toHaveProperty('textContent', '补充问题存在尚未提交的回答，请先提交后再离开此步骤。')
+    fireEvent.click(screen.getByRole('button', { name: /步骤 2.*上传证明材料/ }))
+    expect(workflowPanel('analysis').hidden).toBe(false)
+    expect((screen.getByRole('button', { name: /上一步：上传证明材料/ }) as HTMLButtonElement).disabled).toBe(true)
+    fireEvent.click(screen.getByRole('button', { name: /上一步：上传证明材料/ }))
+    expect(workflowPanel('analysis').hidden).toBe(false)
+  })
+
+  it('registers beforeunload protection only while important input is unsaved', () => {
+    const { unmount } = render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: '模拟修改申请' }))
+    const protectedEvent = new Event('beforeunload', { cancelable: true })
+    window.dispatchEvent(protectedEvent)
+    expect(protectedEvent.defaultPrevented).toBe(true)
+    unmount()
+    const cleanEvent = new Event('beforeunload', { cancelable: true })
+    window.dispatchEvent(cleanEvent)
+    expect(cleanEvent.defaultPrevented).toBe(false)
+  })
+
   it('allows safe return to any visited step from the progress navigation', () => {
     render(<App />)
     saveApplication()
@@ -144,7 +202,7 @@ describe('four-step application workflow', () => {
     render(<App />)
     saveApplication()
     next()
-    expect(document.activeElement).toBe(screen.getByRole('heading', { name: '上传医疗材料' }))
+    expect(document.activeElement).toBe(screen.getByRole('heading', { name: '上传证明材料' }))
     expect(workflowPanel('documents').scrollIntoView).toHaveBeenCalledWith({ block: 'start' })
   })
 })

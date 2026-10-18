@@ -11,7 +11,7 @@ export function BasicInfoStep({ values, errors, onChange }: Props) {
   return (
     <section aria-labelledby="basic-info-title">
       <h3 className="text-lg font-semibold text-slate-900" id="basic-info-title">基本信息</h3>
-      <p className="mt-2 text-sm leading-6 text-slate-600">仅填写申请所需的基础信息，无需提供身份证号或详细住址。</p>
+      <p className="mt-2 text-sm leading-6 text-slate-600">填写患者的基本情况，后续仍可修改。无需填写身份证号或详细住址。</p>
       <div className="mt-6 grid gap-6 sm:grid-cols-2">
         <div>
           <label className="block text-sm font-medium text-slate-800" htmlFor="display-name">患者称呼 <span className="text-red-600">*</span></label>

@@ -2,8 +2,8 @@ const steps = ['基本信息', '医疗情况', '资金情况'] as const
 
 export function StepIndicator({ currentStep }: { currentStep: number }) {
   return (
-    <div className="mb-8">
-      <div className="mb-3 flex items-center justify-between gap-4">
+    <div className="mb-8 rounded-xl border border-slate-100 bg-slate-50/70 p-4 sm:p-5">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
         <p className="text-sm font-medium text-slate-700">填写进度</p>
         <p className="text-sm text-slate-500">第 {currentStep + 1} 步，共 {steps.length} 步</p>
       </div>
@@ -21,7 +21,7 @@ export function StepIndicator({ currentStep }: { currentStep: number }) {
         {steps.map((step, index) => (
           <li
             aria-current={index === currentStep ? 'step' : undefined}
-            className={`rounded-lg border px-2 py-3 text-center text-xs font-medium sm:text-sm ${
+            className={`min-w-0 rounded-lg border px-1.5 py-2.5 text-center text-xs font-medium leading-5 sm:px-2 sm:py-3 sm:text-sm ${
               index === currentStep ? 'border-blue-200 bg-blue-50 text-blue-800' : 'border-slate-200 bg-white text-slate-500'
             }`}
             key={step}
