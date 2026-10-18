@@ -1,0 +1,52 @@
+"""Business completeness rules must be explicitly chosen by the team."""
+
+from dataclasses import dataclass, field
+import re
+from types import MappingProxyType
+from typing import Mapping
+
+
+@dataclass(frozen=True)
+class ValidationPolicy:
+    required_fields: tuple[str, ...]
+    document_required_fields: tuple[str, ...] = ()
+    require_processed_document: bool = True
+    require_user_confirmation: bool = True
+    field_kinds: Mapping[str, str] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        for name in ("required_fields", "document_required_fields"):
+            fields = getattr(self, name)
+            if not isinstance(fields, (tuple, list)) or any(
+                not isinstance(field, str) or not re.fullmatch(r"[a-z][a-z0-9_.]{1,127}", field)
+                for field in fields
+            ):
+                raise ValueError(f"{name} must contain contract-compatible fact field names.")
+            if len(set(fields)) != len(fields):
+                raise ValueError(f"{name} contains duplicate field names.")
+            object.__setattr__(self, name, tuple(fields))
+        if not self.required_fields:
+            raise ValueError("An explicit, non-empty required_fields policy is required.")
+        if not set(self.document_required_fields) <= set(self.required_fields):
+            raise ValueError("document_required_fields must be a subset of required_fields.")
+        for name in ("require_processed_document", "require_user_confirmation"):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(f"{name} must be a boolean.")
+        if not isinstance(self.field_kinds, Mapping) or any(
+            not isinstance(name, str) or not re.fullmatch(r"[a-z][a-z0-9_.]{1,127}", name)
+            or kind not in ("text", "date", "money", "integer", "boolean")
+            for name, kind in self.field_kinds.items()
+        ):
+            raise ValueError("field_kinds must map fact fields to supported FactValue kinds.")
+        object.__setattr__(self, "field_kinds", MappingProxyType(dict(self.field_kinds)))
+
+    @classmethod
+    def from_dict(cls, value: dict) -> "ValidationPolicy":
+        allowed = {
+            "required_fields", "document_required_fields",
+            "require_processed_document", "require_user_confirmation",
+            "field_kinds",
+        }
+        if not isinstance(value, dict) or set(value) - allowed or "required_fields" not in value:
+            raise ValueError("Invalid validation policy keys; required_fields is mandatory.")
+        return cls(**value)
