@@ -1,0 +1,24 @@
+{
+  "source_sha256": "fbcd57439ad7c1b02ae34078990c4042a7e3193977e49bb0a9b5e93bac5b2cc2",
+  "rows": 84712,
+  "categories": {
+    "sanitized_free_text": 52160,
+    "strict_minimal": 32477,
+    "held_for_local_review": 61,
+    "empty": 14
+  },
+  "review_flags": {
+    "redacted_cell_requires_local_review": 39,
+    "possible_residual_identifier_requires_local_review": 39
+  },
+  "distinct_sanitized_texts_including_empty": 34150,
+  "private_input_file": "agent/.local/full-csv-20261017/prepared-inputs.jsonl",
+  "private_input_file_sha256": "89ab0e421fa79d2845abbdf61fa3b71007c2b7a515ffc84a8e4180e86ec2d3f6",
+  "external_model_calls": 0,
+  "external_send_status": "Not started. Awaiting mode/budget decision; held cases require local review.",
+  "limits": [
+    "Deterministic cleanup is not proof that every identifier has been removed.",
+    "Free text has no complete semantic ground truth; partial checks cannot establish accuracy.",
+    "Held rows remain in the complete index and are not counted as model-tested."
+  ]
+}

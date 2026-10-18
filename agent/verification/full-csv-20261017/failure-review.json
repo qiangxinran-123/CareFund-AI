@@ -1,0 +1,11 @@
+{
+  "source_row": 44,
+  "disposition": "confirmed_invalid_model_json_kept_failed_continue_new_rows",
+  "not_fixed": true,
+  "raw_evidence_sha256": "cf681250aaa1d75d78607c7e4d50e16d33e9890bc69ee16fc8924626c71b7c57",
+  "failed_case_retried": false,
+  "new_generation_calls_by_review": 0,
+  "continuation_budget_cny": 20,
+  "continuation_call_cap": 84712,
+  "previous_calls_count_toward_same_cap": 45
+}

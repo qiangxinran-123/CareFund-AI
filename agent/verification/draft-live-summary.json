@@ -1,0 +1,42 @@
+{
+  "started_at": "2026-10-15T16:01:43.168463+00:00",
+  "python": "3.13.15",
+  "transport": "real_dify_draft_api",
+  "status": "three_synthetic_draft_calls_passed",
+  "cases": [
+    {
+      "case": "draft-request",
+      "application_id": "app_synthetic_draft_001",
+      "application_revision": 3,
+      "request_sha256": "a53dedf0a65d5943cb584f1b1b6d473344bc8499052a9a405a68bcd7c6658e38",
+      "status": "schema_references_and_literal_content_passed",
+      "response_file": "agent/verification/draft/draft-request.response.json",
+      "elapsed_seconds": 4.41,
+      "request_file": "agent/verification/draft/draft-request.request.json"
+    },
+    {
+      "case": "draft-uncertain-request",
+      "application_id": "app_synthetic_draft_002",
+      "application_revision": 1,
+      "request_sha256": "a786d0aa6b547bfc5300fa6687fa4c7fa27be6e09e3973f8ee62bcccca46d846",
+      "status": "schema_references_and_literal_content_passed",
+      "response_file": "agent/verification/draft/draft-uncertain-request.response.json",
+      "elapsed_seconds": 5.07,
+      "request_file": "agent/verification/draft/draft-uncertain-request.request.json"
+    },
+    {
+      "case": "draft-injection-request",
+      "application_id": "app_synthetic_draft_003",
+      "application_revision": 1,
+      "request_sha256": "611679a52495463ca4ba5acddff144faccda6d4fecfe4083eaabda698f3a0928",
+      "status": "schema_references_and_literal_content_passed",
+      "response_file": "agent/verification/draft/draft-injection-request.response.json",
+      "elapsed_seconds": 6.58,
+      "request_file": "agent/verification/draft/draft-injection-request.request.json"
+    }
+  ],
+  "completed_at": "2026-10-15T16:02:33.663258+00:00",
+  "scope_limit": "Exact literal fidelity only; not independent truth or evidence-support verification. Injection text stays quoted as test data, never a new factual claim.",
+  "packaging_note": "Only response paths rewritten; original local report retained. Synthetic inputs only.",
+  "repository_migration_note": "Evidence paths adapted from standalone ZIP to agent/verification/."
+}

@@ -1,0 +1,20 @@
+{
+  "generation_calls": 0,
+  "status": "recovered_exact_failed_request",
+  "read_only_endpoints": [
+    "/workflows/logs",
+    "/workflows/run/89afbd57-b67e-45e9-b215-5a447bafa62d"
+  ],
+  "matched_current_run_logs": 45,
+  "source_row": 44,
+  "detail_file": "agent/.local/full-csv-20261017/failure-000044.dify-detail.json",
+  "detail_sha256": "cf681250aaa1d75d78607c7e4d50e16d33e9890bc69ee16fc8924626c71b7c57",
+  "workflow_status": "succeeded",
+  "total_tokens": 2216,
+  "result_type": "str",
+  "result_bytes": 2271,
+  "strict_result_json": "invalid",
+  "json_error": "Expecting ',' delimiter",
+  "json_error_line": 1,
+  "json_error_column": 361
+}

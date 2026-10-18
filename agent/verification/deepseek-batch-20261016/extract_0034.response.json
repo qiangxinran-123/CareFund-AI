@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0034",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "treatment.paid_cost",
+      "value": {
+        "kind": "text",
+        "value": "已支付医疗费 $5000（币种未说明，无法确认是否为美元）"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "treatment.paid_cost",
+      "question": "您提到已支付医疗费 $5000，但未说明币种。请问这 5000 是美元、加元、澳元还是其他货币？",
+      "reason": "币种不明会导致金额无法准确记录和核对，需要您确认具体币种。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "用户自述已支付医疗费为 $5000，但未说明币种，无法按人民币金额记录，已保留为文本并追问。",
+    "本次输入未附材料，无法对用户自述进行材料核对。"
+  ]
+}

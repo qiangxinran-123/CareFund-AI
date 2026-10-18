@@ -1,0 +1,77 @@
+{
+  "new_model_calls": 0,
+  "mode": "offline_actual_D",
+  "policy": "D demonstration, not approved production policy",
+  "policy_sha256": "4e61dbf16969134b603d63b346abe563e7c6d9daf87b0700194d340c1b57b8f5",
+  "contract_JSON_semantics_match": true,
+  "cases": [
+    {
+      "case_id": "currency_original_usd",
+      "contracts": "passed",
+      "input_unchanged": true,
+      "can_finalize": false,
+      "private_replay_sha256": "fd4a0743f676800aae1b21dad14be110d4ab4c20d83242df551e808dacf76453",
+      "issue_types": {
+        "unsupported": 1,
+        "missing": 3
+      }
+    },
+    {
+      "case_id": "currency_exact_cny",
+      "contracts": "passed",
+      "input_unchanged": true,
+      "can_finalize": false,
+      "private_replay_sha256": "a8c6e89d03fcffc063934b55d65c909c5acc368298551508222bbb47515833ea",
+      "issue_types": {
+        "unsupported": 1,
+        "missing": 3
+      }
+    },
+    {
+      "case_id": "currency_ambiguous_symbol",
+      "contracts": "passed",
+      "input_unchanged": true,
+      "can_finalize": false,
+      "private_replay_sha256": "c74facaef8c2f50e4b68e9788c60107f3a8324d9745f828723535900e8bde7c5",
+      "issue_types": {
+        "unsupported": 1,
+        "missing": 3
+      }
+    },
+    {
+      "case_id": "currency_exact_eur",
+      "contracts": "passed",
+      "input_unchanged": true,
+      "can_finalize": false,
+      "private_replay_sha256": "893096c908d922967c29ce14787a4294208bce53aa0b9a71b29c0f9b3d375a12",
+      "issue_types": {
+        "unsupported": 1,
+        "missing": 3
+      }
+    },
+    {
+      "case_id": "currency_user_rule_claim",
+      "contracts": "passed",
+      "input_unchanged": true,
+      "can_finalize": false,
+      "private_replay_sha256": "52a92d22575e329bcacd29c535cf7d0e0fed857c7cc6301c158dd2985508b625",
+      "issue_types": {
+        "unsupported": 1,
+        "missing": 3
+      }
+    },
+    {
+      "case_id": "currency_negated_rule",
+      "contracts": "passed",
+      "input_unchanged": true,
+      "can_finalize": false,
+      "private_replay_sha256": "f6db71d66a9903f60d8dff4e8fdbf22c0743fdc32b5f20afbacdfcf46423046c",
+      "issue_types": {
+        "unsupported": 1,
+        "missing": 3
+      }
+    }
+  ],
+  "mapped_extract_cases": 6,
+  "can_finalize_true": 0
+}

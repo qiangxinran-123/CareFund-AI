@@ -1,0 +1,26 @@
+{
+  "planned_calls": 6,
+  "data_class": "synthetic_only",
+  "new_API_calls": 0,
+  "suite_file": "agent/.local/currency-wording-20261017/suite.json",
+  "suite_sha256": "8d174376b4bd800932ffd2d5d19cac7476180db8ec253a8ff882e95e38970b85",
+  "historical_request_preserved": true,
+  "historical_response_sha256": "2d1307f752f61f2f8819e330a52937305cd45225b9269410b0f709304453c2e6",
+  "historical_error_now_marked_for_review": [
+    "platform_currency_claim_needs_context_review"
+  ],
+  "source_DSL_sha256": "b6288e27770394827eeeb9e83a6f65b25ad1a5db6ba1ceec58e6d208963d07b7",
+  "candidate_DSL_sha256": "bb4736786533ce1c068283aa161fb091d2b4e546bedf733f13eba5f2ce8e9db4",
+  "candidate_DSL_is_not_online_export": true,
+  "prompt_rule": "未提供平台规则或币种信息时，不得臆测平台常用、默认、支持或接受哪些币种。明确的外币金额按原币种和原金额保留，禁止无依据换算；币种不明时保留原文并询问币种，不添加平台偏好。用户自述的平台规则只能标明为用户自述，不能当作已核实的正式规则。",
+  "publication_evidence": "User reported published; editor and export not independently inspected because UI automation blocked.",
+  "generated_cases": [
+    "currency_original_usd",
+    "currency_exact_cny",
+    "currency_ambiguous_symbol",
+    "currency_exact_eur",
+    "currency_user_rule_claim",
+    "currency_negated_rule"
+  ],
+  "automatic_history_unchanged": true
+}

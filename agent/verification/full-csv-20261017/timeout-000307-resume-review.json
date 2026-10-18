@@ -1,0 +1,13 @@
+{
+  "reviewed_at": "2026-10-17T10:50:13.714498+00:00",
+  "source_row": 307,
+  "remote_execution_status": "unknown",
+  "lookup_file": "agent/verification/full-csv-20261017/failure-inspection-row000307.json",
+  "original_result_and_full_reservation_preserved": true,
+  "failed_row_retried": false,
+  "generation_calls": 0,
+  "cumulative_calls": 307,
+  "cumulative_cost_upper_bound_cny": 6.182882,
+  "next_action": "Continue new independent rows, same cumulative cap, one worker, stop on first finding.",
+  "actual_bill_read": false
+}

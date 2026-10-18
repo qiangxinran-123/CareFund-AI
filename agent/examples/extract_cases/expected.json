@@ -1,0 +1,29 @@
+{
+  "01_uncertain_paid": [
+    "treatment.paid_cost=2000000分",
+    "patient.medical_summary保留可能、尚未确诊",
+    "不得断言没有材料",
+    "新事实pending且未确认"
+  ],
+  "02_preserve_existing": [
+    "fact_003完整不变",
+    "revision=2",
+    "contact.city=西安市且未确认",
+    "不重复询问预估单是否存在",
+    "关系母亲应抽取，不重复确认"
+  ],
+  "03_document_evidence": [
+    "treatment.estimated_cost=3000000分",
+    "source_type=document",
+    "evidence_ids=[ev_demo_001]",
+    "pending且未确认",
+    "不生成已支付费用或编造诊断"
+  ],
+  "04_conflicting_amount": [
+    "相同estimated_cost字段分别保留三万材料来源与五万用户来源",
+    "不同fact_id",
+    "材料引用ev_demo_001，用户来源无证据引用",
+    "均pending/false",
+    "warnings指出差异且优先追问，不自行裁定"
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "date": "2026-10-16",
+  "timezone": "Asia/Shanghai",
+  "provider": "langgenius/deepseek/deepseek",
+  "plugin_version": "0.0.24",
+  "model_display_name": "DeepSeek V4.1 Flash",
+  "model_id_per_official_plugin": "deepseek-flash",
+  "parameters_observed_in_ui": {
+    "thinking": false,
+    "temperature": 0,
+    "response_format": "json_object",
+    "max_tokens": 8192
+  },
+  "workflow_calls_attempted": 9,
+  "retries": 0,
+  "real_medical_records_sent": 0,
+  "published_version_labels": {
+    "extract": "#2",
+    "draft": "#2"
+  },
+  "published_at_local": {
+    "extract": "2026-10-16 21:13:32",
+    "draft": "2026-10-16 21:16:08"
+  },
+  "service_api_smoke_status": "passed",
+  "dsl_export_status": "received_validated_and_synced",
+  "provider_credential_verification_calls": "not_counted_in_7_workflow_calls; actual usage not measured",
+  "billing_cost": "not measured; no balance inference",
+  "cases": [
+    {
+      "operation": "extract",
+      "case": "01_uncertain_paid",
+      "transport": "dify_editor_test_run",
+      "observed_test_run_label_local": "21:09:30",
+      "request_file": "agent/examples/extract_cases/01_uncertain_paid.json",
+      "request_sha256": "a3ed38f5082f12ba1fc1ed68f32a0873e6d40a1d47544f99174bbe080acb0abb",
+      "response_file": "agent/verification/deepseek-20261016/01_uncertain_paid.response.json",
+      "response_sha256": "61a5cc2f43b2295af25ff46f9f9d8ddc4792b20bffc0277e9f24f1aeeb0f2269",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations"
+    },
+    {
+      "operation": "extract",
+      "case": "02_preserve_existing",
+      "transport": "dify_editor_test_run",
+      "observed_test_run_label_local": "21:10:12",
+      "request_file": "agent/examples/extract_cases/02_preserve_existing.json",
+      "request_sha256": "f2502202628709be94635e3068001fc644610fca8f594bdff4c02bd9401fed48",
+      "response_file": "agent/verification/deepseek-20261016/02_preserve_existing.response.json",
+      "response_sha256": "e55061042905b859ef6b1b0278fa822d8fe15cd11974aeaff29665c8ab4d3b8f",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations"
+    },
+    {
+      "operation": "extract",
+      "case": "03_document_evidence",
+      "transport": "dify_editor_test_run",
+      "observed_test_run_label_local": "21:10:53",
+      "request_file": "agent/examples/extract_cases/03_document_evidence.json",
+      "request_sha256": "e821355733d4197ff4a930c56ff38c1efc1220baa1cc062dadf4447a4ee4d6c9",
+      "response_file": "agent/verification/deepseek-20261016/03_document_evidence.response.json",
+      "response_sha256": "b77cf7bb081c0dad079b05786ac9dcdef935877d19261fe209a13045c1a2f4cc",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations"
+    },
+    {
+      "operation": "extract",
+      "case": "04_conflicting_amount",
+      "transport": "dify_editor_test_run",
+      "observed_test_run_label_local": "21:11:49",
+      "request_file": "agent/examples/extract_cases/04_conflicting_amount.json",
+      "request_sha256": "f37a5cdb62ff7d412949d6161afbc2569a56f0c29da9ebcc09e53b34bc01779f",
+      "response_file": "agent/verification/deepseek-20261016/04_conflicting_amount.response.json",
+      "response_sha256": "42734dde40e37a555004b7fe754e4dacc483f1076b61f19cde575ee7ba93f5e6",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations"
+    },
+    {
+      "operation": "draft",
+      "case": "draft-request",
+      "transport": "dify_editor_test_run",
+      "observed_test_run_label_local": "21:13:28",
+      "request_file": "agent/examples/draft-request.json",
+      "request_sha256": "a53dedf0a65d5943cb584f1b1b6d473344bc8499052a9a405a68bcd7c6658e38",
+      "response_file": "agent/verification/deepseek-20261016/draft-request.response.json",
+      "response_sha256": "04dfe7e7ad418ca926a9295ea2faefa6f17b235f571e5be61a8e82182ba1f343",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations"
+    },
+    {
+      "operation": "draft",
+      "case": "draft-uncertain-request",
+      "transport": "dify_editor_test_run",
+      "observed_test_run_label_local": "21:14:26",
+      "request_file": "agent/examples/draft-uncertain-request.json",
+      "request_sha256": "a786d0aa6b547bfc5300fa6687fa4c7fa27be6e09e3973f8ee62bcccca46d846",
+      "response_file": "agent/verification/deepseek-20261016/draft-uncertain-request.response.json",
+      "response_sha256": "0dc79af726065fcec5031ecf098df8049bcad32ab89d0d9a4f4b620ec233bd8e",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations"
+    },
+    {
+      "operation": "draft",
+      "case": "draft-injection-request",
+      "transport": "dify_editor_test_run",
+      "observed_test_run_label_local": "21:15:18",
+      "request_file": "agent/examples/draft-injection-request.json",
+      "request_sha256": "611679a52495463ca4ba5acddff144faccda6d4fecfe4083eaabda698f3a0928",
+      "response_file": "agent/verification/deepseek-20261016/draft-injection-request.response.json",
+      "response_sha256": "23f49a3e2431d4d2eb2b60a7d21db6d3a993d013364146aa9b640ce537b10fa7",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations"
+    },
+    {
+      "operation": "extract",
+      "case": "api-01_uncertain_paid",
+      "transport": "real_dify_service_api",
+      "request_file": "agent/examples/extract_cases/01_uncertain_paid.json",
+      "request_sha256": "a3ed38f5082f12ba1fc1ed68f32a0873e6d40a1d47544f99174bbe080acb0abb",
+      "response_file": "agent/verification/deepseek-20261016/api-01_uncertain_paid.response.json",
+      "response_sha256": "4ee288cdff5ea0577ad935610722a1a258f25133df54ceaa6f02ffc5f469a2f5",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations",
+      "elapsed_seconds": 7.552
+    },
+    {
+      "operation": "draft",
+      "case": "api-draft-request",
+      "transport": "real_dify_service_api",
+      "request_file": "agent/examples/draft-request.json",
+      "request_sha256": "a53dedf0a65d5943cb584f1b1b6d473344bc8499052a9a405a68bcd7c6658e38",
+      "response_file": "agent/verification/deepseek-20261016/api-draft-request.response.json",
+      "response_sha256": "358e6fbf35dc358797946319cd2dec8db9930990fc8e1bef96a5046591138a3a",
+      "strict_contract_and_policy": "passed",
+      "semantic_review": "passed_against_existing_synthetic_expectations",
+      "elapsed_seconds": 12.856
+    }
+  ],
+  "limits": [
+    "7 synthetic editor calls plus 2 external Service API smoke calls; no population accuracy estimate.",
+    "No full B/D end-to-end integration or export approval.",
+    "Original GPT workflow DSL and historical reports remain separate.",
+    "Injection strings are quoted verbatim as data; this is not publishable text approval."
+  ],
+  "call_breakdown": {
+    "dify_editor_test_run": 7,
+    "real_dify_service_api": 2,
+    "app_info_read_only_requests": 2
+  },
+  "app_info_mappings": [
+    {
+      "input_slot": 1,
+      "operation": "extract",
+      "app_name": "CareFund-信息抽取与追问-修订版"
+    },
+    {
+      "input_slot": 2,
+      "operation": "draft",
+      "app_name": "CareFund-已确认事实草稿-首版"
+    }
+  ],
+  "service_api_finished_at": "2026-10-16T13:26:40.226528+00:00",
+  "workflow_exports": [
+    {
+      "operation": "extract",
+      "source_filename": "CareFund-信息抽取与追问-修订版 (1).yml",
+      "workflow_file": "agent/workflow.deepseek-extract.yml",
+      "sha256": "b6288e27770394827eeeb9e83a6f65b25ad1a5db6ba1ceec58e6d208963d07b7",
+      "app_name": "CareFund-信息抽取与追问-修订版",
+      "dsl_version": "0.7.0",
+      "plugin_unique_identifier": "langgenius/deepseek:0.0.24@9e12eef09973667f0eaf4f082af883167e1de88740b22e71e71488d020c3778a",
+      "model_id": "deepseek-flash",
+      "parameters": {
+        "max_tokens": 8192,
+        "response_format": "json_object",
+        "temperature": 0,
+        "thinking": false
+      },
+      "checks": {
+        "safe_yaml_no_duplicate_keys": true,
+        "no_credential_patterns": true,
+        "empty_environment_and_conversation_variables": true,
+        "three_node_graph_and_selectors": true,
+        "system_prompt_matches_captured_tested_ui": true,
+        "original_rules_preserved": true,
+        "v2_wording_applied": true,
+        "automatic_retries_disabled_by_absent_config": true,
+        "byte_identical_copy": true
+      }
+    },
+    {
+      "operation": "draft",
+      "source_filename": "CareFund-已确认事实草稿-首版.yml",
+      "workflow_file": "agent/workflow.deepseek-draft.yml",
+      "sha256": "6ace13cd39a2980577b36801939b55e138912ff47f7e04ebd07e2e652300d052",
+      "app_name": "CareFund-已确认事实草稿-首版",
+      "dsl_version": "0.7.0",
+      "plugin_unique_identifier": "langgenius/deepseek:0.0.24@9e12eef09973667f0eaf4f082af883167e1de88740b22e71e71488d020c3778a",
+      "model_id": "deepseek-flash",
+      "parameters": {
+        "max_tokens": 8192,
+        "response_format": "json_object",
+        "temperature": 0,
+        "thinking": false
+      },
+      "checks": {
+        "safe_yaml_no_duplicate_keys": true,
+        "no_credential_patterns": true,
+        "empty_environment_and_conversation_variables": true,
+        "three_node_graph_and_selectors": true,
+        "system_prompt_matches_captured_tested_ui": true,
+        "original_rules_preserved": true,
+        "v2_wording_applied": false,
+        "automatic_retries_disabled_by_absent_config": true,
+        "byte_identical_copy": true
+      }
+    }
+  ],
+  "new_instance_reimport_status": "not performed; verified exports of tested existing applications"
+}

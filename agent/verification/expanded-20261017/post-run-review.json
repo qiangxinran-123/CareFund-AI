@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-17",
+  "new_model_calls": 0,
+  "automatic_results_preserved": true,
+  "cases_scanned_for_additional_platform_currency_claim": 94,
+  "contextual_review_by": "Codex; not independent business or clinical acceptance",
+  "findings": [
+    {
+      "case_id": "expand_synthetic_extract_007",
+      "response_sha256": "2d1307f752f61f2f8819e330a52937305cd45225b9269410b0f709304453c2e6",
+      "original_automatic_status": "automatic_checks_passed",
+      "classification": "unsupported_platform_currency_comparison_in_warning",
+      "severity": "wording_issue_requires_correction",
+      "synthetic_excerpt": "币种与平台常用的人民币不同",
+      "issue": "Input did not provide platform currency usage; this comparison has no supplied basis.",
+      "facts_preserved": "Original USD amount and currency retained as text, with no conversion or fabricated CNY fact.",
+      "not_observed": "No mandatory platform rule or approval-effect promise in this response.",
+      "automatic_check_gap": "Original known-phrase scan did not cover platform currency-default comparisons.",
+      "disposition": "open; correction candidate prepared, not published or re-generated",
+      "proposed_warning": "已支付医疗费按用户自述保留为 USD 389.17，未换算，尚无材料核对。"
+    }
+  ],
+  "limits": "Additional phrase scan is partial. Non-flagged outputs are not proven free of other semantic issues."
+}

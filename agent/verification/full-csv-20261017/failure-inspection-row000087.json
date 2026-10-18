@@ -1,0 +1,10 @@
+{
+  "generation_calls": 0,
+  "status": "read_only_inspection_failed",
+  "read_only_endpoints": [
+    "/workflows/logs",
+    "/workflows/run/ffdce945-adc6-4523-9675-152100fb0edf"
+  ],
+  "matched_current_run_logs": 85,
+  "error": "Read-only inspection network error"
+}

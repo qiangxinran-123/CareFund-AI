@@ -1,0 +1,22 @@
+{
+  "status": "prepared_only_no_new_calls",
+  "remaining_case_count": 7,
+  "operations": {
+    "extract": 7
+  },
+  "data_class": "minimal_anonymous_public_excerpt",
+  "case_ids": [
+    "extract_0024",
+    "extract_0025",
+    "extract_0026",
+    "extract_0027",
+    "extract_0028",
+    "extract_0029",
+    "extract_0030"
+  ],
+  "suite_sha256": "ef5ae85465718bb1dd9d7e87034b271d3f246751443d21228614cbdd4e28bd7e",
+  "local_ignored_suite": "agent/.local/mdcc/evaluation/pending-real-excerpts-after-deepseek-20261016.json",
+  "all_previous_attempts_excluded": true,
+  "historical_failed_extract_0023_excluded": true,
+  "real_content_in_this_manifest": false
+}

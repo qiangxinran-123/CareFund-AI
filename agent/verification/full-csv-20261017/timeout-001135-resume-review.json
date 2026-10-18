@@ -1,0 +1,27 @@
+{
+  "reviewed_at": "2026-10-17T12:53:54.520608+00:00",
+  "source_row": 1135,
+  "remote_execution_status": "unknown",
+  "lookup_file": "agent/verification/full-csv-20261017/failure-inspection-row001135.json",
+  "original_result_and_full_reservation_preserved": true,
+  "failed_row_retried": false,
+  "generation_calls": 0,
+  "cumulative_calls": 1133,
+  "cumulative_cost_upper_bound_cny": 22.369428,
+  "next_action": "Continue new independent rows, same cumulative cap, one worker, stop on first finding.",
+  "actual_bill_read": false,
+  "budget_control": {
+    "mode": "user-reported-bill-plus-new-reservations-v1",
+    "actual_spend_limit_cny": 20.0,
+    "user_reported_spend_at_checkpoint_cny": 1.92,
+    "checkpoint_calls": 1009,
+    "checkpoint_time": "2026-10-17T12:34:41.354868+00:00",
+    "prior_unknown_usage_allowance_cny": 0.785994,
+    "new_calls_cost_upper_bound_cny": 2.525578,
+    "controlled_spend_upper_bound_cny": 5.231572,
+    "remaining_headroom_cny": 14.768428,
+    "historical_cost_estimates_preserved": true,
+    "actual_platform_bill_read": false,
+    "caveat": "Depends on the user-reported bill baseline and pinned rates; not a provider spending limit."
+  }
+}

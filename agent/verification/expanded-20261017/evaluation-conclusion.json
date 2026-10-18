@@ -1,0 +1,14 @@
+{
+  "status": "completed_with_content_finding",
+  "generation_calls": 100,
+  "automatic_checks_passed": 100,
+  "supplemental_content_findings": 1,
+  "cases_with_open_findings": [
+    "expand_synthetic_extract_007"
+  ],
+  "new_model_calls_by_review": 0,
+  "automatic_results_preserved": true,
+  "production_fix_published": false,
+  "correction_candidate": "wording-correction-candidate.md",
+  "limits": "Automatic checks passing is not complete semantic acceptance; the wording finding remains open."
+}

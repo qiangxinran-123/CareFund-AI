@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_demo_003",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "patient.relationship_to_applicant",
+      "value": {
+        "kind": "text",
+        "value": "母亲"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_002",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "用户自述医生表示可能是肺部肿瘤，目前仍在检查，尚未确诊"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_003",
+      "field": "treatment.paid_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 2000000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "treatment.estimated_cost",
+      "question": "您提到后续治疗费用不清楚，请问目前是否已有医院出具的费用预估单或医生对后续治疗费用的大致说明？如有，可补充相关材料；如没有，也可以说明暂未获取。",
+      "reason": "后续预估治疗费是理解当前申请所需的关键信息；用户已表示不清楚，因此改为询问是否已有医院费用预估单，避免重复询问是否知道。",
+      "required": false
+    },
+    {
+      "question_id": "question_002",
+      "field": "documents.diagnosis_proof",
+      "question": "本次未上传材料。请问目前是否已有诊断证明、检查报告或医院费用票据等材料可以补充？如有，可提供以便核对已有陈述。",
+      "reason": "用户自述尚未确诊且未上传材料，补充诊断或检查材料便于核对已有陈述，但不代表平台要求或审核结果。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料，无法对用户自述内容进行材料核验。",
+    "用户自述“医生说可能是肺部肿瘤，目前还在检查，没有确诊”，该不确定性已保留在 patient.medical_summary 中，未单独提取为确诊结论。",
+    "用户自述已支付人民币两万元医疗费，已按 20000 元换算为 2000000 分；该金额尚未经材料核实。",
+    "用户自述后续治疗费用不清楚，未生成 treatment.estimated_cost 事实，保留为未知。"
+  ]
+}
