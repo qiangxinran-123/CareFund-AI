@@ -35,25 +35,25 @@ function deferred<T>() {
 it('disables analysis when there is no saved application', () => {
   const analysisApi = api()
   render(<AnalysisPanel api={analysisApi} application={null} />)
-  expect(screen.getByText(/请先完成并保存申请/)).toBeTruthy()
-  expect(screen.queryByRole('button', { name: '开始分析' })).toBeNull()
+  expect(screen.getByText(/请先填写并保存求助信息/)).toBeTruthy()
+  expect(screen.queryByRole('button', { name: '开始整理和核对' })).toBeNull()
   expect(analysisApi.getLatest).not.toHaveBeenCalled()
 })
 
 it('shows no-material guidance without inventing a hard requirement', async () => {
   render(<AnalysisPanel api={api()} application={application} documents={[]} />)
-  expect(await screen.findByRole('button', { name: '开始分析' })).toBeTruthy()
-  expect(screen.getByText(/仍可尝试分析用户自述/)).toBeTruthy()
+  expect(await screen.findByRole('button', { name: '开始整理和核对' })).toBeTruthy()
+  expect(screen.getByText(/仍可以整理已填写的内容/)).toBeTruthy()
 })
 
 it('shows submitting and prevents duplicate analysis requests', async () => {
   const pending = deferred<AnalysisJob>()
   const start = vi.fn(() => pending.promise)
   render(<AnalysisPanel api={api({ start })} application={application} />)
-  const button = await screen.findByRole('button', { name: '开始分析' })
+  const button = await screen.findByRole('button', { name: '开始整理和核对' })
   fireEvent.click(button)
-  expect(await screen.findByText('正在提交分析请求…')).toBeTruthy()
-  fireEvent.click(screen.getByRole('button', { name: '分析处理中…' }))
+  expect(await screen.findByText('正在提交整理请求…')).toBeTruthy()
+  fireEvent.click(screen.getByRole('button', { name: '正在整理资料…' }))
   expect(start).toHaveBeenCalledTimes(1)
   await act(async () => { pending.resolve(job('failed')) })
 })
@@ -69,13 +69,13 @@ it('shows queued and running states, then fetches the result and stops polling',
     .mockResolvedValueOnce(result())
   const analysisApi = api({ getJob, getLatest: latest })
   render(<AnalysisPanel api={analysisApi} application={application} documents={[document]} pollIntervalMs={0} />)
-  fireEvent.click(await screen.findByRole('button', { name: '开始分析' }))
-  expect(await screen.findByText('分析任务已进入等待队列。')).toBeTruthy()
+  fireEvent.click(await screen.findByRole('button', { name: '开始整理和核对' }))
+  expect(await screen.findByText('已收到请求，正在等待处理。')).toBeTruthy()
   await act(async () => { firstPoll.resolve(job('running')) })
-  expect(await screen.findByText('正在整理您提交的信息，请稍候。')).toBeTruthy()
+  expect(await screen.findByText('正在整理您的资料，请稍候。')).toBeTruthy()
   await act(async () => { secondPoll.resolve(job('succeeded')) })
-  expect(await screen.findByText('分析已完成，请核对以下结果。')).toBeTruthy()
-  expect(screen.getByText(/共整理 3 项事实/)).toBeTruthy()
+  expect(await screen.findByText('资料整理完成，请查看需要核对的信息。')).toBeTruthy()
+  expect(screen.getByText(/已整理 3 条信息/)).toBeTruthy()
   expect(getJob).toHaveBeenCalledTimes(2)
   await new Promise((resolve) => window.setTimeout(resolve, 5))
   expect(getJob).toHaveBeenCalledTimes(2)
@@ -84,15 +84,15 @@ it('shows queued and running states, then fetches the result and stops polling',
 it('shows task failure and network errors without a false success', async () => {
   const failedApi = api({ start: vi.fn().mockResolvedValue({ ...job('failed'), error: { code: 'AGENT_UNAVAILABLE', message: '分析服务暂不可用', details: [] } }) })
   const { unmount } = render(<AnalysisPanel api={failedApi} application={application} pollIntervalMs={0} />)
-  fireEvent.click(await screen.findByRole('button', { name: '开始分析' }))
+  fireEvent.click(await screen.findByRole('button', { name: '开始整理和核对' }))
   expect(await screen.findByRole('alert')).toHaveProperty('textContent', '分析服务暂不可用')
   unmount()
 
   const networkApi = api({ start: vi.fn().mockRejectedValue(new ApiError('网络请求失败，请检查连接后重试。', 'network')) })
   render(<AnalysisPanel api={networkApi} application={application} />)
-  fireEvent.click(await screen.findByRole('button', { name: '开始分析' }))
+  fireEvent.click(await screen.findByRole('button', { name: '开始整理和核对' }))
   expect(await screen.findByRole('alert')).toHaveProperty('textContent', '网络请求失败，请检查连接后重试。')
-  expect(screen.queryByText('分析已完成，请核对以下结果。')).toBeNull()
+  expect(screen.queryByText('资料整理完成，请查看需要核对的信息。')).toBeNull()
 })
 
 it('does not let an old application request overwrite the current application', async () => {
@@ -104,7 +104,7 @@ it('does not let an old application request overwrite the current application', 
   const { rerender } = render(<AnalysisPanel api={analysisApi} application={application} />)
   const nextApplication = { ...application, application_id: 'app_test_002' }
   rerender(<AnalysisPanel api={analysisApi} application={nextApplication} />)
-  expect(await screen.findByRole('button', { name: '开始分析' })).toBeTruthy()
+  expect(await screen.findByRole('button', { name: '开始整理和核对' })).toBeTruthy()
   await act(async () => { oldRequest.resolve(result()) })
   expect(screen.queryByText('用户自述内容')).toBeNull()
   expect(screen.getByText('app_test_002')).toBeTruthy()
@@ -114,7 +114,7 @@ it('does not show a result from a different revision', async () => {
   const stale = result({ application_revision: application.revision - 1 })
   stale.validation = { ...stale.validation, application_revision: application.revision - 1 }
   render(<AnalysisPanel api={api({ getLatest: vi.fn().mockResolvedValue(stale) })} application={application} />)
-  expect(await screen.findByText(/现有分析结果与当前申请版本不一致/)).toBeTruthy()
+  expect(await screen.findByText(/申请信息已更新，之前的整理结果不能继续使用/)).toBeTruthy()
   expect(screen.queryByText('用户自述内容')).toBeNull()
 })
 
@@ -131,13 +131,13 @@ it('submits answers, follows the returned revision, and refreshes the latest res
   render(<AnalysisPanel api={analysisApi} application={application} onRefreshApplication={refreshApplication} pollIntervalMs={0} />)
   fireEvent.change(await screen.findByLabelText(/请补充所在城市/), { target: { value: '杭州' } })
   fireEvent.click(screen.getByRole('button', { name: '提交补充信息' }))
-  expect(await screen.findByText('补充信息已提交，分析结果已更新。')).toBeTruthy()
+  expect(await screen.findByText('补充信息已提交，资料已重新整理，请查看下方结果。')).toBeTruthy()
   expect(analysisApi.submitAnswers).toHaveBeenCalledWith(application.application_id, {
     expected_revision: application.revision,
     answers: [{ question_id: 'q_required', answer: '杭州' }],
   }, expect.any(AbortSignal))
   expect(refreshApplication).toHaveBeenCalledTimes(1)
-  expect(screen.getByText('当前没有需要回答的追问。')).toBeTruthy()
+  expect(screen.getByText('暂时没有需要补充的信息。')).toBeTruthy()
 })
 
 it('keeps an answer after a 409 revision conflict', async () => {
@@ -149,15 +149,15 @@ it('keeps an answer after a 409 revision conflict', async () => {
   const input = await screen.findByLabelText(/请补充所在城市/) as HTMLTextAreaElement
   fireEvent.change(input, { target: { value: '仍需保留' } })
   fireEvent.click(screen.getByRole('button', { name: '提交补充信息' }))
-  expect(await screen.findByRole('alert')).toHaveProperty('textContent', '申请内容或版本已经变化，请刷新申请后重新操作。')
+  expect(await screen.findByRole('alert')).toHaveProperty('textContent', '申请信息已更新，请刷新后重新操作。')
   expect(input.value).toBe('仍需保留')
 })
 
 it('pauses finite polling and allows continuing the same task', async () => {
   const getJob = vi.fn().mockResolvedValue(job('running'))
   render(<AnalysisPanel api={api({ getJob })} application={application} maxPollAttempts={1} pollIntervalMs={0} />)
-  fireEvent.click(await screen.findByRole('button', { name: '开始分析' }))
+  fireEvent.click(await screen.findByRole('button', { name: '开始整理和核对' }))
   expect(await screen.findByText(/已暂停自动查询/)).toBeTruthy()
-  expect(screen.getByRole('button', { name: '继续查询任务' })).toBeTruthy()
+  expect(screen.getByRole('button', { name: '继续查看进度' })).toBeTruthy()
   expect(getJob).toHaveBeenCalledTimes(1)
 })

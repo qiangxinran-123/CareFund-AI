@@ -13,7 +13,7 @@ it('renders the brand, overall flow, and application form without contacting the
   expect(screen.getByText('CareFund-AI')).toBeTruthy()
   expect(screen.getByRole('main')).toBeTruthy()
   expect(screen.getByRole('heading', { name: '清晰整理每一步' })).toBeTruthy()
-  expect(screen.getByRole('heading', { name: '填写申请信息' })).toBeTruthy()
+  expect(screen.getByRole('heading', { name: '填写求助信息' })).toBeTruthy()
   expect(screen.getByText('1. 基本信息')).toBeTruthy()
   expect(screen.getByRole('button', { name: /步骤 2.*上传证明材料/ })).toBeTruthy()
   expect(fetchMock).not.toHaveBeenCalled()

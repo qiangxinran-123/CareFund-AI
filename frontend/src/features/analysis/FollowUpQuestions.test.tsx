@@ -8,7 +8,7 @@ afterEach(cleanup)
 it('shows questions and validates required answers while allowing optional answers to remain empty', async () => {
   const submit = vi.fn().mockResolvedValue(undefined)
   render(<FollowUpQuestions onSubmit={submit} questions={result().questions} />)
-  expect(screen.getByText(/提出原因：当前缺少城市信息/)).toBeTruthy()
+  expect(screen.getByText(/为什么需要：当前缺少城市信息/)).toBeTruthy()
   fireEvent.click(screen.getByRole('button', { name: '提交补充信息' }))
   expect(await screen.findByText('请填写此必答问题。')).toBeTruthy()
   expect(submit).not.toHaveBeenCalled()
@@ -31,7 +31,17 @@ it('keeps input after a failed submission and blocks duplicate clicks while savi
   expect(input.value).toBe('保留的回答')
 })
 
+it('reports an unsaved answer until submission succeeds', async () => {
+  const onStateChange = vi.fn()
+  const submit = vi.fn().mockResolvedValue(undefined)
+  render(<FollowUpQuestions onStateChange={onStateChange} onSubmit={submit} questions={result().questions} />)
+  fireEvent.change(screen.getByLabelText(/请补充所在城市/), { target: { value: '虚构城市' } })
+  expect(onStateChange).toHaveBeenLastCalledWith({ answersSubmitting: false, hasUnsavedAnswers: true })
+  fireEvent.click(screen.getByRole('button', { name: '提交补充信息' }))
+  await waitFor(() => expect(onStateChange).toHaveBeenLastCalledWith({ answersSubmitting: false, hasUnsavedAnswers: false }))
+})
+
 it('renders safely when there are no questions', () => {
   render(<FollowUpQuestions onSubmit={vi.fn()} questions={[]} />)
-  expect(screen.getByText('当前没有需要回答的追问。')).toBeTruthy()
+  expect(screen.getByText('暂时没有需要补充的信息。')).toBeTruthy()
 })

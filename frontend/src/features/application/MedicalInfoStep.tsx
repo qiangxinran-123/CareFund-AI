@@ -10,7 +10,7 @@ export function MedicalInfoStep({ values, errors, onChange }: Props) {
   return (
     <section aria-labelledby="medical-info-title">
       <h3 className="text-lg font-semibold text-slate-900" id="medical-info-title">医疗情况</h3>
-      <p className="mt-2 text-sm leading-6 text-slate-600">以下内容属于您的自述，不代表医疗机构诊断或平台核验结论。</p>
+      <p className="mt-2 text-sm leading-6 text-slate-600">请简要描述目前的病情和治疗情况，尽量依据实际经历填写。这属于您的自述，不代表诊断或审核结论。</p>
       <div className="mt-6">
         <label className="block text-sm font-medium text-slate-800" htmlFor="medical-summary">病情与治疗情况自述（选填）</label>
         <textarea

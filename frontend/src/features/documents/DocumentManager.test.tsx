@@ -37,24 +37,33 @@ function api(overrides: Partial<DocumentApi> = {}): DocumentApi {
 }
 
 async function waitForEmptyList() {
-  expect(await screen.findByText('暂未上传医疗材料。')).toBeTruthy()
+  expect(await screen.findByText('还没有上传材料。您可以现在上传，也可以稍后补充。')).toBeTruthy()
 }
 
 afterEach(cleanup)
 
 it('renders the upload module and empty list', async () => {
   render(<DocumentManager api={api()} application={application} />)
-  expect(screen.getByRole('heading', { name: '上传医疗材料' })).toBeTruthy()
-  expect(screen.getByLabelText('选择医疗材料')).toBeTruthy()
+  expect(screen.getByRole('heading', { name: '上传证明材料' })).toBeTruthy()
+  expect(screen.getByLabelText('选择材料')).toBeTruthy()
   await waitForEmptyList()
+})
+
+it('reports a session-only decision to add optional materials later without claiming they are complete', async () => {
+  const onStateChange = vi.fn()
+  render(<DocumentManager api={api()} application={application} onStateChange={onStateChange} />)
+  await waitForEmptyList()
+  fireEvent.click(screen.getByRole('button', { name: '稍后补充材料' }))
+  expect(screen.getByText(/不表示证明材料已齐全或已核验/)).toBeTruthy()
+  expect(onStateChange).toHaveBeenLastCalledWith({ deferred: true, uploadState: 'idle' })
 })
 
 it('prevents upload without an application id and provides a return entry', () => {
   const documentApi = api()
   render(<DocumentManager api={documentApi} application={null} />)
-  expect(screen.getByText(/请先完成并保存申请/)).toBeTruthy()
+  expect(screen.getByText(/请先填写并保存求助信息/)).toBeTruthy()
   expect(screen.getByRole('link', { name: '返回填写申请信息' }).getAttribute('href')).toBe('#application-form-title')
-  expect(screen.queryByLabelText('选择医疗材料')).toBeNull()
+  expect(screen.queryByLabelText('选择材料')).toBeNull()
   expect(documentApi.list).not.toHaveBeenCalled()
 })
 
@@ -62,7 +71,7 @@ it('shows the selected file name before upload', async () => {
   render(<DocumentManager api={api()} application={application} />)
   await waitForEmptyList()
   const file = new File(['record'], 'selected.pdf', { type: 'application/pdf' })
-  fireEvent.change(screen.getByLabelText('选择医疗材料'), { target: { files: [file] } })
+  fireEvent.change(screen.getByLabelText('选择材料'), { target: { files: [file] } })
   expect(screen.getByText('selected.pdf')).toBeTruthy()
   expect(screen.getByText(/尚未上传/)).toBeTruthy()
 })
@@ -70,17 +79,20 @@ it('shows the selected file name before upload', async () => {
 it('disables duplicate submission while uploading', async () => {
   let finish!: (value: UploadedDocument) => void
   const upload = vi.fn(() => new Promise<UploadedDocument>((resolve) => { finish = resolve }))
-  render(<DocumentManager api={api({ upload })} application={application} />)
+  const onStateChange = vi.fn()
+  render(<DocumentManager api={api({ upload })} application={application} onStateChange={onStateChange} />)
   await waitForEmptyList()
-  fireEvent.change(screen.getByLabelText('选择医疗材料'), {
+  fireEvent.change(screen.getByLabelText('选择材料'), {
     target: { files: [new File(['record'], 'record.pdf', { type: 'application/pdf' })] },
   })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
-  const button = screen.getByRole('button', { name: '上传中…' }) as HTMLButtonElement
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
+  const button = screen.getByRole('button', { name: '正在上传…' }) as HTMLButtonElement
   expect(button.disabled).toBe(true)
   fireEvent.click(button)
   expect(upload).toHaveBeenCalledTimes(1)
+  expect(onStateChange).toHaveBeenLastCalledWith({ deferred: false, uploadState: 'uploading' })
   await act(async () => { finish(uploaded()) })
+  await waitFor(() => expect(onStateChange).toHaveBeenLastCalledWith({ deferred: false, uploadState: 'idle' }))
 })
 
 it('shows returned metadata after upload and refreshes the application revision', async () => {
@@ -88,11 +100,11 @@ it('shows returned metadata after upload and refreshes the application revision'
   const documentApi = api()
   render(<DocumentManager api={documentApi} application={application} onRefreshApplication={refresh} />)
   await waitForEmptyList()
-  fireEvent.change(screen.getByLabelText('选择医疗材料'), {
+  fireEvent.change(screen.getByLabelText('选择材料'), {
     target: { files: [new File(['record'], 'record.pdf', { type: 'application/pdf' })] },
   })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
-  expect(await screen.findByText('材料上传成功！您可以继续上传其他医疗材料。后续处理状态请以列表为准。')).toBeTruthy()
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
+  expect(await screen.findByText('材料已上传，您可以继续添加其他材料。后续处理状态请以列表为准。')).toBeTruthy()
   expect(screen.getByText('record.pdf')).toBeTruthy()
   expect(screen.getByText('已上传，等待处理')).toBeTruthy()
   expect(refresh).toHaveBeenCalledTimes(1)
@@ -108,17 +120,17 @@ it('exits uploading in Strict Mode and supports consecutive uploads', async () =
   const documentApi = api({ upload })
   render(<StrictMode><DocumentManager api={documentApi} application={application} /></StrictMode>)
   await waitForEmptyList()
-  const input = screen.getByLabelText('选择医疗材料') as HTMLInputElement
+  const input = screen.getByLabelText('选择材料') as HTMLInputElement
 
   fireEvent.change(input, { target: { files: [new File(['one'], 'first.pdf', { type: 'application/pdf' })] } })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
   expect(await screen.findByText('first.pdf')).toBeTruthy()
   expect(screen.getByRole('button', { name: '继续上传材料' })).toBeTruthy()
   expect(input.disabled).toBe(false)
   expect(input.value).toBe('')
 
   fireEvent.change(input, { target: { files: [new File(['two'], 'second.jpg', { type: 'image/jpeg' })] } })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
   await waitFor(() => expect(upload).toHaveBeenCalledTimes(2))
   expect(screen.getByText('first.pdf')).toBeTruthy()
   expect(screen.getByText('second.jpg')).toBeTruthy()
@@ -132,13 +144,13 @@ it('creates a new idempotency key when the same file is selected again', async (
   const documentApi = api({ upload })
   render(<DocumentManager api={documentApi} application={application} />)
   await waitForEmptyList()
-  const input = screen.getByLabelText('选择医疗材料')
+  const input = screen.getByLabelText('选择材料')
   const file = new File(['same'], 'same.pdf', { type: 'application/pdf' })
   fireEvent.change(input, { target: { files: [file] } })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
-  await screen.findByText('材料上传成功！您可以继续上传其他医疗材料。后续处理状态请以列表为准。')
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
+  await screen.findByText('材料已上传，您可以继续添加其他材料。后续处理状态请以列表为准。')
   fireEvent.change(input, { target: { files: [file] } })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
   await waitFor(() => expect(upload).toHaveBeenCalledTimes(2))
   const firstKey = (upload.mock.calls[0][0] as { idempotencyKey: string }).idempotencyKey
   const secondKey = (upload.mock.calls[1][0] as { idempotencyKey: string }).idempotencyKey
@@ -149,18 +161,18 @@ it('does not use processing status as the upload loading state', async () => {
   const documentApi = api({ list: vi.fn().mockResolvedValue([uploaded({ processing_status: 'processing' })]) })
   render(<DocumentManager api={documentApi} application={application} />)
   expect(await screen.findByText('处理中')).toBeTruthy()
-  expect(screen.getByRole('button', { name: '上传文件' })).toBeTruthy()
+  expect(screen.getByRole('button', { name: '上传材料' })).toBeTruthy()
 })
 
 it('shows an upload failure and offers an idempotent manual retry', async () => {
   render(<DocumentManager api={api({ upload: vi.fn().mockRejectedValue(new Error('服务暂不可用')) })} application={application} />)
   await waitForEmptyList()
-  fireEvent.change(screen.getByLabelText('选择医疗材料'), {
+  fireEvent.change(screen.getByLabelText('选择材料'), {
     target: { files: [new File(['record'], 'record.pdf', { type: 'application/pdf' })] },
   })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
   expect(await screen.findByRole('alert')).toHaveProperty('textContent', '服务暂不可用')
-  expect(screen.getByRole('button', { name: '使用同一幂等键重试' })).toBeTruthy()
+  expect(screen.getByRole('button', { name: '重新上传' })).toBeTruthy()
 })
 
 it('allows selecting a new file after a failed upload and retrying', async () => {
@@ -169,12 +181,12 @@ it('allows selecting a new file after a failed upload and retrying', async () =>
     .mockResolvedValueOnce(uploaded({ filename: 'retry.png', media_type: 'image/png' }))
   render(<DocumentManager api={api({ upload })} application={application} />)
   await waitForEmptyList()
-  const input = screen.getByLabelText('选择医疗材料')
+  const input = screen.getByLabelText('选择材料')
   fireEvent.change(input, { target: { files: [new File(['bad'], 'first.pdf', { type: 'application/pdf' })] } })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
   await screen.findByRole('alert')
   fireEvent.change(input, { target: { files: [new File(['retry'], 'retry.png', { type: 'image/png' })] } })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
   await waitFor(() => expect(upload).toHaveBeenCalledTimes(2))
   expect(screen.getByText('retry.png')).toBeTruthy()
 })
@@ -196,7 +208,7 @@ it('shows processing failures without calling them approval failures', async () 
 
 it('marks Mock mode clearly', async () => {
   render(<DocumentManager api={api()} application={application} mockMode />)
-  expect(screen.getByText('Mock 模式 · 文件仅模拟上传')).toBeTruthy()
+  expect(screen.getByText('Mock 演示模式 · 文件仅模拟上传')).toBeTruthy()
   await waitForEmptyList()
 })
 
@@ -226,10 +238,10 @@ it('ignores an upload that finishes after switching applications', async () => {
     <DocumentManager api={documentApi} application={application} onRefreshApplication={refresh} />,
   )
   await waitForEmptyList()
-  fireEvent.change(screen.getByLabelText('选择医疗材料'), {
+  fireEvent.change(screen.getByLabelText('选择材料'), {
     target: { files: [new File(['old'], 'old.pdf', { type: 'application/pdf' })] },
   })
-  fireEvent.click(screen.getByRole('button', { name: '上传文件' }))
+  fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
 
   rerender(
     <DocumentManager
