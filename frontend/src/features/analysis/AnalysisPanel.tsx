@@ -78,6 +78,8 @@ export function AnalysisPanel({
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
   const [followUpState, setFollowUpState] = useState({ answersSubmitting: false, hasUnsavedAnswers: false })
+  const [questionToAnswer, setQuestionToAnswer] = useState<string | null>(null)
+  const questionTriggerRef = useRef<HTMLElement | null>(null)
   const controllerRef = useRef<AbortController | null>(null)
   const requestRef = useRef(0)
   const intentRef = useRef<{ applicationId: string; revision: number; key: string } | null>(null)
@@ -178,7 +180,7 @@ export function AnalysisPanel({
           setResult(latest)
           setJob(current)
           setPhase('succeeded')
-          setNotice(refreshAfter ? '补充信息已提交，资料已重新整理，请查看下方结果。' : null)
+          setNotice(refreshAfter ? (latest.validation.issues.length > 0 ? '信息已更新，还有内容需要核对。' : '信息已更新，核对完成。') : null)
           intentRef.current = null
           return
         }
@@ -234,7 +236,7 @@ export function AnalysisPanel({
     requestRef.current += 1
     setPhase('submitting')
     setError(null)
-    setNotice('补充信息正在提交，提交成功后将自动重新整理。')
+    setNotice('补充信息已提交，正在重新核对…')
     try {
       const nextJob = await api.submitAnswers(application.application_id, {
         expected_revision: application.revision,
@@ -264,8 +266,8 @@ export function AnalysisPanel({
       <div className="flex flex-col gap-4 border-b border-slate-100 pb-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm font-medium text-blue-700">申请流程 · 信息核对与补充</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="analysis-title" tabIndex={-1}>核对并补充信息</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">我们会根据您填写的情况和上传的材料整理申请信息，找出需要核对或补充的内容。</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="analysis-title" tabIndex={-1}>核对您的申请信息</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">我们已整理您填写和上传的资料。请重点查看需要补充或核对的内容。</p>
         </div>
         {mockMode && <span className="w-fit rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-900">Mock 演示模式 · 整理结果为虚构示例</span>}
       </div>
@@ -302,12 +304,20 @@ export function AnalysisPanel({
           {result && (phase === 'succeeded' || phase === 'submitting') && (
             <div>
               <div className="mt-7 rounded-xl border border-slate-200 p-4">
-                <p className="text-sm font-semibold text-slate-900">整理结果概览</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">已整理 {result.facts.length} 条信息，发现 {result.validation.issues.length} 项需要您核对的内容，并提出 {result.questions.length} 个补充问题。</p>
+                <p className="text-sm font-semibold text-slate-900">核对概况</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600">需要处理：{result.validation.issues.length} 项 · 其他已整理信息：{result.facts.filter((fact) => !result.validation.issues.some((issue) => issue.related_fact_ids.includes(fact.fact_id)) && fact.verification_status !== 'pending' && fact.verification_status !== 'conflicting').length} 条</p>
               </div>
-              <FactList documents={documents} evidence={result.evidence} facts={result.facts} />
-              <ValidationIssueList issues={result.validation.issues} />
-              <FollowUpQuestions onStateChange={setFollowUpState} onSubmit={submitAnswers} questions={result.questions} />
+              <FactList documents={documents} evidence={result.evidence} facts={result.facts} issues={result.validation.issues} onAnswerQuestion={(questionId, trigger) => { questionTriggerRef.current = trigger; setQuestionToAnswer(questionId) }} questionForField={(field) => {
+                const matching = result.questions.filter((question) => question.field === field)
+                return matching.length === 1 && result.validation.issues.filter((issue) => issue.field === field).length === 1 ? matching[0] : undefined
+              }} />
+              {result.validation.issues.some((issue) => !issue.related_fact_ids.some((factId) => result.facts.some((fact) => fact.fact_id === factId))) && (
+                <ValidationIssueList issues={result.validation.issues.filter((issue) => !issue.related_fact_ids.some((factId) => result.facts.some((fact) => fact.fact_id === factId)))} onAnswerQuestion={(questionId, trigger) => { questionTriggerRef.current = trigger; setQuestionToAnswer(questionId) }} questionForField={(field) => {
+                  const matching = result.questions.filter((question) => question.field === field)
+                  return matching.length === 1 && result.validation.issues.filter((issue) => issue.field === field).length === 1 ? matching[0] : undefined
+                }} />
+              )}
+              <FollowUpQuestions dialogTrigger={questionTriggerRef.current} onDialogClose={() => { questionTriggerRef.current = null; setQuestionToAnswer(null) }} onStateChange={setFollowUpState} onSubmit={submitAnswers} openQuestionId={questionToAnswer} questions={result.questions} standaloneQuestionIds={result.questions.filter((question) => result.validation.issues.filter((issue) => issue.field === question.field).length !== 1 || result.questions.filter((candidate) => candidate.field === question.field).length !== 1).map((question) => question.question_id)} />
             </div>
           )}
         </>

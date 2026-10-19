@@ -1,4 +1,4 @@
-import type { FactValue } from '../../types/contracts'
+import type { FactValue, ValidationIssue } from '../../types/contracts'
 
 const fieldLabels: Record<string, string> = {
   'patient.display_name': '患者称呼',
@@ -26,4 +26,20 @@ export function factValueText(value: FactValue): string {
     }
   }
   return value.value
+}
+
+export function issueStatus(issue: ValidationIssue): { label: string; style: string; guidance: string } {
+  if (issue.type === 'conflict' || issue.type === 'inconsistent_amount' || issue.type === 'inconsistent_date') {
+    return { label: '信息有出入', style: 'bg-red-100 text-red-900', guidance: '建议：核对填写内容与材料内容。' }
+  }
+  if (issue.type === 'missing' || issue.type === 'unsupported') {
+    return { label: '需补充', style: 'bg-amber-100 text-amber-900', guidance: '建议：补充相关信息或材料。' }
+  }
+  return { label: '待核对', style: 'bg-blue-100 text-blue-900', guidance: '建议：检查填写内容后再提交。' }
+}
+
+export function issueGroup(issue: ValidationIssue): '需要补充' | '需要核对' | '其他提醒' {
+  if (issue.type === 'missing' || issue.type === 'unsupported') return '需要补充'
+  if (issue.type === 'conflict' || issue.type === 'inconsistent_amount' || issue.type === 'inconsistent_date') return '需要核对'
+  return '其他提醒'
 }
