@@ -5,7 +5,8 @@ import { ApiError } from '../../api/client'
 import type { AnalysisResult, Application, Draft, ExportResponse, UploadedDocument } from '../../types/contracts'
 import type { DraftPhase, DraftStepState } from '../workflow/workflowStatus'
 import { DraftConfirmation } from './DraftConfirmation'
-import { DraftExport } from './DraftExport'
+import { DraftExport, safeDownloadUrl } from './DraftExport'
+import { DraftCompletion } from './DraftCompletion'
 import { DraftSectionList, missingDraftFactIds } from './DraftSectionList'
 
 interface Props {
@@ -37,8 +38,10 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
   const [phase, setPhase] = useState<DraftPhase>('idle')
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  const [showCompletion, setShowCompletion] = useState(false)
   const controllerRef = useRef<AbortController | null>(null)
   const requestRef = useRef(0)
+  const titleRef = useRef<HTMLHeadingElement | null>(null)
   const applicationId = application?.application_id
   const applicationRevision = application?.revision
   const analysisCurrent = Boolean(analysis && application && analysis.application_id === application.application_id && analysis.application_revision === application.revision)
@@ -55,6 +58,7 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
     setChecked(false)
     setError(null)
     setNotice(null)
+    setShowCompletion(false)
     if (!applicationId || !applicationRevision) {
       setPhase('idle')
       return
@@ -85,6 +89,26 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
   const blockingIssues = analysisCurrent ? analysis!.validation.issues.filter((issue) => issue.severity === 'blocking') : []
   const missingFacts = draft && analysisCurrent ? missingDraftFactIds(draft.sections, analysis!.facts) : []
   const canFinalize = analysisCurrent && analysis!.validation.can_finalize && blockingIssues.length === 0
+  const downloadUrl = safeDownloadUrl(exportResult?.download_url ?? null)
+  const completionVisible = Boolean(
+    showCompletion
+    && !mockMode
+    && downloadUrl
+    && draft
+    && application
+    && !stale
+    && draft.status === 'confirmed'
+    && draft.application_id === application.application_id
+    && draft.application_revision === application.revision
+    && exportResult?.application_id === application.application_id
+    && exportResult.draft_id === draft.draft_id,
+  )
+
+  useEffect(() => {
+    if (!completionVisible) return
+    titleRef.current?.focus({ preventScroll: true })
+    titleRef.current?.closest('section')?.scrollIntoView?.({ block: 'start' })
+  }, [completionVisible])
 
   async function runAction(action: 'generate' | 'confirm' | 'export') {
     if (!application || phase !== 'idle') return
@@ -95,7 +119,10 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
     setPhase(action === 'generate' ? 'generating' : action === 'confirm' ? 'confirming' : 'exporting')
     setError(null)
     setNotice(null)
-    if (action !== 'export') setExportResult(null)
+    if (action !== 'export') {
+      setExportResult(null)
+      setShowCompletion(false)
+    }
     try {
       if (action === 'generate') {
         const generated = await api.generate(application.application_id, { expected_revision: application.revision }, controller.signal)
@@ -130,7 +157,12 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
         }
         if (request !== requestRef.current) return
         setExportResult(result)
-        setNotice('已收到导出结果，请按下方提示获取申请资料包。')
+        if (!mockMode && safeDownloadUrl(result.download_url)) {
+          setShowCompletion(true)
+          setNotice(null)
+        } else {
+          setNotice('已收到导出结果，请按下方提示获取申请资料包。')
+        }
       }
     } catch (caught) {
       if (request === requestRef.current && !isAbort(caught)) {
@@ -159,14 +191,16 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
       <div className="flex flex-col gap-4 border-b border-slate-100 pb-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm font-medium text-blue-700">申请流程 · 确认与导出</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="draft-title" tabIndex={-1}>确认并导出申请</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">请仔细核对申请初稿中的病情、费用和其他重要信息。确认无误后再导出。</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900" id="draft-title" ref={titleRef} tabIndex={-1}>{completionVisible ? '申请资料已整理完成' : '确认并导出申请'}</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">{completionVisible ? '资料包已准备完成，请下载保存后按目标众筹平台的要求自行提交。' : '请仔细核对申请初稿中的病情、费用和其他重要信息。确认无误后再导出。'}</p>
         </div>
         {mockMode && <span className="w-fit rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-900">Mock 演示模式 · 草稿和导出结果为虚构示例</span>}
       </div>
 
       {!application ? (
         <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">请先填写并保存求助信息，再生成申请初稿。</div>
+      ) : completionVisible && downloadUrl ? (
+        <DraftCompletion downloadUrl={downloadUrl} onViewDraft={() => setShowCompletion(false)} />
       ) : (
         <>
           <div className="mt-6 flex flex-col gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between">
