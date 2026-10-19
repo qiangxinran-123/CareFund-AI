@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0046",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "用户自述医生已经排除肺癌，目前具体病因未知，仍在检查。"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "documents.diagnosis_proof",
+      "question": "您提到目前具体病因未知、仍在检查，请问是否已有医院出具的检查报告或诊断材料可以补充？",
+      "reason": "补充材料便于核对已有陈述，并帮助了解当前检查情况。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料，无法对用户自述内容进行材料核对。",
+    "用户自述医生已排除肺癌、具体病因未知且仍在检查，该信息仅为用户陈述，尚未经材料证实。"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "checked_at": "2026-10-17T13:33:59.044158+00:00",
+  "mode": "offline_only",
+  "new_model_calls": 0,
+  "tests": [
+    {
+      "command": "python -m unittest discover -s agent/tests",
+      "tests": 89,
+      "passed": true
+    },
+    {
+      "command": "python -m unittest discover -s contracts/tests",
+      "tests": 10,
+      "passed": true
+    },
+    {
+      "command": "python -m unittest discover -s agent/verification/full-csv-20261017 -p test_full_csv.py",
+      "tests": 20,
+      "passed": true
+    }
+  ],
+  "saved_synthetic_replay": {
+    "extract": 21,
+    "draft": 6,
+    "passed_boundary_and_limited_checks": true,
+    "open_findings_retained": [
+      "S014",
+      "S015",
+      "S018",
+      "S026"
+    ],
+    "semantic_acceptance_claimed": false
+  },
+  "runtime_sha256": {
+    "agent/agent_service.py": "9eed2c94cf38e1fa4ff381217e638d917eb682036d3611f281de8223792fbde0",
+    "agent/dify_runner.py": "83c408c253a436488ba3f7ad4c62035a5a0a68321d510d161aad7a058a45a3e5",
+    "agent/dify_question_format.py": "f06a039b91d659b3ddcfac37b489105940a2533fb5d6b06dfdedbbd7d5aff972",
+    "agent/extract_policy.py": "6e2bed965b56d4c85c8008ea25b1a2269d1f9f9b358571de4b089daf606e328a",
+    "agent/draft_policy.py": "fa9894bb9419fdcd8d3c12f23b3ed1b23739e3670280f55a1b3f57d9de37c5f5",
+    "agent/workflow.deepseek-extract.yml": "560dc5f38b81d1ac9752eef123357fcfd7c6b2d25e8593214afdf0c5c3a0eae3",
+    "agent/workflow.deepseek-draft.yml": "6ace13cd39a2980577b36801939b55e138912ff47f7e04ebd07e2e652300d052"
+  },
+  "prompt_candidate_live_calls": 0,
+  "full_csv_left_paused": true,
+  "production_runtime_changed_by_content_review": false,
+  "added_test": "test_correction_lifecycle.py",
+  "contracts_changed": false,
+  "committed_or_pushed": false
+}

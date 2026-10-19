@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Compare only; never overwrite team contracts.",
+  "files": [
+    {
+      "path": "contracts/.gitkeep",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "contracts/examples/agent-response.example.json",
+      "size_bytes": 1828,
+      "sha256": "e0aaf162c6efaa8edcd461937983fa9f40b3807759177b5b8ebbfb7bd94f3b87"
+    },
+    {
+      "path": "contracts/examples/application.example.json",
+      "size_bytes": 1254,
+      "sha256": "2e4379a99c694b770bd92569da8f2cb03a0c473edfb3c1e50f9335543951530e"
+    },
+    {
+      "path": "contracts/examples/draft.example.json",
+      "size_bytes": 810,
+      "sha256": "5711e9d042d39a46da798b2782be2e10fd7128d128b5fc54d3624742742c43ec"
+    },
+    {
+      "path": "contracts/examples/validation-result.example.json",
+      "size_bytes": 1033,
+      "sha256": "877abbeb402a2b9dc4778ba0980373baed6521a3d0197fcce1ae739561f8d649"
+    },
+    {
+      "path": "contracts/openapi.yaml",
+      "size_bytes": 16509,
+      "sha256": "14a7d68ae53208efeda17c589796ee3bc51e090934cd2451efe92a338f9dfe09"
+    },
+    {
+      "path": "contracts/README.md",
+      "size_bytes": 7461,
+      "sha256": "156f460fa62a2856a38ddf46b297f69cedf5fbe731d2a5e94269c3cfa3ab1ad4"
+    },
+    {
+      "path": "contracts/schemas/agent.schema.json",
+      "size_bytes": 6506,
+      "sha256": "52b36e9b7751d3bde9f5de5af5e7de995c6ccf07a9dece265126c2b94bfec69b"
+    },
+    {
+      "path": "contracts/schemas/application.schema.json",
+      "size_bytes": 4047,
+      "sha256": "c1c9b10a0f138e159e27bd2cb95c03de952923fc38a49c5c08132c0a7cb0df6f"
+    },
+    {
+      "path": "contracts/schemas/common.schema.json",
+      "size_bytes": 3605,
+      "sha256": "dd837c800da599391f9c9a5e808be299d405549906b5d0403fc113c34e5d5181"
+    },
+    {
+      "path": "contracts/schemas/draft.schema.json",
+      "size_bytes": 4289,
+      "sha256": "2d1e74f001ad6842e02a699452e9e14d4503b2eedc3ebec4dd48cd8a7097e9e2"
+    },
+    {
+      "path": "contracts/schemas/evidence.schema.json",
+      "size_bytes": 5663,
+      "sha256": "3100a664dedd939609e8223715ca64b54196fcec34d616721ded99a3c3539ef5"
+    },
+    {
+      "path": "contracts/schemas/validation.schema.json",
+      "size_bytes": 5972,
+      "sha256": "278a5233f16f47a800308b8395f6a9b8744d81e11505665c621864934f2f5da3"
+    },
+    {
+      "path": "contracts/tests/test_contracts.py",
+      "size_bytes": 11842,
+      "sha256": "bcafefcf89f53a0091b0ed02f57d2c8d5e01a9c49d4426c1f86bcd158e3f0eff"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "validation_id": "validation_0b7e8c23349147bc8a29ac4e68079139",
+  "application_id": "app_synthetic_draft_003",
+  "application_revision": 1,
+  "issues": [
+    {
+      "issue_id": "issue_907ad24a5c854e03aa7234226bf77d42",
+      "type": "unsupported",
+      "severity": "blocking",
+      "field": "patient.medical_summary",
+      "message": "事实引用了不存在的证据。",
+      "related_fact_ids": [
+        "fact_injection_001"
+      ]
+    },
+    {
+      "issue_id": "issue_1d9136b61e0b4ccf867045cc5f9f865c",
+      "type": "unsupported",
+      "severity": "blocking",
+      "field": "patient.medical_summary",
+      "message": "引用文本未明确支持该事实；不得猜测或夸大。",
+      "related_fact_ids": [
+        "fact_injection_001"
+      ]
+    },
+    {
+      "issue_id": "issue_c5a3e1e661044c78971e7d0e3d05d6fa",
+      "type": "missing",
+      "severity": "blocking",
+      "field": "documents",
+      "message": "缺少已完成解析的证明材料。",
+      "related_fact_ids": []
+    }
+  ],
+  "can_finalize": false,
+  "evaluated_at": "2026-10-16T12:12:46Z"
+}

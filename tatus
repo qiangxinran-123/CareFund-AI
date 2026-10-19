@@ -1,0 +1,20 @@
+ frontend/.env.example                              |   2 [32m+[m
+ frontend/README.md                                 |  11 [32m+[m[31m-[m
+ frontend/src/App.test.tsx                          |  10 [32m+[m[31m-[m
+ frontend/src/App.tsx                               |   7 [32m+[m[31m-[m
+ frontend/src/api/application.test.ts               |  64 [32m++++++++[m
+ frontend/src/api/application.ts                    |  48 [32m++++++[m
+ frontend/src/api/applicationMock.ts                |  52 [32m+++++++[m
+ frontend/src/api/index.ts                          |   5 [32m+[m
+ frontend/src/components/layout/AppLayout.tsx       |   2 [32m+[m[31m-[m
+ .../features/application/ApplicationForm.test.tsx  | 136 [32m++++++++++++++++[m
+ .../src/features/application/ApplicationForm.tsx   | 173 [32m+++++++++++++++++++++[m
+ .../src/features/application/BasicInfoStep.tsx     |  49 [32m++++++[m
+ .../src/features/application/FinancialInfoStep.tsx |  12 [32m++[m
+ .../src/features/application/MedicalInfoStep.tsx   |  30 [32m++++[m
+ .../src/features/application/StepIndicator.tsx     |  35 [32m+++++[m
+ .../src/features/application/validation.test.ts    |  22 [32m+++[m
+ frontend/src/features/application/validation.ts    |  45 [32m++++++[m
+ frontend/src/styles/index.css                      |  22 [32m+++[m
+ frontend/src/types/contracts.ts                    |  47 [32m++++[m[31m--[m
+ 19 files changed, 746 insertions(+), 26 deletions(-)

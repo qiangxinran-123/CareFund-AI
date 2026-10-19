@@ -1,0 +1,78 @@
+{
+  "source_file": "data_final(1).csv",
+  "source_sha256": "fbcd57439ad7c1b02ae34078990c4042a7e3193977e49bb0a9b5e93bac5b2cc2",
+  "source_bytes": 28848478,
+  "counts": {
+    "rows": 84712,
+    "unreviewed_free_text": 52221,
+    "strict_minimal_disease": 32477,
+    "empty": 14
+  },
+  "distinct_nonempty_disease_cells": 34147,
+  "distinct_strict_minimal_phrases": 229,
+  "strict_minimal_row_coverage": 32477,
+  "unreviewed_distinct_disease_cells": 33917,
+  "local_privacy_pattern_flags": {
+    "source_name_exact_overlap_rows": 25
+  },
+  "row_index_sha256": "dc5ad62ebdf9544b599ded94d572a16397db5a250a4fe6b71e9bfd31550717a4",
+  "historical_chinese_sample_size": 60,
+  "historical_chinese_mean_seconds": 6.867466666666667,
+  "historical_chinese_mean_total_tokens": 1875.45,
+  "independent_nonempty_row_calls": 84698,
+  "independent_including_empty_calls": 84712,
+  "independent_row_serial_days_estimate": 6.733296716049383,
+  "independent_row_total_tokens_estimate": 158873120,
+  "nonempty_deduplicated_calls": 34147,
+  "deduplicated_nonempty_serial_hours_estimate": 65.13982896296297,
+  "columns_excluded_from_model_inputs": [
+    "created_time",
+    "disease_label",
+    "duration",
+    "patient_birth_date",
+    "patient_city",
+    "patient_province",
+    "projuuid",
+    "raise_days",
+    "share_number",
+    "target_amount",
+    "uuid",
+    "publisher_name",
+    "patient_name",
+    "raised_amount",
+    "support_number",
+    "support_person_number",
+    "patient_age",
+    "property",
+    "av_donate",
+    "complete",
+    "project",
+    "patient_age_new"
+  ],
+  "privacy_gate": "Only the prior strict whole-cell grammar is currently reviewed for external sending; other text remains local.",
+  "planned_model_calls_approved_by_this_script": 0,
+  "actual_model_calls": 0,
+  "provider_rates_checked_2026_10_17": {
+    "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+    "unit": "CNY per million tokens",
+    "model": "deepseek-flash",
+    "off_peak": {
+      "input_cache_hit": 0.02,
+      "input_cache_miss": 1,
+      "output": 4
+    },
+    "peak": {
+      "input_cache_hit": 0.04,
+      "input_cache_miss": 2,
+      "output": 8
+    }
+  },
+  "limits": [
+    "Timing and token extrapolations are planning estimates, not actual usage or a quote.",
+    "Stored total-token metadata does not identify input/output/cache mix; exact cost cannot be derived.",
+    "Identity columns are excluded, but disease free text can itself contain identity details.",
+    "Local privacy patterns are incomplete; a lack of flags is not proof of deidentification.",
+    "Deduplicated reuse is not an independent model execution on every source row.",
+    "No dataset-wide semantic labels or ground truth have been established."
+  ]
+}

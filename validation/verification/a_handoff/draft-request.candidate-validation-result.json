@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "validation_id": "validation_08db0736ec32481f96ee882f8afad0ef",
+  "application_id": "app_synthetic_draft_001",
+  "application_revision": 3,
+  "issues": [
+    {
+      "issue_id": "issue_d5e85387161a4e319b9afdffe3d1bae8",
+      "type": "unsupported",
+      "severity": "blocking",
+      "field": "treatment.estimated_cost",
+      "message": "事实引用了不存在的证据。",
+      "related_fact_ids": [
+        "fact_draft_004"
+      ]
+    },
+    {
+      "issue_id": "issue_da3728bfc3854d85be4b6ab914cccd00",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "patient.relationship_to_applicant",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_draft_001"
+      ]
+    },
+    {
+      "issue_id": "issue_c5d79fde4fe34988ac79d66ca689f860",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "patient.medical_summary",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_draft_002"
+      ]
+    },
+    {
+      "issue_id": "issue_cbd68da59c9c45a992e0be1fb460deff",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "treatment.paid_cost",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_draft_003"
+      ]
+    },
+    {
+      "issue_id": "issue_f292262b19064dd583c9e153a6b9d9ee",
+      "type": "unsupported",
+      "severity": "blocking",
+      "field": "treatment.estimated_cost",
+      "message": "引用文本未明确支持该事实；不得猜测或夸大。",
+      "related_fact_ids": [
+        "fact_draft_004"
+      ]
+    },
+    {
+      "issue_id": "issue_193b5c45cafb43b29783210d1f17dab7",
+      "type": "missing",
+      "severity": "blocking",
+      "field": "documents",
+      "message": "缺少已完成解析的证明材料。",
+      "related_fact_ids": []
+    }
+  ],
+  "can_finalize": false,
+  "evaluated_at": "2026-10-16T12:12:46Z"
+}

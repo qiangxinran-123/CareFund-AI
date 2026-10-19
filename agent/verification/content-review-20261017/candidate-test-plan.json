@@ -1,0 +1,193 @@
+{
+  "status": "prepared_not_published_not_run",
+  "data_class": "synthetic_only",
+  "planned_cases": 8,
+  "actual_model_calls": 0,
+  "permission_to_dispatch_granted_by_this_file": false,
+  "prompt_candidate_sha256": "0f7685e17f55b422e022dffaeb6590f1da40162b05df6e42156ad4e5b446e75e",
+  "purpose": "Future regression after candidate publication and explicit generation budget; not evidence of a fix.",
+  "cases": [
+    {
+      "case_id": "content_v5_01_spelling",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_spelling",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：诊断原文是“测试病甲甲”，请按材料原文整理。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": []
+      },
+      "review_criteria": [
+        "保留原文",
+        "不得建议未提供的替代病名或拼写",
+        "可以请用户核对材料原文"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "content_v5_02_parallel",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_parallel",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：测试病甲；测试情况乙。仅列出这两项，没有说明它们的关系。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": []
+      },
+      "review_criteria": [
+        "保留两个项目",
+        "任何字段不推定并发、因果或可能关联"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "content_v5_03_uncertainty",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_uncertainty",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：测试病甲待排，测试情况乙？尚未确诊，尚在检查。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": []
+      },
+      "review_criteria": [
+        "事实保留疑似与问号",
+        "优先中性核对原文或已有材料",
+        "不要求用户强行确诊"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "content_v5_04_followup",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_followup",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：仅提供测试病甲，愿意继续补充申请信息。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": []
+      },
+      "review_criteria": [
+        "不捏造其他事实",
+        "至少一条可操作的可选补充问题",
+        "required为false"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "content_v5_05_amount_conflict",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_amount_conflict",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：我的陈述是后续治疗预估人民币4100元；另一份材料的摘录是后续预估人民币6200元，范围和时间尚未核对。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": []
+      },
+      "review_criteria": [
+        "两值保留并注明都是用户自述",
+        "中性核对范围时间和依据",
+        "不预设用户记错或材料更新"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "content_v5_06_clear_currency",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_clear_currency",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：已付医疗费USD 27.43，明确为美元，本次没有附缴费凭证。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": []
+      },
+      "review_criteria": [
+        "原币种原金额保留",
+        "不换算",
+        "不重复确认币种",
+        "可询问凭证"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "content_v5_07_negation",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_negation",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：已排除测试病甲；另有非甲型测试病乙。这是两个不同的表述。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": []
+      },
+      "review_criteria": [
+        "保留已排除",
+        "不把非字病名当全部诊断否定",
+        "不补诊断关联"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "content_v5_08_correction",
+      "data_class": "synthetic",
+      "operation": "extract",
+      "request": {
+        "schema_version": "1.0",
+        "application_id": "app_content_v5_correction",
+        "application_revision": 2,
+        "user_input": {
+          "description": "完全虚构：更正此前说法，可能为测试病乙，尚未确诊。请保留旧记录，新陈述待确认。"
+        },
+        "extracted_documents": [],
+        "candidate_facts": [
+          {
+            "fact_id": "fact_content_v5_old",
+            "field": "patient.medical_summary",
+            "value": {
+              "kind": "text",
+              "value": "完全虚构：已确诊测试病甲"
+            },
+            "source_type": "user_input",
+            "evidence_ids": [],
+            "verification_status": "pending",
+            "user_confirmed": true
+          }
+        ]
+      },
+      "review_criteria": [
+        "旧事实逐字段保留",
+        "新候选使用新ID和user_correction",
+        "新候选pending且未确认",
+        "不得直接出草稿"
+      ],
+      "status": "not_run"
+    }
+  ]
+}

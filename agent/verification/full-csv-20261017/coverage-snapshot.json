@@ -1,0 +1,27 @@
+{
+  "snapshot_time": "2026-10-17T13:19:26.758904+00:00",
+  "runner_status": "paused_on_finding_no_retry",
+  "snapshot_attempts": 1350,
+  "source_rows": 84712,
+  "row_counts": {
+    "partial_checks_passed": 1338,
+    "boundary_or_transport_rejected": 11,
+    "held_for_local_review": 61,
+    "needs_context_review": 1,
+    "not_attempted": 83301
+  },
+  "review_flag_counts": {
+    "free_text_semantics_not_independently_annotated": 779,
+    "platform_reference_needs_context_review": 1
+  },
+  "dify_reported_total_tokens": 3200480,
+  "responses_with_verified_question_format_provenance": 1259,
+  "question_policy_applied_calls": 111,
+  "raw_model_contract_rejections_recorded": 111,
+  "sum_completed_call_seconds": 8455.569,
+  "private_row_results": "agent/.local/full-csv-20261017/row-results.csv",
+  "row_results_sha256": "1495e1df1cc37fb3338846b5f3e8a452a0371d777a0ceea56e9b53b47adc1738",
+  "automatic_semantic_limits": "Free-text meanings are not independently annotated; partial checks are not an accuracy score.",
+  "external_calls_by_this_script": 0,
+  "actual_provider_bill_read": false
+}

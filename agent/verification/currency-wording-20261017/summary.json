@@ -1,0 +1,146 @@
+{
+  "started_at": "2026-10-17T05:23:33.284367+00:00",
+  "status": "completed_with_reviewed_flags",
+  "planned_cases": 6,
+  "calls_attempted": 6,
+  "automatic_retries": 0,
+  "real_medical_inputs": 0,
+  "app_info_requests_attempted": 2,
+  "suite_sha256": "8d174376b4bd800932ffd2d5d19cac7476180db8ec253a8ff882e95e38970b85",
+  "model_configuration_basis": "prior configured deepseek-flash; no fresh DSL export",
+  "publication_basis": "user reported manual prompt change published",
+  "cases": [
+    {
+      "case_id": "currency_original_usd",
+      "operation": "extract",
+      "data_class": "synthetic",
+      "request_sha256": "0b0ce2ba6d21f7ad8426055099cb42291b01d6f66688e0e198c4c7df2b59eeea",
+      "status": "automatic_checks_passed",
+      "segment": 1,
+      "response_file": "agent/.local/currency-wording-20261017/currency_original_usd.response.json",
+      "response_sha256": "2391af39262123d2081bbae1b92c5a7084775ca19b10d363bd9b51d28a80ae92",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 5.155
+    },
+    {
+      "case_id": "currency_exact_cny",
+      "operation": "extract",
+      "data_class": "synthetic",
+      "request_sha256": "b1e8bb53752514ff098ac8594daf159a12d31f0f5ea564092d2ff64027febdc0",
+      "status": "automatic_checks_passed",
+      "segment": 1,
+      "response_file": "agent/.local/currency-wording-20261017/currency_exact_cny.response.json",
+      "response_sha256": "3f8ed34bdf3db5a098be0ee7ff13f24b283af6006b69d2e5bbdf6098590be1ea",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 4.234
+    },
+    {
+      "case_id": "currency_ambiguous_symbol",
+      "operation": "extract",
+      "data_class": "synthetic",
+      "request_sha256": "57623137fc69d09fa5d9daaa9aa7ed007b5ec53a04f6dc126fe9e7a6f687ba5f",
+      "status": "automatic_checks_passed",
+      "segment": 1,
+      "response_file": "agent/.local/currency-wording-20261017/currency_ambiguous_symbol.response.json",
+      "response_sha256": "e59f9b45287e4b98f767d7fb15089d7e20ec86b909351d07531cb2ceff88794f",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 4.304
+    },
+    {
+      "case_id": "currency_exact_eur",
+      "operation": "extract",
+      "data_class": "synthetic",
+      "request_sha256": "ec39dd3078701f9ac691e61eec9ac1d50ee50f8b5b00b91b662283f0615ade84",
+      "status": "automatic_checks_passed",
+      "segment": 1,
+      "response_file": "agent/.local/currency-wording-20261017/currency_exact_eur.response.json",
+      "response_sha256": "979676d76abfe5d2afac4557e57392fb8ec7c5935a9f0aa02cdbe2b94b4ce69b",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 3.68
+    },
+    {
+      "case_id": "currency_user_rule_claim",
+      "operation": "extract",
+      "data_class": "synthetic",
+      "request_sha256": "f011b8a753af3ca38a5395b92ded65a922657c4c857bba65192ac35fb3d88aff",
+      "status": "needs_content_review",
+      "segment": 1,
+      "response_file": "agent/.local/currency-wording-20261017/currency_user_rule_claim.response.json",
+      "response_sha256": "25febb0b96fb49554b01721fb14763105dc98d7135fb9c507b3f95bec6548ec5",
+      "failures": [],
+      "review_flags": [
+        "platform_currency_claim_needs_context_review"
+      ],
+      "elapsed_seconds": 5.394
+    },
+    {
+      "case_id": "currency_negated_rule",
+      "operation": "extract",
+      "data_class": "synthetic",
+      "request_sha256": "2928a2bd6262c1dece676d910f9a88b5dd1f23ef1ccc52971399a1c1a263c8cd",
+      "status": "automatic_checks_passed",
+      "segment": 2,
+      "response_file": "agent/.local/currency-wording-20261017/currency_negated_rule.response.json",
+      "response_sha256": "aa0605b05d6ceb8b8a3d87d6c87d08adc975b008377233b05bb078a2e6b3478b",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 5.8
+    }
+  ],
+  "segments": [
+    {
+      "index": 1,
+      "started_at": "2026-10-17T05:23:33.284386+00:00",
+      "finished_at": "2026-10-17T05:23:59.469827+00:00",
+      "calls_after": 5,
+      "status": "stopped_for_review"
+    },
+    {
+      "index": 2,
+      "started_at": "2026-10-17T05:24:44.714689+00:00",
+      "finished_at": "2026-10-17T05:24:53.482170+00:00",
+      "calls_after": 6,
+      "status": "completed_with_reviewed_flags"
+    }
+  ],
+  "counts": {
+    "automatic_checks_passed": 5,
+    "needs_content_review": 1
+  },
+  "finished_at": "2026-10-17T05:24:53.482183+00:00",
+  "unattempted_case_ids": [],
+  "review_decisions": {
+    "currency_user_rule_claim": {
+      "response_sha256": "25febb0b96fb49554b01721fb14763105dc98d7135fb9c507b3f95bec6548ec5",
+      "disposition": "safe_attribution_or_negation",
+      "review_summary": "The warning explicitly attributes the platform-currency claim to the user's guess, says no formal rule was supplied and does not present it as verified. USD amount is preserved without conversion. No new unsupported platform-currency assertion was observed.",
+      "usability_observation": "The question redundantly asks to confirm an explicitly supplied USD currency while also requesting a receipt. This is a separate minor usability issue, not evidence of an unsupported platform rule.",
+      "reviewed_by": "Codex; partial contextual review, not independent business acceptance"
+    }
+  },
+  "overall_status": "all_six_passed_partial_checks_and_context_review",
+  "accepted_after_context_review": 6,
+  "offline_saved_response_checks": "passed",
+  "new_model_calls_by_finalization": 0,
+  "local_status_sha256": "5b7101e18f7b8753369adb57ac2dbad8645507ca4b0995e37a7951482f124fbe",
+  "original_USD_request_retested_unchanged": true,
+  "publication_verification": "User reported manual publication; exact current UI prompt and fresh DSL export not inspected.",
+  "runtime_sha256": {
+    "agent/agent_service.py": "9eed2c94cf38e1fa4ff381217e638d917eb682036d3611f281de8223792fbde0",
+    "agent/extract_policy.py": "6e2bed965b56d4c85c8008ea25b1a2269d1f9f9b358571de4b089daf606e328a",
+    "agent/currency_review.py": "82c2fa86200694eb3f802534a5d4e60c4afba1d57634be21486abcb1161d0ddc",
+    "agent/batch_check.py": "37f60d8d6a74f80aa215bd4ebadf81df1524959925d218f77704242a39b35492"
+  },
+  "actual_bill_read": false,
+  "limits": [
+    "Six synthetic runs are partial regression, not a guarantee against future hallucination.",
+    "Platform currency phrase matches require contextual review, including attributed or negated text.",
+    "No production AgentService guard added for ambiguous prose; the new scan is an evaluation helper.",
+    "Existing raw DSL exports predate the manually published change; a separate candidate is not an online export.",
+    "No B transactions, OCR or final export acceptance."
+  ]
+}

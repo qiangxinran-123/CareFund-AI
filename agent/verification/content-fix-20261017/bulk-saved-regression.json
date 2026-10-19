@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-17T13:48:53.428087+00:00",
+  "saved_response_count": 1341,
+  "counts": {
+    "saved_extract_replayed_facts_unchanged": 1339,
+    "historical_invalid_response_still_rejected": 2
+  },
+  "response_fingerprints_sha256": "228265106603f59e0170fbba5d13b069eb6c79bf6914c22327c688c8b4638045",
+  "batch_attempts": 1350,
+  "batch_ledger_modified": false,
+  "new_model_calls": 0,
+  "medical_accuracy_claimed": false,
+  "scope": "All saved parsed responses; no re-generation or recovery of missing network/invalid-JSON responses."
+}

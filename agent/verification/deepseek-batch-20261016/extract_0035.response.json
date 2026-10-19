@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0035",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "用户自述医生表示可能是肺部肿瘤，仍在检查，尚未确诊"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "documents.diagnosis_proof",
+      "question": "您目前是否已有医院出具的诊断证明或检查报告（如CT、病理报告等）可以补充？",
+      "reason": "用户自述正在检查、尚未确诊，补充现有检查材料便于核对已有陈述。",
+      "required": false
+    },
+    {
+      "question_id": "question_002",
+      "field": "treatment.estimated_cost",
+      "question": "您是否已有医院给出的后续治疗费用预估单或费用说明？如有，金额是多少？",
+      "reason": "用户未提供后续预估治疗费信息，需要了解是否已有医院费用预估材料。",
+      "required": false
+    },
+    {
+      "question_id": "question_003",
+      "field": "treatment.paid_cost",
+      "question": "截至目前，您为检查和治疗已经支付了多少费用？",
+      "reason": "用户未提供已支付医疗费信息，需要了解当前已发生的费用情况。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料，无法对用户自述的病情进行材料核实。",
+    "用户自述“可能是肺部肿瘤，正在检查，尚未确诊”，该不确定性已保留在事实 value 中，未提取为确诊结论。",
+    "用户未提供患者与申请人关系、所在城市、已支付费用、后续预估费用等信息，未生成相应事实。"
+  ]
+}

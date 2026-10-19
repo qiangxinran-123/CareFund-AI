@@ -1,0 +1,62 @@
+{
+  "publication_basis": "user_reported_not_verified_by_fresh_dsl",
+  "source_rows": [
+    82,
+    83,
+    84,
+    85
+  ],
+  "new_generation_calls": 4,
+  "new_status_counts": {
+    "partial_checks_passed": 2,
+    "boundary_or_transport_rejected": 2
+  },
+  "valid_json_responses": 4,
+  "schema_valid_partial_checks_passed": 2,
+  "failures": [
+    {
+      "source_row": 84,
+      "json_syntax": "valid",
+      "invalid_question_count": 3,
+      "missing_fields": [
+        "required"
+      ],
+      "wire_sha256": "c0cca5f3b61b909891962c95de769f3810275920b91949a42cfae33bdd5cee02",
+      "response_sha256": "6aed910f530c788ee190d89b180678af8904eb1e69d793bf7ae57d24f7fccee0",
+      "retried": false,
+      "required_inserted": false,
+      "original_status_retained": true
+    },
+    {
+      "source_row": 85,
+      "json_syntax": "valid",
+      "invalid_question_count": 3,
+      "missing_fields": [
+        "required"
+      ],
+      "wire_sha256": "acdfaa2590de0b72225cea318c1204af7d21fa6ce87132451ad1627804ef3857",
+      "response_sha256": "39d880593b489748c189ed7b606d46ca43d66bbb0411d2da73c4e67d98a8c967",
+      "retried": false,
+      "required_inserted": false,
+      "original_status_retained": true
+    }
+  ],
+  "historical_failures_not_retried": [
+    44,
+    70,
+    78
+  ],
+  "cumulative_attempts": 85,
+  "cumulative_counts": {
+    "boundary_or_transport_rejected": 5,
+    "partial_checks_passed": 80
+  },
+  "cumulative_cost_upper_bound_cny": 1.488962,
+  "actual_bill_read": false,
+  "all_rows_model_tested": false,
+  "held_for_local_review": 61,
+  "not_attempted_rows": 84566,
+  "conclusion": "Two new outputs still violate the contract. Four valid JSON responses do not prove original syntax issue fixed.",
+  "next_step": "Verify newly published extraction DSL. Existing local candidate already specifies required=false; do not weaken response validation or retry old rows.",
+  "external_calls_by_report": 0
+}

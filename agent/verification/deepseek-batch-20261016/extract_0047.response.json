@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0047",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "treatment.recorded_date",
+      "value": {
+        "kind": "text",
+        "value": "今年三月曾就诊，具体哪一天不清楚"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "treatment.recorded_date",
+      "question": "您提到今年三月曾就诊，但具体日期不清楚。请问就诊记录或病历上是否有更具体的日期？如果有，方便提供吗？",
+      "reason": "就诊日期是治疗记录的关键信息，目前只有月份且年份未提供，需要更准确的信息以便核对。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "用户自述“今年三月曾就诊，具体哪一天不清楚”，未提供年份，日期不完整，已保留为文本，未补全年月日。",
+    "本次输入未附材料，无法从材料中核实就诊日期。"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-10-17T06:12:37.739258+00:00",
+  "supplied_export_sha256": "e98b2c7d631a86ba9de986d5c241cfd6478b327dad03e6057a81e4fc630ed233",
+  "supplied_export_matches_v4_candidate_exactly": true,
+  "actual_SYSTEM_contains_required_rule_and_example": true,
+  "current_offline_canonical_export_synchronized": true,
+  "previous_export_sha256": "f4780099f9008ee478bdcc93409745641e7c75389f42232e1630adaee52511b6",
+  "candidate_dsl": "agent/workflow.deepseek-extract.question-guard-candidate.yml",
+  "candidate_dsl_sha256": "09e3707fb4ccecd0277e5fd0b13c9404e0b390dacb6b6accb85d8e1a337345b2",
+  "candidate_code_sha256": "f06a039b91d659b3ddcfac37b489105940a2533fb5d6b06dfdedbbd7d5aff972",
+  "model_and_prompt_unchanged": true,
+  "candidate_status": "prepared_offline_not_imported_or_published",
+  "automatic_model_or_code_retries_enabled": false,
+  "new_generation_calls": 0,
+  "offline_replay_counts": {
+    "already_valid_preserved": 80,
+    "counterfactual_valid_after_optional_policy": 2
+  },
+  "offline_replay_input_basis": {
+    "reserialized_saved_parsed_response_original_whitespace_unavailable": 44,
+    "exact_captured_model_text": 39
+  },
+  "counterfactual_insertions": [
+    {
+      "source_row": 84,
+      "inserted_false_count": 3,
+      "original_status_unchanged": true
+    },
+    {
+      "source_row": 85,
+      "inserted_false_count": 3,
+      "original_status_unchanged": true
+    }
+  ],
+  "malformed_historical_responses_still_rejected": [
+    44,
+    70
+  ],
+  "historical_attempts_unchanged": 85,
+  "historical_cost_upper_bound_cny": 1.488962,
+  "actual_bill_read": false,
+  "provider_model_bug_proven_fixed": false,
+  "full_csv_resume_requires_new_publication_and_separate_failure_triage": true,
+  "references": [
+    "https://docs.dify.ai/en/cloud/use-dify/nodes/code",
+    "https://api-docs.deepseek.com/api/create-chat-completion/"
+  ],
+  "limitations": "Offline normalization is not a new model run or correction of historical failures. Program fills only question.required=false under current optional-question policy. A still validates full final response; medical accuracy is not established."
+}

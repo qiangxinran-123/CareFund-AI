@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-17",
+  "source_filename": "CareFund-信息抽取与追问-修订版 (2).yml",
+  "source_bytes": 12675,
+  "old_export_archived": "agent/verification/currency-wording-20261017/pre-currency-extract-export.yml",
+  "old_export_sha256": "b6288e27770394827eeeb9e83a6f65b25ad1a5db6ba1ceec58e6d208963d07b7",
+  "new_export_sha256": "f4780099f9008ee478bdcc93409745641e7c75389f42232e1630adaee52511b6",
+  "synced_file": "agent/workflow.deepseek-extract.yml",
+  "synced_as_original_bytes": true,
+  "exact_exported_SYSTEM_prompt_file": "agent/prompts/extract-currency-v3.md",
+  "exact_exported_SYSTEM_prompt_sha256": "bd31abbd397c525e52604492c8f969ac072b12cb55fcaa47100fb3982d902b3a",
+  "model": {
+    "completion_params": {
+      "max_tokens": 8192,
+      "response_format": "json_object",
+      "temperature": 0,
+      "thinking": false
+    },
+    "mode": "chat",
+    "name": "deepseek-flash",
+    "provider": "langgenius/deepseek/deepseek"
+  },
+  "dependencies": [
+    {
+      "current_identifier": null,
+      "type": "marketplace",
+      "value": {
+        "marketplace_plugin_unique_identifier": "langgenius/deepseek:0.0.24@9e12eef09973667f0eaf4f082af883167e1de88740b22e71e71488d020c3778a",
+        "version": null
+      }
+    }
+  ],
+  "normalized_prompt_only_adds_rule_8": true,
+  "all_non_prompt_execution_configuration_unchanged": true,
+  "local_candidate_semantically_matches_actual_export": true,
+  "UI_selection_difference_ignored": true,
+  "credentials_pattern_scan": "passed",
+  "published_version_label": "not independently observed",
+  "source_and_limit": "User supplied editor export plus user publication confirmation and six real API regressions; export alone does not prove the published version.",
+  "yaml_parser_version": "6.0.3",
+  "new_model_calls": 0
+}

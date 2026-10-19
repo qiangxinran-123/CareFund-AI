@@ -1,0 +1,15 @@
+{
+  "status": "prepared_unpublished_untested_candidate",
+  "original_dsl_sha256": "f4780099f9008ee478bdcc93409745641e7c75389f42232e1630adaee52511b6",
+  "candidate_dsl": "agent/workflow.deepseek-extract.json-v4-candidate.yml",
+  "candidate_dsl_sha256": "e98b2c7d631a86ba9de986d5c241cfd6478b327dad03e6057a81e4fc630ed233",
+  "append_prompt": "agent/prompts/extract-json-v4-append.md",
+  "complete_candidate_prompt": "agent/prompts/extract-json-v4-candidate.md",
+  "example_validated_against_current_agent_contract": true,
+  "only_SYSTEM_prompt_semantics_changed": true,
+  "published": false,
+  "live_regression_calls": 0,
+  "model_issue_fixed": false,
+  "reference": "https://api-docs.deepseek.com/guides/json_mode/",
+  "limits": "Prompt example may reduce format errors but cannot guarantee valid output; fresh live testing after publication is required."
+}

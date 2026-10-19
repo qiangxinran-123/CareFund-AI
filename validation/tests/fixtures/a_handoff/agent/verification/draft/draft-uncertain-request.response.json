@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_synthetic_draft_002",
+  "application_revision": 1,
+  "candidate_sections": [
+    {
+      "title": "病情及检查情况",
+      "content": "用户自述，病情及检查情况：“仍在检查，可能为肺部肿瘤，尚未确诊；这是虚构测试案例。”",
+      "fact_ids": [
+        "fact_uncertain_001"
+      ]
+    },
+    {
+      "title": "已支付医疗费",
+      "content": "用户更正陈述，已支付医疗费：人民币123.45元",
+      "fact_ids": [
+        "fact_uncertain_002"
+      ]
+    },
+    {
+      "title": "后续预估治疗费",
+      "content": "用户自述，后续预估治疗费：“后续治疗费用暂不清楚，尚无费用预估单。”",
+      "fact_ids": [
+        "fact_uncertain_003"
+      ]
+    }
+  ],
+  "warnings": [
+    "候选草稿仅整理已确认事实，仍需独立校验和人工复核；用户确认不等于材料真实或平台审核通过。"
+  ]
+}

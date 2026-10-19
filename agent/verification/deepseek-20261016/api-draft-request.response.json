@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_synthetic_draft_001",
+  "application_revision": 3,
+  "candidate_sections": [
+    {
+      "title": "患者与申请人的关系",
+      "content": "用户自述，患者与申请人的关系：“母亲”",
+      "fact_ids": [
+        "fact_draft_001"
+      ]
+    },
+    {
+      "title": "病情及检查情况",
+      "content": "用户自述，病情及检查情况：“医生表示可能是肺部肿瘤，仍在检查，尚未确诊。”",
+      "fact_ids": [
+        "fact_draft_002"
+      ]
+    },
+    {
+      "title": "已支付医疗费",
+      "content": "用户自述，已支付医疗费：人民币20000.00元",
+      "fact_ids": [
+        "fact_draft_003"
+      ]
+    },
+    {
+      "title": "后续预估治疗费",
+      "content": "提交材料记载（真伪未经本模块核验），后续预估治疗费：人民币30000.00元",
+      "fact_ids": [
+        "fact_draft_004"
+      ]
+    }
+  ],
+  "warnings": [
+    "候选草稿仅整理已确认事实，仍需独立校验和人工复核；用户确认不等于材料真实或平台审核通过。"
+  ]
+}

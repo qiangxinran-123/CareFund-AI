@@ -1,0 +1,123 @@
+{
+  "calls_attempted": 85,
+  "counts": {
+    "partial_checks_passed": 80,
+    "boundary_or_transport_rejected": 5
+  },
+  "findings": [
+    {
+      "case_id": "fullcsv_000044",
+      "source_row": 44,
+      "status": "boundary_or_transport_rejected",
+      "error": "Dify returned invalid JSON",
+      "total_tokens": 2216,
+      "evidence_kind": "read_only_recovered_exact_request",
+      "evidence_sha256": "cf681250aaa1d75d78607c7e4d50e16d33e9890bc69ee16fc8924626c71b7c57",
+      "json_syntax": "invalid",
+      "json_error": "Expecting ',' delimiter",
+      "json_error_line": 1,
+      "json_error_column": 361,
+      "disposition": "failed_response_correctly_rejected_no_automatic_repair",
+      "model_issue_fixed": false,
+      "automatic_retry": false
+    },
+    {
+      "case_id": "fullcsv_000070",
+      "source_row": 70,
+      "status": "boundary_or_transport_rejected",
+      "error": "Dify returned invalid JSON",
+      "total_tokens": 2080,
+      "evidence_kind": "original_http_success_bytes_before_inner_json_parse",
+      "evidence_sha256": "5877c5e247750e8053cb68d8dfe4c23eaa702b7115f2a118e0c6d28545360598",
+      "json_syntax": "invalid",
+      "json_error": "Expecting ',' delimiter",
+      "json_error_line": 1,
+      "json_error_column": 270,
+      "disposition": "failed_response_correctly_rejected_no_automatic_repair",
+      "model_issue_fixed": false,
+      "automatic_retry": false
+    },
+    {
+      "case_id": "fullcsv_000078",
+      "source_row": 78,
+      "status": "boundary_or_transport_rejected",
+      "error": "Dify network request failed or timed out; execution may still be running",
+      "total_tokens": null,
+      "evidence_kind": "no_response_bytes_received",
+      "remote_execution_status": "unknown_no_matching_run_recovered_by_bounded_read_only_lookup",
+      "usage_basis": "full_reservation_retained",
+      "automatic_retry": false
+    },
+    {
+      "case_id": "fullcsv_000084",
+      "source_row": 84,
+      "status": "boundary_or_transport_rejected",
+      "error": "Schema validation failed: AgentExtractResponse (required at schema properties/questions/items/required; missing required)",
+      "total_tokens": 2444,
+      "evidence_kind": "original_http_success_bytes_before_inner_json_parse",
+      "evidence_sha256": "c0cca5f3b61b909891962c95de769f3810275920b91949a42cfae33bdd5cee02",
+      "json_syntax": "valid",
+      "missing_question_fields": [
+        {
+          "question_index": 0,
+          "missing": [
+            "required"
+          ]
+        },
+        {
+          "question_index": 1,
+          "missing": [
+            "required"
+          ]
+        },
+        {
+          "question_index": 2,
+          "missing": [
+            "required"
+          ]
+        }
+      ],
+      "disposition": "schema_invalid_response_correctly_rejected_no_field_invention",
+      "model_issue_fixed": false,
+      "automatic_retry": false
+    },
+    {
+      "case_id": "fullcsv_000085",
+      "source_row": 85,
+      "status": "boundary_or_transport_rejected",
+      "error": "Schema validation failed: AgentExtractResponse (required at schema properties/questions/items/required; missing required)",
+      "total_tokens": 2370,
+      "evidence_kind": "original_http_success_bytes_before_inner_json_parse",
+      "evidence_sha256": "acdfaa2590de0b72225cea318c1204af7d21fa6ce87132451ad1627804ef3857",
+      "json_syntax": "valid",
+      "missing_question_fields": [
+        {
+          "question_index": 0,
+          "missing": [
+            "required"
+          ]
+        },
+        {
+          "question_index": 1,
+          "missing": [
+            "required"
+          ]
+        },
+        {
+          "question_index": 2,
+          "missing": [
+            "required"
+          ]
+        }
+      ],
+      "disposition": "schema_invalid_response_correctly_rejected_no_field_invention",
+      "model_issue_fixed": false,
+      "automatic_retry": false
+    }
+  ],
+  "cost_upper_bound_cny": 1.488962,
+  "actual_provider_bill_read": false,
+  "full_file_model_test_complete": false,
+  "next_step": "User reports format-v4 publication; 4 new calls produced 2 schema rejections. Obtain fresh DSL to verify actual configuration before further changes or calls.",
+  "external_calls_by_analysis": 0
+}

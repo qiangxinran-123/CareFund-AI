@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_synthetic_draft_001",
+  "application_revision": 3,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_draft_001",
+      "field": "patient.relationship_to_applicant",
+      "value": {
+        "kind": "text",
+        "value": "母亲"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": true
+    },
+    {
+      "fact_id": "fact_draft_002",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "医生表示可能是肺部肿瘤，仍在检查，尚未确诊。"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": true
+    },
+    {
+      "fact_id": "fact_draft_003",
+      "field": "treatment.paid_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 2000000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": true
+    },
+    {
+      "fact_id": "fact_draft_004",
+      "field": "treatment.estimated_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 3000000
+        }
+      },
+      "source_type": "document",
+      "evidence_ids": [
+        "ev_synthetic_draft_001"
+      ],
+      "verification_status": "pending",
+      "user_confirmed": true
+    }
+  ],
+  "validation_issue_ids": []
+}

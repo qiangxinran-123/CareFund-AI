@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0040",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "treatment.estimated_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 5000000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_002",
+      "field": "treatment.estimated_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 3000000
+        }
+      },
+      "source_type": "document",
+      "evidence_ids": [
+        "ev_synthetic_0"
+      ],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "treatment.estimated_cost",
+      "question": "您记得后续治疗预估为人民币50000元，但本次材料中的虚构费用预估单写的是人民币30000元，请确认是否记错，或是否另有更新的预估单。",
+      "reason": "用户自述金额与材料金额不一致，需要用户确认以核对后续预估治疗费。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "用户自述后续治疗预估为人民币50000元（来源：user_input），本次材料中的虚构费用预估单显示为人民币30000元（来源：document，evidence_id：ev_synthetic_0），两者不一致，已分别保留为待确认事实，未自行裁定正确值。",
+    "本次输入未附其他材料，不能据此断言用户没有材料或医院尚未出具材料。"
+  ]
+}

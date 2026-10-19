@@ -1,0 +1,22 @@
+{
+  "version": "user-reported-bill-plus-new-reservations-v1",
+  "recorded_at": "2026-10-17T12:34:41.354868+00:00",
+  "source": "explicit_user_report",
+  "user_statement": "才花费1.92人民币，继续",
+  "platform_bill_machine_verified": false,
+  "reported_spent_micro_cny": 1920000,
+  "actual_spend_limit_micro_cny": 20000000,
+  "authorization_sha256": "c985e87b9f170c3686f2aa95e46c85941f7e33a507935625c9a635ffbd023ce4",
+  "baseline_calls": 1009,
+  "baseline_last_source_row": 1011,
+  "baseline_ledger_charge_micro_cny": 19843850,
+  "baseline_records_sha256": "3669895edab584dc30e2f017b283f87074bfbe8401497fb3d3ec19cd9daecf18",
+  "prior_unknown_usage_reserve_micro_cny": 785994,
+  "original_authorization_unchanged": true,
+  "aggregate_call_cap_unchanged": true,
+  "historical_attempts_and_costs_unchanged": true,
+  "failed_rows_retried": false,
+  "scope": "Only continue unattempted approved rows. Future calls retain highest-rate reservations. Prior unknown attempts retain extra full allowances; no scaling by an empirical price ratio.",
+  "pricing_source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "pricing_checked": "2026-10-17"
+}

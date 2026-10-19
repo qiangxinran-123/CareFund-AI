@@ -1,0 +1,64 @@
+{
+"schema_version": "1.0",
+"application_id": "app_demo_004",
+"application_revision": 1,
+"candidate_facts": [
+{
+"fact_id": "fact_001",
+"field": "patient.relationship_to_applicant",
+"value": {
+"kind": "text",
+"value": "母亲"
+},
+"source_type": "user_input",
+"evidence_ids": [],
+"verification_status": "pending",
+"user_confirmed": false
+},
+{
+"fact_id": "fact_002",
+"field": "treatment.estimated_cost",
+"value": {
+"kind": "money",
+"value": {
+"currency": "CNY",
+"amount_minor": 5000000
+}
+},
+"source_type": "user_input",
+"evidence_ids": [],
+"verification_status": "pending",
+"user_confirmed": false
+},
+{
+"fact_id": "fact_003",
+"field": "treatment.estimated_cost",
+"value": {
+"kind": "money",
+"value": {
+"currency": "CNY",
+"amount_minor": 3000000
+}
+},
+"source_type": "document",
+"evidence_ids": [
+"ev_demo_001"
+],
+"verification_status": "pending",
+"user_confirmed": false
+}
+],
+"questions": [
+{
+"question_id": "question_001",
+"field": "treatment.estimated_cost",
+"question": "您记得费用预估单写的是后续治疗预计人民币五万元，但本次材料中该预估单显示为人民币30000元。请确认是您记错了金额，还是另有一份更新的费用预估单？",
+"reason": "用户自述金额与材料金额不一致，需要确认以哪份信息为准，避免后续信息矛盾。",
+"required": false
+}
+],
+"warnings": [
+"用户自述后续治疗预计费用为人民币五万元（5000000分），材料 ev_demo_001 显示为人民币30000元（3000000分），两者不一致，已分别保留为 fact_002（user_input）和 fact_003（document），未自行裁定正确值。",
+"本次输入未附其他材料，无法据此判断用户是否还有其他费用预估单或诊断材料。"
+]
+}

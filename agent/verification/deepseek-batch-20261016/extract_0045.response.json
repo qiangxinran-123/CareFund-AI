@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0045",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "用户自述医生表示可能是肺部肿瘤，仍在检查，尚未确诊"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "documents.diagnosis_proof",
+      "question": "您提到正在检查、尚未确诊，请问目前是否已有医院出具的检查报告或诊断材料可以补充？",
+      "reason": "补充材料便于核对您已有的陈述，但本次输入未附材料，无法确认检查或诊断情况。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料，无法核实用户自述的病情信息。",
+    "用户自述“医生说可能是肺部肿瘤，正在检查，尚未确诊”属于未确诊的陈述，已按原意保留不确定性，未提取为确诊结论。"
+  ]
+}

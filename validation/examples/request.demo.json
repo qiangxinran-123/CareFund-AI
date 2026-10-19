@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_local_demo",
+  "application_revision": 1,
+  "documents": [
+    {
+      "document_id": "doc_local_demo",
+      "application_id": "app_local_demo",
+      "filename": "fictional_estimate.pdf",
+      "media_type": "application/pdf",
+      "size_bytes": 100,
+      "uploaded_at": "2026-10-16T00:00:00Z",
+      "processing_status": "processed"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev_local_demo",
+      "document_id": "doc_local_demo",
+      "source_type": "document",
+      "page": null,
+      "text_excerpt": "虚构演示材料：预估费用人民币12,500.00元。",
+      "extraction_method": "ocr"
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "fact_local_summary",
+      "field": "patient.medical_summary",
+      "value": {"kind": "text", "value": "虚构申请人自述正在接受治疗，仅用于测试。"},
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": true
+    },
+    {
+      "fact_id": "fact_local_cost",
+      "field": "treatment.estimated_cost",
+      "value": {"kind": "money", "value": {"currency": "CNY", "amount_minor": 1250000}},
+      "source_type": "document",
+      "evidence_ids": ["ev_local_demo"],
+      "verification_status": "supported",
+      "user_confirmed": true
+    }
+  ]
+}
