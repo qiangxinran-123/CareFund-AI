@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from uuid import uuid4
 
 from fastapi import APIRouter, File, Form, UploadFile, status
+from starlette.concurrency import run_in_threadpool
 
 from ..errors import ApiError
 from ..models import (
@@ -24,9 +25,9 @@ from ..models import (
     UpdateApplicationRequest,
     UploadedDocument,
 )
-from ..services.agent import agent_service
-from ..services.ocr import ocr_service
-from ..services.validation import validation_service
+from ..services.agent import AgentIntegrationError, agent_service
+from ..services.ocr import OcrProcessingError, ocr_service
+from ..services.validation import ValidationIntegrationError, validation_service
 from ..store import ApplicationRecord, store
 
 
@@ -70,7 +71,7 @@ def invalidate_derived_data(record: ApplicationRecord) -> None:
         record.draft.status = "stale"
 
 
-def run_analysis(record: ApplicationRecord, idempotency_key: str) -> AnalysisJob:
+async def run_analysis(record: ApplicationRecord, idempotency_key: str) -> AnalysisJob:
     key = (record.application.revision, idempotency_key)
     existing_job_id = record.idempotency_jobs.get(key)
     if existing_job_id:
@@ -88,10 +89,32 @@ def run_analysis(record: ApplicationRecord, idempotency_key: str) -> AnalysisJob
     record.jobs[job.job_id] = job
     record.idempotency_jobs[key] = job.job_id
 
-    facts, questions = agent_service.extract(
-        record.application, record.evidence, record.answers
-    )
-    validation = validation_service.validate(record.application, facts, questions)
+    try:
+        facts, questions = await run_in_threadpool(
+            agent_service.extract,
+            record.application,
+            record.documents,
+            record.evidence,
+            record.facts,
+            record.answers,
+        )
+        validation = await run_in_threadpool(
+            validation_service.validate,
+            record.application,
+            record.documents,
+            record.evidence,
+            facts,
+            questions,
+        )
+    except AgentIntegrationError as exc:
+        job.status = "failed"
+        job.updated_at = now()
+        raise ApiError(503, "AGENT_UNAVAILABLE", str(exc)) from exc
+    except ValidationIntegrationError as exc:
+        job.status = "failed"
+        job.updated_at = now()
+        raise ApiError(422, "VALIDATION_FAILED", str(exc)) from exc
+    record.facts = facts
     record.analysis = AnalysisResult(
         application_id=record.application.application_id,
         application_revision=record.application.revision,
@@ -172,8 +195,12 @@ async def upload_document(
         uploaded_at=now(),
         processing_status="processed",
     )
+    try:
+        extracted_evidence = await run_in_threadpool(ocr_service.extract, document, content)
+    except OcrProcessingError as exc:
+        raise ApiError(422, "OCR_FAILED", str(exc)) from exc
     record.documents.append(document)
-    record.evidence.extend(ocr_service.extract(document, content))
+    record.evidence.extend(extracted_evidence)
     record.application.revision += 1
     record.application.status = "collecting"
     record.application.updated_at = now()
@@ -194,7 +221,7 @@ async def list_documents(application_id: str) -> list[UploadedDocument]:
 async def start_analysis(application_id: str, payload: AnalyzeRequest) -> AnalysisJob:
     record = get_record(application_id)
     require_revision(record, payload.expected_revision)
-    return run_analysis(record, payload.idempotency_key)
+    return await run_analysis(record, payload.idempotency_key)
 
 
 @router.get("/applications/{application_id}/analysis/jobs/{job_id}", response_model=AnalysisJob)
@@ -229,7 +256,7 @@ async def submit_answers(application_id: str, payload: AnswerSubmissionRequest) 
     record.application.revision += 1
     record.application.updated_at = now()
     invalidate_derived_data(record)
-    return run_analysis(record, f"answers_{uuid4().hex}")
+    return await run_analysis(record, f"answers_{uuid4().hex}")
 
 
 @router.post(
@@ -243,13 +270,22 @@ async def generate_draft(application_id: str, payload: DraftGenerationRequest) -
     if record.analysis is None or not record.analysis.validation.can_finalize:
         raise ApiError(422, "VALIDATION_FAILED", "Current application is not ready for draft generation")
     draft_revision = 1 if record.draft is None else record.draft.draft_revision + 1
+    try:
+        sections = await run_in_threadpool(
+            agent_service.draft_sections,
+            record.application,
+            record.analysis.facts,
+            record.analysis.validation.issues,
+        )
+    except AgentIntegrationError as exc:
+        raise ApiError(503, "AGENT_UNAVAILABLE", str(exc)) from exc
     record.draft = Draft(
         draft_id=f"draft_{uuid4().hex}",
         application_id=application_id,
         application_revision=record.application.revision,
         draft_revision=draft_revision,
         status="generated",
-        sections=agent_service.draft_sections(record.analysis.facts),
+        sections=sections,
         created_at=now(),
     )
     record.application.status = "draft_ready"
@@ -280,6 +316,20 @@ async def confirm_draft(application_id: str, payload: DraftConfirmationRequest) 
         or not record.analysis.validation.can_finalize
     ):
         raise ApiError(409, "STATE_CONFLICT", "Draft is stale or cannot be confirmed")
+    try:
+        final_validation = await run_in_threadpool(
+            validation_service.validate_confirmation,
+            record.application,
+            record.documents,
+            record.evidence,
+            record.facts,
+            draft,
+            payload,
+        )
+    except ValidationIntegrationError as exc:
+        raise ApiError(422, "VALIDATION_FAILED", str(exc)) from exc
+    if not final_validation.can_finalize:
+        raise ApiError(422, "VALIDATION_FAILED", "Draft failed confirmation validation")
     draft.status = "confirmed"
     draft.confirmed_at = now()
     record.application.status = "confirmed"
@@ -302,6 +352,20 @@ async def export_application(application_id: str, payload: ExportRequest) -> Exp
         or not record.analysis.validation.can_finalize
     ):
         raise ApiError(422, "EXPORT_BLOCKED", "A current confirmed and validated draft is required")
+    try:
+        final_validation = await run_in_threadpool(
+            validation_service.validate_export,
+            record.application,
+            record.documents,
+            record.evidence,
+            record.facts,
+            draft,
+            payload,
+        )
+    except ValidationIntegrationError as exc:
+        raise ApiError(422, "EXPORT_BLOCKED", str(exc)) from exc
+    if not final_validation.can_finalize:
+        raise ApiError(422, "EXPORT_BLOCKED", "Draft failed export validation")
     record.application.status = "exported"
     record.application.updated_at = now()
     return ExportResponse(

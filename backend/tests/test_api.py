@@ -1,3 +1,9 @@
+import os
+
+os.environ["CAREFUND_AGENT_MODE"] = "mock"
+os.environ["CAREFUND_VALIDATION_MODE"] = "mock"
+
+import pymupdf
 from fastapi.testclient import TestClient
 
 from backend.main import app
@@ -26,6 +32,15 @@ def create_application(medical_summary: str | None = "这是由用户提供的�
     return response.json()
 
 
+def make_text_pdf(text: str) -> bytes:
+    document = pymupdf.open()
+    page = document.new_page()
+    page.insert_text((72, 72), text)
+    content = document.tobytes()
+    document.close()
+    return content
+
+
 def test_health() -> None:
     response = client.get("/api/v1/health")
     assert response.status_code == 200
@@ -40,7 +55,13 @@ def test_mock_happy_path_reaches_export() -> None:
     upload = client.post(
         f"/api/v1/applications/{application_id}/documents",
         data={"expected_revision": 1},
-        files={"file": ("synthetic.pdf", b"synthetic content", "application/pdf")},
+        files={
+            "file": (
+                "synthetic.pdf",
+                make_text_pdf("Synthetic medical material for OCR pipeline test."),
+                "application/pdf",
+            )
+        },
     )
     assert upload.status_code == 201
 
@@ -153,4 +174,40 @@ def test_rejects_unsupported_file_type() -> None:
     )
     assert response.status_code == 415
     assert response.json()["error"]["code"] == "UNSUPPORTED_FILE"
+
+
+def test_extracts_native_pdf_text_with_page_source() -> None:
+    created = create_application()
+    application_id = created["application"]["application_id"]
+    response = client.post(
+        f"/api/v1/applications/{application_id}/documents",
+        data={"expected_revision": 1},
+        files={
+            "file": (
+                "native-text.pdf",
+                make_text_pdf("Hospital cost estimate: CNY 12500 (synthetic test)."),
+                "application/pdf",
+            )
+        },
+    )
+    assert response.status_code == 201
+    application = client.get(f"/api/v1/applications/{application_id}").json()
+    evidence = application["evidence"]
+    assert evidence[0]["page"] == 1
+    assert evidence[0]["extraction_method"] == "structured_import"
+    assert "12500" in evidence[0]["text_excerpt"]
+
+
+def test_corrupt_pdf_returns_ocr_failed_without_saving_document() -> None:
+    created = create_application()
+    application_id = created["application"]["application_id"]
+    response = client.post(
+        f"/api/v1/applications/{application_id}/documents",
+        data={"expected_revision": 1},
+        files={"file": ("broken.pdf", b"not a pdf", "application/pdf")},
+    )
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "OCR_FAILED"
+    application = client.get(f"/api/v1/applications/{application_id}").json()
+    assert application["documents"] == []
 

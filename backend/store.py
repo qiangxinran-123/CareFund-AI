@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .models import AnalysisJob, AnalysisResult, Application, Draft, Evidence, UploadedDocument
+from .models import AnalysisJob, AnalysisResult, Application, Draft, Evidence, Fact, UploadedDocument
 
 
 @dataclass
@@ -16,6 +16,7 @@ class ApplicationRecord:
     application: Application
     documents: list[UploadedDocument] = field(default_factory=list)
     evidence: list[Evidence] = field(default_factory=list)
+    facts: list[Fact] = field(default_factory=list)
     jobs: dict[str, AnalysisJob] = field(default_factory=dict)
     idempotency_jobs: dict[tuple[int, str], str] = field(default_factory=dict)
     analysis: AnalysisResult | None = None
