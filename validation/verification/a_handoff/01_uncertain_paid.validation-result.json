@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "validation_id": "validation_d46ce27d4adb443883cde0990276aeaa",
+  "application_id": "app_demo_003",
+  "application_revision": 1,
+  "issues": [
+    {
+      "issue_id": "issue_801492213f024f9d8e63f8fe1eaf34f9",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "patient.relationship_to_applicant",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_001"
+      ]
+    },
+    {
+      "issue_id": "issue_365991c812ce4a64b67e8827201b4b78",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "patient.medical_summary",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_002"
+      ]
+    },
+    {
+      "issue_id": "issue_bfc2c5b1c18d44959c758a2eecf2e218",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "treatment.paid_cost",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_003"
+      ]
+    },
+    {
+      "issue_id": "issue_124d7bbeb04d4cedbf4478438e019a6e",
+      "type": "missing",
+      "severity": "blocking",
+      "field": "documents",
+      "message": "缺少已完成解析的证明材料。",
+      "related_fact_ids": []
+    },
+    {
+      "issue_id": "issue_f12d82e7b60c4400887a3bca095f1cfb",
+      "type": "missing",
+      "severity": "blocking",
+      "field": "patient.medical_summary",
+      "message": "关键事实尚未由用户确认。",
+      "related_fact_ids": [
+        "fact_002"
+      ]
+    }
+  ],
+  "can_finalize": false,
+  "evaluated_at": "2026-10-16T12:12:46Z"
+}

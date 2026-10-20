@@ -1,0 +1,21 @@
+{
+  "source_label": "A CURRENT_HANDOFF.md states 755a0c2; ZIP has no Git history",
+  "source_zip_sha256": "425ad00ec5b7205f439f7130c65c7f4fa334cdbbef3b92cf24c2a9eb5fd420ef",
+  "a_unit_tests": {
+    "tests": 108,
+    "exit_code": 0,
+    "mode": "offline",
+    "command": "python -B -m unittest discover -s agent/tests -q"
+  },
+  "a_public_saved_replay": {
+    "synthetic_cases": 27,
+    "extract_facts_unchanged": 21,
+    "normal_drafts": 5,
+    "instruction_draft_blocked": 1,
+    "exit_code": 0,
+    "command": "python -B agent/verification/content-fix-20261017/verify_saved.py"
+  },
+  "contracts_unchanged": true,
+  "a_private_batch_reproduced": false,
+  "api_calls": 0
+}
