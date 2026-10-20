@@ -1,0 +1,16 @@
+{
+  "required_fields": [
+    "patient.medical_summary",
+    "treatment.estimated_cost"
+  ],
+  "document_required_fields": [
+    "treatment.estimated_cost"
+  ],
+  "require_processed_document": true,
+  "require_user_confirmation": true,
+  "field_kinds": {
+    "patient.medical_summary": "text",
+    "treatment.estimated_cost": "money",
+    "treatment.recorded_date": "date"
+  }
+}
