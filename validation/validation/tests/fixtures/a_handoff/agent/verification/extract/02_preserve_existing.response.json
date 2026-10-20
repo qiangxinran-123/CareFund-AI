@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_demo_003",
+  "application_revision": 2,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_003",
+      "field": "treatment.paid_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 2000000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": true
+    },
+    {
+      "fact_id": "fact_001",
+      "field": "patient.relationship_to_applicant",
+      "value": {
+        "kind": "text",
+        "value": "母亲"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_002",
+      "field": "contact.city",
+      "value": {
+        "kind": "text",
+        "value": "西安市"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_004",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "用户自述母亲目前在西安市，仍在检查，没有确诊。"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "treatment.estimated_cost",
+      "question": "目前医院暂未提供后续治疗费用的预估单，请问后续治疗预计还需要多少费用？如暂不清楚，可说明是否有医生或医院的初步估算。",
+      "reason": "需要了解后续治疗的预计费用，以便合理设置筹款目标和说明资金用途。",
+      "required": false
+    },
+    {
+      "question_id": "question_002",
+      "field": "documents.diagnosis_proof",
+      "question": "目前尚未上传诊断或检查相关证明材料，请问后续是否可以补充医院出具的诊断证明或检查报告？",
+      "reason": "平台建议补充医院出具的诊断或检查证明材料，有助于提高申请的可信度。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料。",
+    "用户自述母亲仍在检查、尚未确诊，未提供具体诊断信息。"
+  ]
+}

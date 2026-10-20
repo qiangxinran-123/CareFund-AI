@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_demo_004",
+  "application_revision": 1,
+  "documents": [
+    {
+      "document_id": "doc_demo_001",
+      "application_id": "app_demo_004",
+      "filename": "虚构费用预估单.pdf",
+      "media_type": "application/pdf",
+      "size_bytes": 1024,
+      "uploaded_at": "2026-10-15T06:00:00Z",
+      "processing_status": "processed"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev_demo_001",
+      "document_id": "doc_demo_001",
+      "source_type": "document",
+      "page": 1,
+      "text_excerpt": "【虚构测试材料】后续治疗预计费用：人民币30000元。此金额为预估，实际费用以结算为准。",
+      "extraction_method": "manual"
+    }
+  ],
+  "facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "patient.relationship_to_applicant",
+      "value": {
+        "kind": "text",
+        "value": "母亲"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_002",
+      "field": "treatment.estimated_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 3000000
+        }
+      },
+      "source_type": "document",
+      "evidence_ids": [
+        "ev_demo_001"
+      ],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_003",
+      "field": "treatment.estimated_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 5000000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ]
+}

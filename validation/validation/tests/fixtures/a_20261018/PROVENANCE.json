@@ -1,0 +1,43 @@
+{
+  "source_label": "A CURRENT_HANDOFF.md states feature commit 755a0c2; ZIP has no Git history",
+  "source_zip_sha256": "425ad00ec5b7205f439f7130c65c7f4fa334cdbbef3b92cf24c2a9eb5fd420ef",
+  "data_class": "synthetic_only",
+  "online_calls": 0,
+  "files": [
+    {
+      "path": "agent/agent_service.py",
+      "bytes": 7990,
+      "sha256": "9e78125b996405628a5099089b450f95318725d22c40c35ac2c93b673d8dca06"
+    },
+    {
+      "path": "agent/draft_policy.py",
+      "bytes": 1649,
+      "sha256": "fa9894bb9419fdcd8d3c12f23b3ed1b23739e3670280f55a1b3f57d9de37c5f5"
+    },
+    {
+      "path": "agent/draft_input_policy.py",
+      "bytes": 1350,
+      "sha256": "09e52db7cfd161f1ad151625627514e4b4300cf6ada7425d2fc2a378ad61a318"
+    },
+    {
+      "path": "agent/extract_policy.py",
+      "bytes": 540,
+      "sha256": "6e2bed965b56d4c85c8008ea25b1a2269d1f9f9b358571de4b089daf606e328a"
+    },
+    {
+      "path": "agent/extract_presentation.py",
+      "bytes": 8784,
+      "sha256": "5fb92fee433a9a048630706dd156ce658c8a987c9079af4ae36c1f504e531aac"
+    },
+    {
+      "path": "agent/verification/content-review-20261017/synthetic-replay.json",
+      "bytes": 87936,
+      "sha256": "355db22292b3c096d0c400b826a944b8ab94c2b5b0d4809f62d8e3f2bfb18beb"
+    },
+    {
+      "path": "agent/CURRENT_HANDOFF.md",
+      "bytes": 5788,
+      "sha256": "192c8b58f6470fa7b994e6c44d21bf1dec19d53f48b545349ffd3c27a37a80c2"
+    }
+  ]
+}

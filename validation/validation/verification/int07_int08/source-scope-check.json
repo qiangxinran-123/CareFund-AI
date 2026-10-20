@@ -1,0 +1,38 @@
+{
+  "source_zip_sha256": "d5102c4676b3fb0478e569ab5a70aab042a17cf9124114749ee43ba66eff9b11",
+  "changed_existing": [
+    "validation/A_D_HANDOFF.md",
+    "validation/CURRENT_STATUS.md",
+    "validation/GITHUB_UPLOAD.md",
+    "validation/PR_DESCRIPTION.md",
+    "validation/README.md",
+    "validation/__init__.py",
+    "validation/__main__.py",
+    "validation/agent_adapter.py",
+    "validation/export_checker.py",
+    "validation/fact_checker.py",
+    "validation/rules/policy.py",
+    "validation/tools/package_handoff.py"
+  ],
+  "new_files": [
+    "validation/INT07_INT08_HANDOFF.md",
+    "validation/requirements-integration.txt",
+    "validation/integration_tests/test_backend_demo_v1.py",
+    "validation/integration_tests/__init__.py",
+    "validation/policies/demo_v1.json",
+    "validation/policies/__init__.py",
+    "validation/tests/test_demo_v1.py",
+    "validation/tools/verify_int07_int08.py",
+    "validation/verification/int07_int08/backend-integration-tests.txt",
+    "validation/verification/int07_int08/backend-original-tests.txt",
+    "validation/verification/int07_int08/scenarios.json",
+    "validation/verification/int07_int08/summary.json",
+    "validation/verification/int07_int08/validation-contract-tests.txt"
+  ],
+  "outside_validation_changed": [],
+  "a_original_offline_tests": {
+    "tests": 108,
+    "result": "passed after allowing temporary test directory writes",
+    "new_api_calls": 0
+  }
+}

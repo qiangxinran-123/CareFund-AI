@@ -1,0 +1,19 @@
+{
+  "policy_name": "demo_v1",
+  "notice": "仅用于本次医疗众筹申请助手演示，不代表任何真实筹款平台的官方审批标准。",
+  "required_fields": ["patient.medical_summary", "treatment.estimated_cost"],
+  "document_required_fields": ["treatment.estimated_cost"],
+  "recommended_fields": ["patient.relationship_to_applicant", "contact.city", "treatment.recorded_date"],
+  "recommended_document_fields": ["patient.medical_summary"],
+  "require_processed_document": true,
+  "require_user_confirmation": true,
+  "draft_issue_scope": "blocking",
+  "field_kinds": {
+    "patient.medical_summary": "text",
+    "patient.relationship_to_applicant": "text",
+    "treatment.estimated_cost": "money",
+    "treatment.paid_cost": "money",
+    "treatment.recorded_date": "date",
+    "contact.city": "text"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "validation_id": "validation_c92ba494f28b4ea0811f78b10127fc10",
+  "application_id": "app_demo_004",
+  "application_revision": 1,
+  "issues": [
+    {
+      "issue_id": "issue_4b68396be23e4069b277ac241c072421",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "patient.relationship_to_applicant",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_001"
+      ]
+    },
+    {
+      "issue_id": "issue_6b4116c8215f43c4b15d4f122bd0add8",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "treatment.estimated_cost",
+      "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+      "related_fact_ids": [
+        "fact_003"
+      ]
+    },
+    {
+      "issue_id": "issue_8d528f2e9cea436b8ae2a40527c41db4",
+      "type": "inconsistent_amount",
+      "severity": "blocking",
+      "field": "treatment.estimated_cost",
+      "message": "同一事实字段存在不同取值，需人工澄清，系统不自动择一。",
+      "related_fact_ids": [
+        "fact_002",
+        "fact_003"
+      ]
+    },
+    {
+      "issue_id": "issue_ba1269b68e1a46148a22446da0bd0be0",
+      "type": "missing",
+      "severity": "blocking",
+      "field": "patient.medical_summary",
+      "message": "缺少规则要求的事实，请补充信息或材料。",
+      "related_fact_ids": []
+    }
+  ],
+  "can_finalize": false,
+  "evaluated_at": "2026-10-16T12:12:46Z"
+}
