@@ -2,12 +2,18 @@
 
 from datetime import datetime
 
+
+from .fact_checker import validate
+
 from .issues import issue, result
 from .rules import ValidationPolicy
 from .rules.agent_literal import matches_literal_sections
 from .rules.values import date_mentions, fact_numbers, money_mentions, normalize, numeric_mentions
 from .schema import check_model
+
 from .agent_adapter import _draft_issues
+
+
 
 
 def _check(
@@ -17,10 +23,14 @@ def _check(
     check_model(application, "application.schema.json", "Application")
     check_model(draft, "draft.schema.json", "Draft")
     check_model(action, "draft.schema.json", "ExportRequest" if exporting else "DraftConfirmationRequest")
+
     # Share A's fact confirmation/value gate across generation and final checks.
     issues = _draft_issues(request, policy)
     if not application["patient_info"]["display_name"].strip():
         issues.append(issue("missing", "patient.display_name", "申请人显示名称不能为空白。"))
+
+    issues = validate(request, policy=policy)["issues"]
+
     if not (
         application["application_id"] == request["application_id"] == draft["application_id"]
         and application["revision"] == request["application_revision"] == draft["application_revision"]
@@ -43,8 +53,10 @@ def _check(
         {key: section[key] for key in ("title", "content", "fact_ids")}
         for section in draft["sections"]
     ])
+
     if policy is not None and policy.policy_name == "demo_v1" and not literal_layout:
         issues.append(issue("unsupported", "draft.sections", "demo_v1 要求草稿完整保留当前事实原值、来源和限定词；编辑后需重新核验。"))
+
     section_ids = set()
     for section in draft["sections"]:
         if section["section_id"] in section_ids:

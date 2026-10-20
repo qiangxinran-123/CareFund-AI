@@ -1,0 +1,16 @@
+{
+  "reviews": [
+    {
+      "case_id": "extract_0039",
+      "response_sha256": "17c9f64f989862c2cb707a0d00dd4ddfd02d7828ae3fddc0e1be36192fcf5c71",
+      "reviewer": "Codex context review, not independent business acceptance",
+      "reviewed_at": "2026-10-16T13:49:22.331824+00:00",
+      "original_flags": [
+        "platform_reference_needs_context_review"
+      ],
+      "disposition": "false_positive_negated_platform_reference",
+      "evidence": "补充诊断或检查材料便于核对已有陈述，不代表平台要求或审核结果。",
+      "decision": "Continue only unattempted cases; retain original flag and response unchanged."
+    }
+  ]
+}

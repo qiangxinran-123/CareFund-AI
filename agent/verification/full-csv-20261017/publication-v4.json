@@ -1,0 +1,17 @@
+{
+  "epoch": "json-format-v4-user-reported",
+  "recorded_at": "2026-10-17T06:04:12.338266+00:00",
+  "user_statement": "已追加并发布",
+  "publication_verified_by_export": false,
+  "original_attempts": 81,
+  "starts_after_source_row": 81,
+  "candidate_dsl_file": "agent/workflow.deepseek-extract.json-v4-candidate.yml",
+  "candidate_dsl_sha256": "e98b2c7d631a86ba9de986d5c241cfd6478b327dad03e6057a81e4fc630ed233",
+  "append_file": "agent/prompts/extract-json-v4-append.md",
+  "append_sha256": "0ce980fc13187b99d1b5b910cd8a13bd214c04bf7a766058dce1cf8003fc82fb",
+  "note": "User reports appending this rule and publishing. Fresh exported online DSL is not available. Historical attempts are unchanged.",
+  "cumulative_budget_cny": 20,
+  "cumulative_call_cap": 84712,
+  "retry_failed_rows": false,
+  "new_generation_calls_by_recording": 0
+}

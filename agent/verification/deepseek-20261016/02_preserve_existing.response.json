@@ -1,0 +1,79 @@
+{
+"schema_version": "1.0",
+"application_id": "app_demo_003",
+"application_revision": 2,
+"candidate_facts": [
+{
+"fact_id": "fact_003",
+"field": "treatment.paid_cost",
+"value": {
+"kind": "money",
+"value": {
+"currency": "CNY",
+"amount_minor": 2000000
+}
+},
+"source_type": "user_input",
+"evidence_ids": [],
+"verification_status": "pending",
+"user_confirmed": true
+},
+{
+"fact_id": "fact_004",
+"field": "patient.relationship_to_applicant",
+"value": {
+"kind": "text",
+"value": "母亲"
+},
+"source_type": "user_input",
+"evidence_ids": [],
+"verification_status": "pending",
+"user_confirmed": false
+},
+{
+"fact_id": "fact_005",
+"field": "patient.medical_summary",
+"value": {
+"kind": "text",
+"value": "用户自述母亲仍在检查，没有确诊"
+},
+"source_type": "user_input",
+"evidence_ids": [],
+"verification_status": "pending",
+"user_confirmed": false
+},
+{
+"fact_id": "fact_006",
+"field": "contact.city",
+"value": {
+"kind": "text",
+"value": "西安市"
+},
+"source_type": "user_input",
+"evidence_ids": [],
+"verification_status": "pending",
+"user_confirmed": false
+}
+],
+"questions": [
+{
+"question_id": "question_001",
+"field": "documents.diagnosis_proof",
+"question": "您提到母亲仍在检查、尚未确诊，请问目前是否已有检查报告、门诊病历或医院出具的其他诊断相关材料可以补充？",
+"reason": "补充诊断或检查材料便于核对您关于病情和检查情况的陈述。",
+"required": false
+},
+{
+"question_id": "question_002",
+"field": "treatment.estimated_cost",
+"question": "您提到医院暂时没有提供后续费用预估单，请问是否已有医生口头告知的大致费用范围，或其他书面费用说明？",
+"reason": "后续预估治疗费是理解当前申请所需的关键信息，目前尚未提供。",
+"required": false
+}
+],
+"warnings": [
+"本次输入未附任何材料（extracted_documents 为空），因此所有新提取事实均来自用户自述，未引用材料证据。",
+"用户自述母亲仍在检查、没有确诊，病情信息保持不确定性，未提取具体诊断名称。",
+"用户自述医院暂时没有提供后续费用预估单，treatment.estimated_cost 暂无可用信息，未生成事实。"
+]
+}

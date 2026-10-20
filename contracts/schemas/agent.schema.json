@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carefund.ai/contracts/schemas/agent.schema.json",
+  "title": "CareFund Agent Contract V1",
+  "$ref": "#/$defs/AgentExtractResponse",
+  "$defs": {
+    "UserInputSnapshot": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "integer", "boolean", "null"]
+      },
+      "description": "Flat normalized user input. null means explicitly unknown; missing means not supplied."
+    },
+    "ExtractedDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["document", "evidence"],
+      "properties": {
+        "document": {"$ref": "evidence.schema.json#/$defs/UploadedDocument"},
+        "evidence": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Evidence"},
+          "default": []
+        }
+      }
+    },
+    "AgentExtractRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "application_id",
+        "application_revision",
+        "user_input",
+        "extracted_documents",
+        "candidate_facts"
+      ],
+      "properties": {
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "user_input": {"$ref": "#/$defs/UserInputSnapshot"},
+        "extracted_documents": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/ExtractedDocument"},
+          "default": []
+        },
+        "candidate_facts": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Fact"},
+          "default": []
+        }
+      },
+      "description": "Normalized internal input for the Backend Agent adapter; it is not a claim about a Dify REST path."
+    },
+    "AgentQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question_id", "field", "question", "reason", "required"],
+      "properties": {
+        "question_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "field": {"type": "string", "pattern": "^[a-z][a-z0-9_.]{1,127}$"},
+        "question": {"type": "string", "minLength": 1, "maxLength": 500},
+        "reason": {"type": "string", "minLength": 1, "maxLength": 500},
+        "required": {"type": "boolean"}
+      }
+    },
+    "AgentExtractResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "application_id",
+        "application_revision",
+        "candidate_facts",
+        "questions",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "candidate_facts": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Fact"},
+          "default": []
+        },
+        "questions": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/AgentQuestion"},
+          "default": []
+        },
+        "warnings": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1, "maxLength": 500},
+          "default": []
+        }
+      },
+      "description": "All facts are candidates. Evidence IDs must already exist in Backend-provided input; page numbers must never be invented."
+    },
+    "AgentDraftRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "application_id",
+        "application_revision",
+        "candidate_facts",
+        "validation_issue_ids"
+      ],
+      "properties": {
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "candidate_facts": {
+          "type": "array",
+          "items": {"$ref": "evidence.schema.json#/$defs/Fact"}
+        },
+        "validation_issue_ids": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/$defs/Identifier"},
+          "uniqueItems": true,
+          "default": []
+        }
+      }
+    },
+    "AgentDraftSection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "content", "fact_ids"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 100},
+        "content": {"type": "string", "minLength": 1, "maxLength": 5000},
+        "fact_ids": {
+          "type": "array",
+          "items": {"$ref": "common.schema.json#/$defs/Identifier"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "AgentDraftResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "application_id",
+        "application_revision",
+        "candidate_sections",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": {"$ref": "common.schema.json#/$defs/SchemaVersion"},
+        "application_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "application_revision": {"type": "integer", "minimum": 1},
+        "candidate_sections": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/AgentDraftSection"}
+        },
+        "warnings": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1, "maxLength": 500},
+          "default": []
+        }
+      },
+      "description": "Candidate prose only. Backend validates fact references and language before creating a Draft."
+    },
+    "Answer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question_id", "answer"],
+      "properties": {
+        "question_id": {"$ref": "common.schema.json#/$defs/Identifier"},
+        "answer": {"type": "string", "minLength": 1, "maxLength": 2000}
+      }
+    },
+    "AnswerSubmissionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_revision", "answers"],
+      "properties": {
+        "expected_revision": {"type": "integer", "minimum": 1},
+        "answers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/Answer"}
+        }
+      }
+    }
+  }
+}

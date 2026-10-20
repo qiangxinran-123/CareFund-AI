@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-17",
+  "generation_calls": 100,
+  "overall_status": "completed_with_content_finding",
+  "open_content_findings": 1,
+  "offline_recheck": {
+    "automatic_checks_passed": 100
+  },
+  "D_extract_cases": 94,
+  "D_can_finalize_true": 0,
+  "private_files_ignored_and_untracked": 198,
+  "public_files_credential_scanned": 103,
+  "real_medical_texts_checked_absent_from_public_report": 79,
+  "source_fingerprints_unchanged": true,
+  "production_A_hashes_unchanged": true,
+  "workflow_export_hashes_unchanged": true,
+  "other_member_directories_unchanged": true,
+  "git_diff_whitespace_check": "passed",
+  "full_unit_suite_rerun_this_turn": false,
+  "prior_unit_regression_evidence": "agent/verification/scope-guard-20261017/local-checks.json",
+  "additional_model_calls_by_offline_checks": 0,
+  "committed_or_pushed_this_turn": false,
+  "limits": "Partial semantic checks; source records and saved responses remain local and ignored."
+}

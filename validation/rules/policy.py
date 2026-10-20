@@ -13,6 +13,7 @@ class ValidationPolicy:
     require_processed_document: bool = True
     require_user_confirmation: bool = True
     field_kinds: Mapping[str, str] = field(default_factory=dict)
+
     recommended_fields: tuple[str, ...] = ()
     recommended_document_fields: tuple[str, ...] = ()
     policy_name: str | None = None
@@ -21,6 +22,11 @@ class ValidationPolicy:
 
     def __post_init__(self) -> None:
         for name in ("required_fields", "document_required_fields", "recommended_fields", "recommended_document_fields"):
+
+
+    def __post_init__(self) -> None:
+        for name in ("required_fields", "document_required_fields"):
+
             fields = getattr(self, name)
             if not isinstance(fields, (tuple, list)) or any(
                 not isinstance(field, str) or not re.fullmatch(r"[a-z][a-z0-9_.]{1,127}", field)
@@ -34,6 +40,7 @@ class ValidationPolicy:
             raise ValueError("An explicit, non-empty required_fields policy is required.")
         if not set(self.document_required_fields) <= set(self.required_fields):
             raise ValueError("document_required_fields must be a subset of required_fields.")
+
         if set(self.recommended_fields) & set(self.required_fields):
             raise ValueError("recommended_fields must not duplicate required_fields.")
         if self.policy_name is not None and (
@@ -42,6 +49,8 @@ class ValidationPolicy:
             raise ValueError("policy_name must be a stable local rule-set name.")
         if not isinstance(self.notice, str) or self.draft_issue_scope not in ("all", "blocking"):
             raise ValueError("Invalid policy notice or draft_issue_scope.")
+
+
         for name in ("require_processed_document", "require_user_confirmation"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be a boolean.")
@@ -59,7 +68,9 @@ class ValidationPolicy:
             "required_fields", "document_required_fields",
             "require_processed_document", "require_user_confirmation",
             "field_kinds",
+
             "recommended_fields", "recommended_document_fields", "policy_name", "notice", "draft_issue_scope",
+
         }
         if not isinstance(value, dict) or set(value) - allowed or "required_fields" not in value:
             raise ValueError("Invalid validation policy keys; required_fields is mandatory.")

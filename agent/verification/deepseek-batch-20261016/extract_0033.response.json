@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0033",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "treatment.paid_cost",
+      "value": {
+        "kind": "text",
+        "value": "已支付医疗费为 USD 123.45，币种明确为美元"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_002",
+      "field": "treatment.estimated_cost",
+      "value": {
+        "kind": "text",
+        "value": "后续费用未知"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "treatment.estimated_cost",
+      "question": "您提到后续费用未知，请问目前是否已有医院出具的费用预估单或医生对后续治疗费用的书面说明？如有，可补充以便核对。",
+      "reason": "后续预估治疗费是理解当前申请所需的关键信息；用户已明确表示不清楚后续费用，因此改为询问是否已有医院费用预估单，避免重复询问其是否知道费用。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料，无法对用户自述的已支付医疗费进行材料核对。",
+    "已支付医疗费为美元金额，当前字段约定金额以人民币分记录，无法直接转换，故保留为文本并待确认。",
+    "用户自述后续费用未知，未生成具体金额事实。"
+  ]
+}

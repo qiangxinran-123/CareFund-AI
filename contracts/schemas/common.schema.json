@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://carefund.ai/contracts/schemas/common.schema.json",
+  "title": "CareFund Common Contract V1",
+  "$ref": "#/$defs/ErrorResponse",
+  "$defs": {
+    "SchemaVersion": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Contract schema version. Additive compatible changes retain 1.x semantics."
+    },
+    "Identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{2,63}$",
+      "description": "Stable opaque identifier; clients must not derive business meaning from it."
+    },
+    "UtcDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$",
+      "description": "RFC 3339 timestamp normalized to UTC and ending in Z."
+    },
+    "CalendarDate": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 full calendar date (YYYY-MM-DD), with no inferred timezone."
+    },
+    "Money": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["currency", "amount_minor"],
+      "properties": {
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217 currency code, for example CNY."
+        },
+        "amount_minor": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Non-negative amount in minor units; floating-point money is forbidden."
+        }
+      }
+    },
+    "ErrorCode": {
+      "type": "string",
+      "enum": [
+        "INVALID_REQUEST",
+        "RESOURCE_NOT_FOUND",
+        "UNSUPPORTED_FILE",
+        "FILE_TOO_LARGE",
+        "OCR_FAILED",
+        "AGENT_UNAVAILABLE",
+        "VALIDATION_FAILED",
+        "STATE_CONFLICT",
+        "EXPORT_BLOCKED",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "ErrorDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["message"],
+      "properties": {
+        "field": {"type": ["string", "null"]},
+        "message": {"type": "string", "minLength": 1},
+        "value": {
+          "description": "Optional rejected value; omitted when it may contain sensitive content."
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "details"],
+      "properties": {
+        "code": {"$ref": "#/$defs/ErrorCode"},
+        "message": {"type": "string", "minLength": 1},
+        "details": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/ErrorDetail"},
+          "default": []
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error", "request_id"],
+      "properties": {
+        "error": {"$ref": "#/$defs/Error"},
+        "request_id": {"$ref": "#/$defs/Identifier"}
+      }
+    },
+    "Pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["limit", "has_more"],
+      "properties": {
+        "limit": {"type": "integer", "minimum": 1, "maximum": 100},
+        "next_cursor": {"type": ["string", "null"]},
+        "has_more": {"type": "boolean"}
+      },
+      "description": "Cursor pagination metadata. Include only on endpoints that are actually paginated."
+    },
+    "HealthResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "schema_version", "time"],
+      "properties": {
+        "status": {"type": "string", "const": "ok"},
+        "schema_version": {"$ref": "#/$defs/SchemaVersion"},
+        "time": {"$ref": "#/$defs/UtcDateTime"}
+      }
+    }
+  }
+}

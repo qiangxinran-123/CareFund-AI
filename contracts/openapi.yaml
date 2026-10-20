@@ -1,0 +1,367 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CareFund-AI Backend API",
+    "version": "1.0.0",
+    "description": "V1 contract for the medical crowdfunding application assistant. It does not provide diagnosis, evidence authenticity verification, or platform approval decisions."
+  },
+  "servers": [{"url": "/"}],
+  "tags": [
+    {"name": "Applications"},
+    {"name": "Documents"},
+    {"name": "Analysis"},
+    {"name": "Drafts"},
+    {"name": "System"}
+  ],
+  "paths": {
+    "/api/v1/applications": {
+      "post": {
+        "tags": ["Applications"],
+        "operationId": "create_application",
+        "summary": "Create an application",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "./schemas/application.schema.json#/$defs/CreateApplicationRequest"}
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Application created",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/application.schema.json#/$defs/ApplicationResponse"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "422": {"$ref": "#/components/responses/UnprocessableEntity"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "get": {
+        "tags": ["Applications"],
+        "operationId": "get_application",
+        "summary": "Get the application and its current state",
+        "responses": {
+          "200": {
+            "description": "Current application snapshot",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/application.schema.json#/$defs/ApplicationResponse"}}}
+          },
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      },
+      "patch": {
+        "tags": ["Applications"],
+        "operationId": "update_application",
+        "summary": "Update patient input with optimistic revision checking",
+        "description": "A successful material update increments Application.revision and invalidates affected analysis, confirmations, and drafts. A stale expected_revision returns 409.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {"$ref": "./schemas/application.schema.json#/$defs/UpdateApplicationRequest"}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application updated",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/application.schema.json#/$defs/ApplicationResponse"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "422": {"$ref": "#/components/responses/UnprocessableEntity"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/documents": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "post": {
+        "tags": ["Documents"],
+        "operationId": "upload_document",
+        "summary": "Upload one document",
+        "description": "One JPEG, PNG, or PDF per request. Reusing the same Idempotency-Key for the same file intent must return the existing result or in-progress operation; a key reused with different content returns 409.",
+        "parameters": [{"$ref": "#/components/parameters/IdempotencyKey"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["file", "expected_revision"],
+                "properties": {
+                  "file": {"type": "string", "format": "binary"},
+                  "expected_revision": {"type": "integer", "minimum": 1}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Document accepted; processing may continue asynchronously",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/evidence.schema.json#/$defs/UploadedDocument"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "413": {"$ref": "#/components/responses/FileTooLarge"},
+          "415": {"$ref": "#/components/responses/UnsupportedFile"},
+          "422": {"$ref": "#/components/responses/UnprocessableEntity"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      },
+      "get": {
+        "tags": ["Documents"],
+        "operationId": "list_documents",
+        "summary": "List uploaded documents",
+        "responses": {
+          "200": {
+            "description": "Document list; empty list means no uploads",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/DocumentList"}}}
+          },
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/analyze": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "post": {
+        "tags": ["Analysis"],
+        "operationId": "start_analysis",
+        "summary": "Start OCR, Agent extraction, and validation orchestration",
+        "description": "Returns a durable task. Reuse idempotency_key when the response is unknown due to timeout; do not create a new key automatically. The same key and revision identify the same analysis intent.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "./schemas/validation.schema.json#/$defs/AnalyzeRequest"}}
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Analysis queued or an existing idempotent task returned",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/validation.schema.json#/$defs/AnalysisJob"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "422": {"$ref": "#/components/responses/UnprocessableEntity"},
+          "500": {"$ref": "#/components/responses/InternalError"},
+          "503": {"$ref": "#/components/responses/AgentUnavailable"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/analysis/jobs/{job_id}": {
+      "parameters": [
+        {"$ref": "#/components/parameters/ApplicationId"},
+        {"$ref": "#/components/parameters/JobId"}
+      ],
+      "get": {
+        "tags": ["Analysis"],
+        "operationId": "get_analysis_job",
+        "summary": "Poll an analysis task",
+        "responses": {
+          "200": {
+            "description": "Current task state",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/validation.schema.json#/$defs/AnalysisJob"}}}
+          },
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/analysis": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "get": {
+        "tags": ["Analysis"],
+        "operationId": "get_latest_analysis",
+        "summary": "Get the latest structured analysis",
+        "description": "Only results bound to the returned application_revision are current.",
+        "responses": {
+          "200": {
+            "description": "Facts, evidence, questions, and deterministic validation result",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/validation.schema.json#/$defs/AnalysisResult"}}}
+          },
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/answers": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "post": {
+        "tags": ["Analysis"],
+        "operationId": "submit_answers",
+        "summary": "Submit answers and queue required revalidation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "./schemas/agent.schema.json#/$defs/AnswerSubmissionRequest"}}
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Answers accepted and revalidation task queued",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/validation.schema.json#/$defs/AnalysisJob"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "422": {"$ref": "#/components/responses/UnprocessableEntity"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/draft": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "post": {
+        "tags": ["Drafts"],
+        "operationId": "generate_draft",
+        "summary": "Generate a draft from current validated facts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "./schemas/draft.schema.json#/$defs/DraftGenerationRequest"}}
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Draft generated",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/draft.schema.json#/$defs/Draft"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "422": {"$ref": "#/components/responses/UnprocessableEntity"},
+          "500": {"$ref": "#/components/responses/InternalError"},
+          "503": {"$ref": "#/components/responses/AgentUnavailable"}
+        }
+      },
+      "get": {
+        "tags": ["Drafts"],
+        "operationId": "get_latest_draft",
+        "summary": "Get the latest draft",
+        "responses": {
+          "200": {
+            "description": "Latest draft, including stale status when applicable",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/draft.schema.json#/$defs/Draft"}}}
+          },
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/draft/confirm": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "post": {
+        "tags": ["Drafts"],
+        "operationId": "confirm_draft",
+        "summary": "Confirm the current non-stale draft version",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "./schemas/draft.schema.json#/$defs/DraftConfirmationRequest"}}
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Draft confirmed",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/draft.schema.json#/$defs/Draft"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "422": {"$ref": "#/components/responses/UnprocessableEntity"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/applications/{application_id}/export": {
+      "parameters": [{"$ref": "#/components/parameters/ApplicationId"}],
+      "post": {
+        "tags": ["Drafts"],
+        "operationId": "export_application",
+        "summary": "Export a confirmed, current, validated JSON application package",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {"schema": {"$ref": "./schemas/draft.schema.json#/$defs/ExportRequest"}}
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "JSON export prepared",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/draft.schema.json#/$defs/ExportResponse"}}}
+          },
+          "400": {"$ref": "#/components/responses/BadRequest"},
+          "404": {"$ref": "#/components/responses/NotFound"},
+          "409": {"$ref": "#/components/responses/Conflict"},
+          "422": {"$ref": "#/components/responses/ExportBlocked"},
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "tags": ["System"],
+        "operationId": "get_health",
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "Service is available",
+            "content": {"application/json": {"schema": {"$ref": "./schemas/common.schema.json#/$defs/HealthResponse"}}}
+          },
+          "500": {"$ref": "#/components/responses/InternalError"}
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "ApplicationId": {
+        "name": "application_id",
+        "in": "path",
+        "required": true,
+        "schema": {"$ref": "./schemas/common.schema.json#/$defs/Identifier"}
+      },
+      "JobId": {
+        "name": "job_id",
+        "in": "path",
+        "required": true,
+        "schema": {"$ref": "./schemas/common.schema.json#/$defs/Identifier"}
+      },
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "schema": {"type": "string", "minLength": 8, "maxLength": 128, "pattern": "^[A-Za-z0-9_-]+$"}
+      }
+    },
+    "schemas": {
+      "DocumentList": {
+        "type": "array",
+        "items": {"$ref": "./schemas/evidence.schema.json#/$defs/UploadedDocument"}
+      },
+      "ErrorResponse": {"$ref": "./schemas/common.schema.json#/$defs/ErrorResponse"}
+    },
+    "responses": {
+      "BadRequest": {"description": "Malformed or semantically invalid request (INVALID_REQUEST)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "NotFound": {"description": "Resource not found (RESOURCE_NOT_FOUND)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "Conflict": {"description": "Revision, state, or idempotency conflict (STATE_CONFLICT)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "UnprocessableEntity": {"description": "Schema or business validation failed (VALIDATION_FAILED)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "FileTooLarge": {"description": "Configured upload limit exceeded (FILE_TOO_LARGE)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "UnsupportedFile": {"description": "Unsupported media type (UNSUPPORTED_FILE)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "AgentUnavailable": {"description": "Agent dependency unavailable (AGENT_UNAVAILABLE)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "ExportBlocked": {"description": "Draft is stale, unconfirmed, or not finalizable (EXPORT_BLOCKED)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}},
+      "InternalError": {"description": "Unexpected server failure (INTERNAL_ERROR)", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}}}
+    }
+  }
+}

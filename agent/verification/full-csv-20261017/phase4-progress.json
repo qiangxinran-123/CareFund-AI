@@ -1,0 +1,25 @@
+{
+  "started_at": "2026-10-17T05:41:03.399290+00:00",
+  "updated_at": "2026-10-17T06:41:40.068758+00:00",
+  "status": "paused_on_finding_no_retry",
+  "mode": "independent_rows",
+  "authorized_max_generation_calls": 84712,
+  "authorized_budget_cny": 20,
+  "calls_attempted": 88,
+  "counts": {
+    "boundary_or_transport_rejected": 7,
+    "partial_checks_passed": 81
+  },
+  "cost_upper_bound_cny": 1.822656,
+  "automatic_retries": 0,
+  "actual_platform_bill_read": false,
+  "question_policy_applied_calls": 0,
+  "raw_model_contract_rejections_recorded": 0,
+  "all_source_rows": 84712,
+  "held_for_local_review": 61,
+  "not_attempted_rows": 84563,
+  "unattempted_including_held_rows": 84624,
+  "all_rows_model_tested": false,
+  "scope": "Only disease field, excluding other 22 columns. No draft calls. No clinical ground truth.",
+  "budget_caveat": "Conservative planning bound uses Dify total_tokens and pinned single-LLM DSL; not an upstream billing hard limit."
+}

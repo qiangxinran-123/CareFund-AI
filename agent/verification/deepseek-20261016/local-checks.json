@@ -1,0 +1,12 @@
+{
+  "agent_tests": 62,
+  "contract_tests": 10,
+  "status": "passed",
+  "saved_response_rechecks": 9,
+  "new_model_calls": 0,
+  "diff_whitespace_check": "passed",
+  "credential_pattern_scan": "passed_for_changed_docs_new_dsl_and_verification_files",
+  "workflow_exports_checked": 2,
+  "exported_workflow_hash_rechecks": 2,
+  "historical_workflows_and_builder_unchanged": true
+}

@@ -1,6 +1,10 @@
 # D 模块：事实校验与证据溯源
 
+
 最新进展请先读 `validation/CURRENT_STATUS.md`（2026-10-20）与 `validation/INT07_INT08_HANDOFF.md`。演示规则为 `validation/policies/demo_v1.json`，旧交接文档和验证目录保留历史上下文。
+
+最新进展与本轮结果请先读 `validation/CURRENT_STATUS.md`（2026-10-18）。`A_D_HANDOFF.md` 的首轮记录和旧验证目录保留历史上下文；当前回归入口包含最新 A 适配测试。
+
 
 本模块接收 `contracts/schemas/validation.schema.json#/$defs/ValidationRequest`，返回同文件中的 `ValidationResult`。输入输出直接使用共享 Schema 校验，不另建一套 API 模型，不提供 FastAPI 路由，不修改申请、草稿或原始事实。
 
@@ -107,7 +111,11 @@ B 必须将读取快照、调用检查、最终版本复查及状态/导出写�
 
 适配入口为 `build_validation_request`、`prepare_agent_draft_request`、`validate_agent_draft`，调用方式和返回类型见 `validation/A_D_HANDOFF.md`。新材料事实为 `pending` 时 D 独立检查文本及引用，不自动改变事实状态。候选草稿按 A 当前逐事实格式校验；正式草稿的确认与导出仍由 B 调用原有入口并负责事务。
 
+
 demo_v1 显式配置草稿请求只携带 blocking ID，完整问题保留在配对的 ValidationResult 中；旧配置默认仍保留全 ID 行为。A/B 需按 INT07_INT08_HANDOFF 确认并接入此约定，B 当前全 ID 转发尚未改动，不表示系统门禁冲突已整体修复。
+
+注意：A 当前拒绝任何非空问题 ID，D 则允许 info 来源提示与 `can_finalize=true` 同时存在。本次保留全部 ID，不绕过 A 门槛，需 A/B/D 确认后统一严重性规则。
+
 
 ## 测试与交付
 

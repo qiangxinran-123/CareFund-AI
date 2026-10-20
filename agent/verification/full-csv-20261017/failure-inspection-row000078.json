@@ -1,0 +1,14 @@
+{
+  "generation_calls": 0,
+  "status": "not_recovered",
+  "read_only_endpoints": [
+    "/workflows/logs",
+    "/workflows/run/fbd2561c-37c1-42b6-9b0f-cf18ae04cd21",
+    "/workflows/run/17919b15-403a-449f-9895-43dda970078a",
+    "/workflows/run/f22f3c10-d1aa-446f-b6b1-27411ce22120",
+    "/workflows/run/754e6036-4d6a-4872-b373-7466058e4a21",
+    "/workflows/run/6b25f6c5-35bb-49b5-afbb-3fe25c604dea",
+    "/workflows/run/06949411-0044-479c-a682-6250dba3ee0d"
+  ],
+  "matched_current_run_logs": 80
+}

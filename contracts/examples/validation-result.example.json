@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "validation_id": "validation_demo_001",
+  "application_id": "app_demo_001",
+  "application_revision": 2,
+  "issues": [
+    {
+      "issue_id": "issue_demo_001",
+      "type": "inconsistent_date",
+      "severity": "blocking",
+      "field": "treatment.recorded_date",
+      "message": "材料日期与用户填写的时间描述不一致，需澄清后再生成可确认草稿。",
+      "related_fact_ids": ["fact_demo_003"]
+    },
+    {
+      "issue_id": "issue_demo_002",
+      "type": "missing",
+      "severity": "warning",
+      "field": "contact.city",
+      "message": "当前缺少城市信息。",
+      "related_fact_ids": []
+    },
+    {
+      "issue_id": "issue_demo_003",
+      "type": "unsupported",
+      "severity": "info",
+      "field": "patient.medical_summary",
+      "message": "该信息目前仅来自用户自述，不应表述为已由材料证明。",
+      "related_fact_ids": ["fact_demo_001"]
+    }
+  ],
+  "can_finalize": false,
+  "evaluated_at": "2026-10-20T09:35:00Z"
+}

@@ -1,0 +1,116 @@
+{
+  "mode": "offline_private_minimal_excerpt_responses_through_actual_D",
+  "new_model_calls": 0,
+  "policy": "D demo only; not team-approved production policy",
+  "policy_sha256": "4e61dbf16969134b603d63b346abe563e7c6d9daf87b0700194d340c1b57b8f5",
+  "mapped_cases": 7,
+  "can_finalize_true": 0,
+  "cases": [
+    {
+      "case_id": "extract_0024",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "e4714d1bae2a5cb2051060abded53dc35ce7630ce2514869e0583d96ddbf1b4e"
+    },
+    {
+      "case_id": "extract_0025",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 2,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 2,
+        "blocking": 3
+      },
+      "private_replay_sha256": "29929b99f7b8d28905cc24e0a2b73ab74365968b4f142f1c7838b27d5af70a30"
+    },
+    {
+      "case_id": "extract_0026",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "24da9eddff4c9150dd455a91a63cdd4c409ccd5f874e4ec330c95b25f845b3c5"
+    },
+    {
+      "case_id": "extract_0027",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "848d307e10f03144b243fb45a11e506652fa10d7b9f21deae548da96b39f2531"
+    },
+    {
+      "case_id": "extract_0028",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "6ab36db257540fdf151593976717a1dde00c417063e36af1b03fced55cdedd01"
+    },
+    {
+      "case_id": "extract_0029",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "9c02266610b92dfb09677af972b5149b14a0d8016129cf3afa0198864f903d61"
+    },
+    {
+      "case_id": "extract_0030",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "7628968183fdd0c932577b0b5c2797f39088b6594262e20585ebd0abfd835bce"
+    }
+  ],
+  "contains_patient_text": false
+}

@@ -1,0 +1,50 @@
+{
+  "mode": "offline_saved_historical_responses",
+  "new_model_calls": 0,
+  "checks": [
+    {
+      "historical_case_id": "extract_0001",
+      "saved_response_sha256": "cd41c787876a965af6b26a700666b5b730df293871301eca1d0c43939926d50c",
+      "current_runtime_accepts_historical_output": true,
+      "current_runtime_rejection": null,
+      "evaluation_failures": [],
+      "evaluation_flags": [
+        "approval_effect_claim_needs_context_review"
+      ]
+    },
+    {
+      "historical_case_id": "extract_0011",
+      "saved_response_sha256": "ec8987520c83dc8d190e125ea17dc2e4e35e18eb5de9487862061526ccbe9cd8",
+      "current_runtime_accepts_historical_output": true,
+      "current_runtime_rejection": null,
+      "evaluation_failures": [],
+      "evaluation_flags": [
+        "approval_effect_claim_needs_context_review"
+      ]
+    },
+    {
+      "historical_case_id": "extract_0016",
+      "saved_response_sha256": "71852fba14bf430759bc7ebdb900ff8fdaab21800a55897c8d7d95c4cd844c75",
+      "current_runtime_accepts_historical_output": true,
+      "current_runtime_rejection": null,
+      "evaluation_failures": [],
+      "evaluation_flags": [
+        "approval_effect_claim_needs_context_review"
+      ]
+    },
+    {
+      "historical_case_id": "extract_0042",
+      "saved_response_sha256": "c479dd9410ce34edd751c4c465f43ec5710eb71b08904549aa55eace7ef3c389",
+      "current_runtime_accepts_historical_output": false,
+      "current_runtime_rejection": "New candidate field is outside the extraction scope",
+      "evaluation_failures": [],
+      "evaluation_flags": []
+    }
+  ],
+  "neutral_prompt_rule_in_tested_export": true,
+  "runtime_scope_rejection_reproduced": true,
+  "limits": [
+    "Historical approval prose remains accepted by structural runtime validation, flagged by evaluation. The fix is a published prompt rule, not a complete runtime semantic guarantee.",
+    "Historical records remain failures/findings even when a later generated response passes."
+  ]
+}

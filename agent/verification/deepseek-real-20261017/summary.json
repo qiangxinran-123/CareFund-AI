@@ -1,0 +1,289 @@
+{
+  "started_at": "2026-10-17T04:19:37.800001+00:00",
+  "status": "completed_automatic_checks_passed",
+  "transport": "real_dify_service_api",
+  "model_configured_in_dify": "deepseek-flash",
+  "configuration_evidence": "agent/verification/deepseek-20261016/summary.json",
+  "scope_guard_evidence": "agent/verification/scope-guard-20261017/summary.json",
+  "suite_file": "agent/.local/mdcc/evaluation/pending-real-excerpts-after-deepseek-20261016.json",
+  "suite_sha256": "ef5ae85465718bb1dd9d7e87034b271d3f246751443d21228614cbdd4e28bd7e",
+  "planned_cases": 7,
+  "calls_attempted": 7,
+  "app_info_requests_attempted": 1,
+  "automatic_retries": 0,
+  "full_real_records_sent": 0,
+  "minimal_real_excerpts_sent": 7,
+  "cases": [
+    {
+      "case_id": "extract_0024",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "data_class": "minimal_anonymous_public_excerpt",
+      "request_sha256": "657f86d868384aa35ccf0045577defd1e4900f80eb60a4c355b73bcd5b24f3e4",
+      "status": "automatic_checks_passed",
+      "response_file": "agent/.local/deepseek-real-20261017/extract_0024.response.json",
+      "response_sha256": "0a5ff43a6c75bb7bc963a49d489d5dc75f268167ec96d5b9eea979231fcacab7",
+      "response_shape": {
+        "has_candidate_sections": false,
+        "has_candidate_facts": true,
+        "has_questions": true,
+        "candidate_sections_type": "NoneType",
+        "warnings_type": "list"
+      },
+      "strict_contract_and_policy": "passed",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 7.031
+    },
+    {
+      "case_id": "extract_0025",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "data_class": "minimal_anonymous_public_excerpt",
+      "request_sha256": "44809c4d58abc85c1140659002c191bea5f9840c39f56107e9b6dfa9a18e3c39",
+      "status": "automatic_checks_passed",
+      "response_file": "agent/.local/deepseek-real-20261017/extract_0025.response.json",
+      "response_sha256": "1722fa1e962b21a40c66095f38355fa87551ff2583b4a185f7c00f1eacd9ec10",
+      "response_shape": {
+        "has_candidate_sections": false,
+        "has_candidate_facts": true,
+        "has_questions": true,
+        "candidate_sections_type": "NoneType",
+        "warnings_type": "list"
+      },
+      "strict_contract_and_policy": "passed",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 9.689
+    },
+    {
+      "case_id": "extract_0026",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "data_class": "minimal_anonymous_public_excerpt",
+      "request_sha256": "ec9ed25648ab3a78a3fa3a2b959b324b4311cf815108e7eea68080b004886edc",
+      "status": "automatic_checks_passed",
+      "response_file": "agent/.local/deepseek-real-20261017/extract_0026.response.json",
+      "response_sha256": "2e929ee7bb39a87298379d85a1a61384ec3fb4f618b85b9cc7cba16c5179e32a",
+      "response_shape": {
+        "has_candidate_sections": false,
+        "has_candidate_facts": true,
+        "has_questions": true,
+        "candidate_sections_type": "NoneType",
+        "warnings_type": "list"
+      },
+      "strict_contract_and_policy": "passed",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 5.501
+    },
+    {
+      "case_id": "extract_0027",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "data_class": "minimal_anonymous_public_excerpt",
+      "request_sha256": "8b1f8c904a2aa6df823c60c8da41b2c30f83f3c8194ca405bd7881ac3b6ffb8a",
+      "status": "automatic_checks_passed",
+      "response_file": "agent/.local/deepseek-real-20261017/extract_0027.response.json",
+      "response_sha256": "1e44892530f3df988f8050b8c9846a2b69664d34f659d9df472aada95cd524fd",
+      "response_shape": {
+        "has_candidate_sections": false,
+        "has_candidate_facts": true,
+        "has_questions": true,
+        "candidate_sections_type": "NoneType",
+        "warnings_type": "list"
+      },
+      "strict_contract_and_policy": "passed",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 4.516
+    },
+    {
+      "case_id": "extract_0028",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "data_class": "minimal_anonymous_public_excerpt",
+      "request_sha256": "1d40833fb59a1a902367b7e46c6ae3ef7aa98e68cf91b180160807b7c05d6dcd",
+      "status": "automatic_checks_passed",
+      "response_file": "agent/.local/deepseek-real-20261017/extract_0028.response.json",
+      "response_sha256": "90a0fe4463bc11985ee8144c5731b7bc7d89db0edfb8692457d03e3133b3477d",
+      "response_shape": {
+        "has_candidate_sections": false,
+        "has_candidate_facts": true,
+        "has_questions": true,
+        "candidate_sections_type": "NoneType",
+        "warnings_type": "list"
+      },
+      "strict_contract_and_policy": "passed",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 7.873
+    },
+    {
+      "case_id": "extract_0029",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "data_class": "minimal_anonymous_public_excerpt",
+      "request_sha256": "ee02d2f10e60a0cc27d13807cc80b1fb261d7d7b2b4d0b6d03d04be2d54a15cd",
+      "status": "automatic_checks_passed",
+      "response_file": "agent/.local/deepseek-real-20261017/extract_0029.response.json",
+      "response_sha256": "abdb7454d2a25dc3611faba6fdab35cd7673bc5e2b0883808a58ec09ec259934",
+      "response_shape": {
+        "has_candidate_sections": false,
+        "has_candidate_facts": true,
+        "has_questions": true,
+        "candidate_sections_type": "NoneType",
+        "warnings_type": "list"
+      },
+      "strict_contract_and_policy": "passed",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 4.297
+    },
+    {
+      "case_id": "extract_0030",
+      "operation": "extract",
+      "group": "mdcc_minimal_clause",
+      "data_class": "minimal_anonymous_public_excerpt",
+      "request_sha256": "e9d6afad52d7230ed93caf57483e80842272272df65d6ebf3c2faebc10d00d83",
+      "status": "automatic_checks_passed",
+      "response_file": "agent/.local/deepseek-real-20261017/extract_0030.response.json",
+      "response_sha256": "ea906980d20071fac4319f264bcc5ae98ab1052631718edc1791e652995e4886",
+      "response_shape": {
+        "has_candidate_sections": false,
+        "has_candidate_facts": true,
+        "has_questions": true,
+        "candidate_sections_type": "NoneType",
+        "warnings_type": "list"
+      },
+      "strict_contract_and_policy": "passed",
+      "failures": [],
+      "review_flags": [],
+      "elapsed_seconds": 5.79
+    }
+  ],
+  "counts": {
+    "automatic_checks_passed": 7
+  },
+  "unattempted_case_ids": [],
+  "finished_at": "2026-10-17T04:20:29.163668+00:00",
+  "scope": "Seven previously unattempted minimal public medical clauses; no full records, identity data or other new cases.",
+  "local_status_sha256": "1b43c047e70dcd97ed6c6bcff2d4481eb843a1fe37e04c93538a1fc02df7b847",
+  "runtime_code_sha256": {
+    "agent/agent_service.py": "9eed2c94cf38e1fa4ff381217e638d917eb682036d3611f281de8223792fbde0",
+    "agent/extract_policy.py": "6e2bed965b56d4c85c8008ea25b1a2269d1f9f9b358571de4b089daf606e328a"
+  },
+  "content_checks": {
+    "mode": "partial_automatic_checks_no_clinical_gold_standard",
+    "cases": [
+      {
+        "case_id": "extract_0024",
+        "fields": [
+          "patient.medical_summary"
+        ],
+        "diagnosis_and_stage_expectations_checked": true,
+        "relation_expected": false,
+        "facts_with_unprovided_field": [],
+        "all_source_user_input": true,
+        "all_pending_and_unconfirmed": true,
+        "reasks_provided_relation": false,
+        "semantic_failures": [],
+        "review_flags": []
+      },
+      {
+        "case_id": "extract_0025",
+        "fields": [
+          "patient.relationship_to_applicant",
+          "patient.medical_summary"
+        ],
+        "diagnosis_and_stage_expectations_checked": true,
+        "relation_expected": true,
+        "facts_with_unprovided_field": [],
+        "all_source_user_input": true,
+        "all_pending_and_unconfirmed": true,
+        "reasks_provided_relation": false,
+        "semantic_failures": [],
+        "review_flags": []
+      },
+      {
+        "case_id": "extract_0026",
+        "fields": [
+          "patient.medical_summary"
+        ],
+        "diagnosis_and_stage_expectations_checked": true,
+        "relation_expected": false,
+        "facts_with_unprovided_field": [],
+        "all_source_user_input": true,
+        "all_pending_and_unconfirmed": true,
+        "reasks_provided_relation": false,
+        "semantic_failures": [],
+        "review_flags": []
+      },
+      {
+        "case_id": "extract_0027",
+        "fields": [
+          "patient.medical_summary"
+        ],
+        "diagnosis_and_stage_expectations_checked": true,
+        "relation_expected": false,
+        "facts_with_unprovided_field": [],
+        "all_source_user_input": true,
+        "all_pending_and_unconfirmed": true,
+        "reasks_provided_relation": false,
+        "semantic_failures": [],
+        "review_flags": []
+      },
+      {
+        "case_id": "extract_0028",
+        "fields": [
+          "patient.medical_summary"
+        ],
+        "diagnosis_and_stage_expectations_checked": true,
+        "relation_expected": false,
+        "facts_with_unprovided_field": [],
+        "all_source_user_input": true,
+        "all_pending_and_unconfirmed": true,
+        "reasks_provided_relation": false,
+        "semantic_failures": [],
+        "review_flags": []
+      },
+      {
+        "case_id": "extract_0029",
+        "fields": [
+          "patient.medical_summary"
+        ],
+        "diagnosis_and_stage_expectations_checked": true,
+        "relation_expected": false,
+        "facts_with_unprovided_field": [],
+        "all_source_user_input": true,
+        "all_pending_and_unconfirmed": true,
+        "reasks_provided_relation": false,
+        "semantic_failures": [],
+        "review_flags": []
+      },
+      {
+        "case_id": "extract_0030",
+        "fields": [
+          "patient.medical_summary"
+        ],
+        "diagnosis_and_stage_expectations_checked": true,
+        "relation_expected": false,
+        "facts_with_unprovided_field": [],
+        "all_source_user_input": true,
+        "all_pending_and_unconfirmed": true,
+        "reasks_provided_relation": false,
+        "semantic_failures": [],
+        "review_flags": []
+      }
+    ]
+  },
+  "public_report_contains_patient_text": false,
+  "raw_suite_and_responses_git_ignored": true,
+  "limits": [
+    "Partial automatic checks, not clinical truth, independent business review or population accuracy.",
+    "All original medical narratives and model responses remain in local ignored storage.",
+    "No new draft, OCR, B transactions, frontend or final export acceptance.",
+    "Model identified by configured workflow; billing and token fees were not read.",
+    "The original HTTP400 case extract_0023 was not retried."
+  ]
+}

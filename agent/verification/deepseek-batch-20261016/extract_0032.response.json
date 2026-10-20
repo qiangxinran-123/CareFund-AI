@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_mdcc_eval_0032",
+  "application_revision": 1,
+  "candidate_facts": [],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "patient.medical_summary",
+      "question": "请描述患者的病情、诊断名称、目前治疗阶段，以及是否已经确诊。",
+      "reason": "当前申请未提供任何病情或诊断信息，无法了解患者医疗状况。",
+      "required": false
+    },
+    {
+      "question_id": "question_002",
+      "field": "treatment.paid_cost",
+      "question": "目前已经支付的医疗费用大约是多少？如有费用清单或发票，可一并提供。",
+      "reason": "当前申请未提供已支付医疗费用信息，补充后便于核对已有陈述。",
+      "required": false
+    },
+    {
+      "question_id": "question_003",
+      "field": "treatment.estimated_cost",
+      "question": "后续预估治疗费用大约是多少？如果医院已出具费用预估单，可以补充提供。",
+      "reason": "当前申请未提供后续预估治疗费用信息，补充后便于核对已有陈述。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料，无法从材料中核实任何事实。",
+    "用户自述提到筹款目标为人民币20000元、已募集3000元，但未提供对应字段，暂未生成候选事实。",
+    "用户自述明确表示病情和医疗费用均未提供，因此未提取相关事实。"
+  ]
+}

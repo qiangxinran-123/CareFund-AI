@@ -89,6 +89,7 @@ def _draft_issues(request: dict, policy: ValidationPolicy | None) -> list[dict]:
 
 def prepare_agent_draft_request(
     request: dict, *, policy: ValidationPolicy | None = None,
+
     application: dict | None = None, generation_request: dict | None = None,
 ) -> tuple[dict, dict]:
     """Return (AgentDraftRequest, ValidationResult) with explicit ID semantics.
@@ -111,10 +112,25 @@ def prepare_agent_draft_request(
             item["issue_id"] for item in report["issues"]
             if policy is None or policy.draft_issue_scope == "all" or item["severity"] == "blocking"
         ],
+=======
+) -> tuple[dict, dict]:
+    """Return (AgentDraftRequest, current ValidationResult), preserving ALL issues.
+
+    A 755a0c2 blocks every nonempty issue list, including info/warning. B must
+    pause if can_finalize is false OR validation_issue_ids is nonempty. No issue
+    is silently dropped to circumvent A's current gate.
+    """
+    report = result(request, _draft_issues(request, policy))
+    draft_request = {key: request[key] for key in _IDENTITY}
+    draft_request.update(
+        candidate_facts=deepcopy(request["facts"]),
+        validation_issue_ids=[item["issue_id"] for item in report["issues"]],
+
     )
     check_model(report, "validation.schema.json", "ValidationResult")
     check_model(draft_request, "agent.schema.json", "AgentDraftRequest")
     return draft_request, report
+
 
 
 def validate_for_generation(
@@ -135,6 +151,7 @@ def validate_for_generation(
     report = result(request, issues)
     check_model(report, "validation.schema.json", "ValidationResult")
     return report
+
 
 
 def validate_agent_draft(

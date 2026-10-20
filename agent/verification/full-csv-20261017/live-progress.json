@@ -1,0 +1,40 @@
+{
+  "started_at": "2026-10-17T05:41:03.399290+00:00",
+  "updated_at": "2026-10-17T13:19:26.758904+00:00",
+  "status": "paused_on_finding_no_retry",
+  "mode": "independent_rows",
+  "authorized_max_generation_calls": 84712,
+  "authorized_budget_cny": 20,
+  "calls_attempted": 1350,
+  "counts": {
+    "boundary_or_transport_rejected": 11,
+    "needs_context_review": 1,
+    "partial_checks_passed": 1338
+  },
+  "cost_upper_bound_cny": 26.70419,
+  "automatic_retries": 0,
+  "actual_platform_bill_read": false,
+  "question_policy_applied_calls": 111,
+  "raw_model_contract_rejections_recorded": 111,
+  "all_source_rows": 84712,
+  "held_for_local_review": 61,
+  "not_attempted_rows": 83301,
+  "unattempted_including_held_rows": 83362,
+  "all_rows_model_tested": false,
+  "scope": "Only disease field, excluding other 22 columns. No draft calls. No clinical ground truth.",
+  "budget_caveat": "cost_upper_bound_cny preserves the historical all-token ledger estimate. Dispatch uses budget_control: user-reported bill baseline plus prior unknown usage allowance and conservative new-call reservations. This is not a machine-read bill or a provider hard limit.",
+  "budget_control": {
+    "mode": "user-reported-bill-plus-new-reservations-v1",
+    "actual_spend_limit_cny": 20.0,
+    "user_reported_spend_at_checkpoint_cny": 1.92,
+    "checkpoint_calls": 1009,
+    "checkpoint_time": "2026-10-17T12:34:41.354868+00:00",
+    "prior_unknown_usage_allowance_cny": 0.785994,
+    "new_calls_cost_upper_bound_cny": 6.86034,
+    "controlled_spend_upper_bound_cny": 9.566334,
+    "remaining_headroom_cny": 10.433666,
+    "historical_cost_estimates_preserved": true,
+    "actual_platform_bill_read": false,
+    "caveat": "Depends on the user-reported bill baseline and pinned rates; not a provider spending limit."
+  }
+}

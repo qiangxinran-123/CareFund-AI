@@ -1,0 +1,14 @@
+{
+  "offline_only": true,
+  "new_model_calls": 0,
+  "saved_responses_rechecked": 30,
+  "tested_workflow_export_hashes_unchanged": 2,
+  "credential_pattern_scan": "passed",
+  "files_scanned": 45,
+  "git_diff_whitespace_check": "passed",
+  "production_code_and_shared_contracts_unchanged": true,
+  "D_replayed_cases": 20,
+  "partial_content_findings_preserved": 1,
+  "remaining_real_suite_ignored": true,
+  "remaining_real_cases_prepared_not_called": 7
+}

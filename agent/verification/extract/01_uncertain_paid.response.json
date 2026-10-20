@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "application_id": "app_demo_003",
+  "application_revision": 1,
+  "candidate_facts": [
+    {
+      "fact_id": "fact_001",
+      "field": "patient.relationship_to_applicant",
+      "value": {
+        "kind": "text",
+        "value": "母亲"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_002",
+      "field": "patient.medical_summary",
+      "value": {
+        "kind": "text",
+        "value": "用户自述医生表示可能是肺部肿瘤，仍在检查，尚未确诊"
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    },
+    {
+      "fact_id": "fact_003",
+      "field": "treatment.paid_cost",
+      "value": {
+        "kind": "money",
+        "value": {
+          "currency": "CNY",
+          "amount_minor": 2000000
+        }
+      },
+      "source_type": "user_input",
+      "evidence_ids": [],
+      "verification_status": "pending",
+      "user_confirmed": false
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "question_001",
+      "field": "treatment.estimated_cost",
+      "question": "请问医院是否有出具后续治疗费用的预估单？如有，请补充说明或上传相关材料。",
+      "reason": "您表示后续治疗费用不清楚，如有医院出具的费用预估单，有助于完善申请信息。",
+      "required": false
+    },
+    {
+      "question_id": "question_002",
+      "field": "documents.diagnosis_proof",
+      "question": "目前尚未上传诊断或检查相关材料，请问后续是否可以补充医院出具的诊断证明或检查报告？",
+      "reason": "目前未见诊断或检查材料，补充相关证明有助于核实病情。",
+      "required": false
+    }
+  ],
+  "warnings": [
+    "本次输入未附材料，所有事实均来自用户自述，尚未获得材料证实。"
+  ]
+}

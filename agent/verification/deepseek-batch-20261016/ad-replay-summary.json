@@ -1,0 +1,1022 @@
+{
+  "mode": "offline_replay_of_20_new_synthetic_extractions_through_actual_D",
+  "new_model_calls": 0,
+  "policy": "D demo only; not team-approved production policy",
+  "policy_sha256": "4e61dbf16969134b603d63b346abe563e7c6d9daf87b0700194d340c1b57b8f5",
+  "cases": [
+    {
+      "case_id": "extract_0031",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_87332bf3c6cb4bdfa174b57c624afff4",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.paid_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_c07cb60b286a4c5a90c814a4c2e6545f",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_a85a8a4ec5f04e26936f6e6470086b3f",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_4af02ebcc7334eb3891c1cdaabd96678",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_703686a95e444615a575d2492b5293e9",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_3254f040eb8e48b6af33cf54afc3a100",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "该关键事实需要材料来源，用户自述不能替代。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0032",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_138cfa39bbc6474d816977e82eb1b7f9",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_9cbd53c497c2447fafe7e3f17f29d4ef",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_c4eb0fa0a3df4b5e80e2e03faab19343",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0033",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_74fc8537f81f4d76b1219c269626d7b7",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.paid_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_dca14adb92d441f0a0013d77f58a1b73",
+          "type": "invalid_format",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "事实取值类型与已配置的字段规则不一致。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_623d772747e2451e935823890434856f",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_d3fd1d11d893493598534ecb9aa70142",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_4953b1d81c654b96803800f124be5daf",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_12e9a65a95144a6dabdd6ad98d18d78d",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_0ef840c8ed9b418da8f575d16075b8bf",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "该关键事实需要材料来源，用户自述不能替代。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0034",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_001b0bc85dc6491ebe9caf4882df1951",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.paid_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_ec211028014545d398b8b831493b41ee",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_0f33c303447247adba917ec29bf733e0",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_22642c0bf89f420997e5837fcb9cbd06",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0035",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_66dee60257bb44c78023fa9a768205b7",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "patient.medical_summary",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_8bf92e05f06745be8c0634dad6df33b4",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_88783f5e53fc4f6ca816dfca65ba2ff9",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_cb17eca8aae54be1a8ddd0f43479b8c3",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0036",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_c36917541761457f93f95ebab82845c1",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "patient.medical_summary",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_04bdcc98011a4c5ba761f8b5fca55a7e",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_307042df6565403e800526c2c128a086",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_b5eccff3863f41c49b17163d2521f3a6",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0037",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_be241d5bdb3441268901bbab848c47a4",
+          "type": "invalid_format",
+          "severity": "blocking",
+          "field": "treatment.recorded_date",
+          "message": "事实取值类型与已配置的字段规则不一致。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_e1690c1f9ad44ecb9ab3129901a2509b",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.recorded_date",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_15548e1012c44459940af584098d812d",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_75b7e7dd0551434783a4ee5241854c50",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_36944f2b8f9c4673bb271f96eca8b510",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0038",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_3535103508274be9b58437b18d01430c",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_95f044d67c0442629f7e43fd66228ddc",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_b07b919114144262a226640ed3c2e5d9",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0039",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_d1c8bcd29a734cfb81d3a6baf9b9c02f",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "patient.relationship_to_applicant",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_preserved_0"
+          ]
+        },
+        {
+          "issue_id": "issue_f2889b1ecc7e4695b16ec45e737b8e36",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "contact.city",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_0717ccd41a5340fb9db474ba36d266ef",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_8c382e91e5aa4c4fb0cbd308d65085d5",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_ecd3ed9586a3408c98a1da151a1f4e70",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0040",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_a01ccd5ad008487688ba1e77fd9683d6",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_c2ba9319d1cf47cb95a5e21911e7457d",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "材料事实尚未完成核对。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_b3886db798414a8bb94c71ba38baf0bd",
+          "type": "inconsistent_amount",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "同一事实字段存在不同取值，需人工澄清，系统不自动择一。",
+          "related_fact_ids": [
+            "fact_001",
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_18d3437ecc7b43d39db21bf7fae0a215",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_acea5809a1e54a478ead2a272680789e",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_001",
+            "fact_002"
+          ]
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0041",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_9fd755e4b77a481ebb42f39b2af458fc",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.paid_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_dec7b2be857e4f99b3152f3264304751",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_dddd284abf2d47e895240db6725c91b7",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_c02fe31eb9ee4ff3b3bbf8f1e51d78ac",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_2e68c39162ee49209e02f6f00784df43",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_a3dc4e06ef564320a6170648066e904a",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "该关键事实需要材料来源，用户自述不能替代。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0042",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_64a95be74438465c98bb447177db1f2e",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "fundraising.target_amount",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_ca360c43c47e4d42ae68caf9faaea73a",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "fundraising.raised_amount",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_33c5f9ce45a5445686348fd66d2061f9",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_f9f2d298618148a7a359857af7a2a63c",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_c74f0c2825b349da8d33caf9853e29b4",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": [
+        {
+          "type": "new_fact_field_outside_tested_prompt_scope",
+          "fact_id": "fact_001",
+          "field": "fundraising.target_amount"
+        },
+        {
+          "type": "new_fact_field_outside_tested_prompt_scope",
+          "fact_id": "fact_002",
+          "field": "fundraising.raised_amount"
+        }
+      ]
+    },
+    {
+      "case_id": "extract_0043",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_a25f33b16f364912a7f952f131d77232",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.paid_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_406cec0f53844b68a75bd3424b4ae193",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_411f6f6be0184ee991155968e537c1af",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_99e34155f1ff4b258ceba4bc5d2102e4",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0044",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_b83add265d5748349cff893fe77e0473",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.paid_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_bfe302d0bfb54b05a0a290de4928b62b",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_7fbc1169ed9c4570a1a048304d34014a",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_0e2f9e9f77dd46a881b3c0b94b22d720",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0045",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_ad6898569fd74cd28bd3475bc4492a86",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "patient.medical_summary",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_39a0fd29378d4ec7bb99565c8f4f53f8",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_dd10b0aa63e54532b9a03983e5155546",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_4f4fe3bd6c8241caac13c1ddd6e4a13d",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0046",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_ffa6f123533f405bad8bbef4405dd82b",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "patient.medical_summary",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_b7ea1ad963ca4918a036ae9a4370a2ee",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_848fcc6d94744f679d545b10a325ea2c",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_be3486908eb64ce9a38f16275abfd51f",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0047",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_3842df3a0cdd423e8872c8ddd224484b",
+          "type": "invalid_format",
+          "severity": "blocking",
+          "field": "treatment.recorded_date",
+          "message": "事实取值类型与已配置的字段规则不一致。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_c1c9329ce5924b8081bb7d2c0ea939a7",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.recorded_date",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_0a4f1d6a59104179b395b8bc747c8470",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_11535d4a353c4423a9ec92694c5f0756",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_d043b4057a084431987f890481e4628b",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0048",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_0a010821666f4d10af3853e2649317e3",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_1d93d63612444111b44c15222af71561",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_ab488f4e854941aea6f6edb1822515d0",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0049",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_172ed0519703462fb6d7de858499da14",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "patient.relationship_to_applicant",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_preserved_1"
+          ]
+        },
+        {
+          "issue_id": "issue_7c23e28f8cda43c88d0dbc5ca1eb60ca",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "contact.city",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_1a2486e3b7e14afb8c1c1b883c869ba6",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "documents",
+          "message": "缺少已完成解析的证明材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_c29915fe8eb24fc59fc3c9332428b334",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_2ef513ac55444d4f8faf132e05c9260b",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        }
+      ],
+      "a_prompt_scope_findings": []
+    },
+    {
+      "case_id": "extract_0050",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issues": [
+        {
+          "issue_id": "issue_5f5ab652c6404d5dae28ebe17adeca83",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_001"
+          ]
+        },
+        {
+          "issue_id": "issue_7395c2bf65c24fbc9e73e34ff41f2019",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "材料事实尚未完成核对。",
+          "related_fact_ids": [
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_ff4d9ac8f382472daedc2b4a1fd140b5",
+          "type": "inconsistent_amount",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "同一事实字段存在不同取值，需人工澄清，系统不自动择一。",
+          "related_fact_ids": [
+            "fact_001",
+            "fact_002"
+          ]
+        },
+        {
+          "issue_id": "issue_359d74aaaa82415e96e3659fdc62ff01",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "patient.medical_summary",
+          "message": "缺少规则要求的事实，请补充信息或材料。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_a127df436365438eb495e3ec6c540958",
+          "type": "missing",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "关键事实尚未由用户确认。",
+          "related_fact_ids": [
+            "fact_001",
+            "fact_002"
+          ]
+        }
+      ],
+      "a_prompt_scope_findings": []
+    }
+  ],
+  "mapped_cases": 20,
+  "can_finalize_true": 0,
+  "limits": [
+    "Interface acceptance does not cure the A prompt-scope finding.",
+    "No input facts were promoted or edited.",
+    "Not B/D online end-to-end acceptance."
+  ]
+}

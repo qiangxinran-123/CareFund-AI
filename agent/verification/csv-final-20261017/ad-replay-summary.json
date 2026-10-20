@@ -1,0 +1,399 @@
+{
+  "mode": "offline_actual_D_replay_of_accepted_A_outputs",
+  "new_model_calls": 0,
+  "policy": "D demo only; not team-approved production policy",
+  "policy_sha256": "4e61dbf16969134b603d63b346abe563e7c6d9daf87b0700194d340c1b57b8f5",
+  "shared_contract_fingerprints_match": false,
+  "shared_contract_semantics_match": true,
+  "current_contract_sha256": {
+    "agent.schema.json": "f475c43d3a572cd285b0795835775f1fc07e5c4892f51e2dda923e46b94889c4",
+    "application.schema.json": "427275304e4604b4755e01d6844707b19124fcad964541c86ee62518733f8687",
+    "common.schema.json": "80891b0d4c7fc3d9a11346ae5c1bba796c8bc5b0f3373df6902b7b691d4aff41",
+    "draft.schema.json": "e94981c4c38f471f91b10425f8609ea14e0c5fac3ac691672601658123842356",
+    "evidence.schema.json": "b5dbd7296decc5b776c066acae5a3ecd5f5f3c7874d62b3b6f249ea186728f3c",
+    "validation.schema.json": "9ca4c74cba49f4ed1fa5d3f46e87f779ec01fedf9447ea395838d05214568bd3"
+  },
+  "D_contract_sha256": {
+    "agent.schema.json": "52b36e9b7751d3bde9f5de5af5e7de995c6ccf07a9dece265126c2b94bfec69b",
+    "application.schema.json": "c1c9b10a0f138e159e27bd2cb95c03de952923fc38a49c5c08132c0a7cb0df6f",
+    "common.schema.json": "dd837c800da599391f9c9a5e808be299d405549906b5d0403fc113c34e5d5181",
+    "draft.schema.json": "2d1e74f001ad6842e02a699452e9e14d4503b2eedc3ebec4dd48cd8a7097e9e2",
+    "evidence.schema.json": "3100a664dedd939609e8223715ca64b54196fcec34d616721ded99a3c3539ef5",
+    "validation.schema.json": "278a5233f16f47a800308b8395f6a9b8744d81e11505665c621864934f2f5da3"
+  },
+  "D_source_sha256": {
+    "validation/evidence_tracker.py": "695b43a59c494e641c3f7cd37cac98fb5a97fb01434c3694a58cd30e2963d961",
+    "validation/export_checker.py": "84d5df6ed55106c215058eacab0981700c9c500db2ddea3caddb4dbea63830ae",
+    "validation/fact_checker.py": "dba43dedb33de4c981ed2e6d5ccc0aeedf6f6545b407add5f8c43f936f697230",
+    "validation/issues.py": "0dfcbacca275503efedf94922153c046239ead88ce0b1f72d5a44ec665c5c545",
+    "validation/schema.py": "ae7618342a934d2a617bdb29d8bb3d80e6a3e220b6dd0dc1bf922e64bdebc18a",
+    "validation/__init__.py": "b92959cfa418c8470b9e09ccb2a81ad7d8decc47f68e2491fc5a65092313247c",
+    "validation/__main__.py": "4a219fd508b74a6146df58db719f8262e0aa81304000e36f19680ce2ec88ae44",
+    "validation/rules/policy.py": "e812f71bc0f24ab386117089e8cceb9498fac15128bde7bdd44a34671cb49dbd",
+    "validation/rules/values.py": "5908db0f90a965ea66712acbd0d1461c086f8b0df7b48b405ae543bed23fe581",
+    "validation/rules/__init__.py": "5015e386df17e08fed680b77e491fdea1a975ec889e8d61cc04a62755a107f96"
+  },
+  "cases": [
+    {
+      "case_id": "regression_extract_0001",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "750e177ccb185a0b2def33f64244554218e7f23c219134da19de9ceee48256ac"
+    },
+    {
+      "case_id": "regression_extract_0011",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "1e233c75d63f48208db082731b1e9d823a4dcb9b42d028cb79f061b53d6b23d3"
+    },
+    {
+      "case_id": "regression_extract_0016",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "6770dd869f2de09fdf0ec4827eef8e8d48b1c124b8c6dedbc23fe40a761ad666"
+    },
+    {
+      "case_id": "regression_extract_0042",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "blocking": 3
+      },
+      "private_replay_sha256": "f0541f6a29541d0d066fc08168682981715cae6ac7472820727380cfdb22465e"
+    },
+    {
+      "case_id": "csv_disease_001",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "a1160c4e94ff4d60e7b123dd2c61597d46274e3191a70d490521940011a27b08"
+    },
+    {
+      "case_id": "csv_disease_002",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "081ecd010d1bb9a75645007854216136ebf7928f4f32348d4bda130e06f9023d"
+    },
+    {
+      "case_id": "csv_disease_003",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "fe328ef1a87feede25854635057a51419937e155c510701f509a88a03b756387"
+    },
+    {
+      "case_id": "csv_disease_004",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "cda4d0e1e66f224be00a74426f93322ed923c5fbaec8daa0ca48ed9b26f4b0cc"
+    },
+    {
+      "case_id": "csv_disease_005",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "f36c6445d2701f6de11002c90d314eb67b637318966330d1a339ed49b11bf59b"
+    },
+    {
+      "case_id": "csv_disease_006",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "9dbd0a3adf7868ee820bc5e9a0573e51ee643563ced3df7a009d2df06200ab5a"
+    },
+    {
+      "case_id": "csv_disease_007",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "8cdac27810ef3462f1f0450afb8d47114675b0449850e05fb9ef9da2f2e01784"
+    },
+    {
+      "case_id": "csv_disease_008",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "6152c166d78752cfcaa0d04e204ae0709c1e4ca8ebbb17893db7e93a187c255d"
+    },
+    {
+      "case_id": "csv_disease_009",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "50411969d1618fca6859b9acef8eeb956e9e3970219dc6add957fefc9dfea64e"
+    },
+    {
+      "case_id": "csv_disease_010",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "bd58f755ff794b5e56a7d8188324b095ac3dde9fe0e3938e022c295f99546e52"
+    },
+    {
+      "case_id": "csv_disease_011",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "1d5ebd3b86f91092641665f34af2bb10131a20b2256c11df156ec13ce586069e"
+    },
+    {
+      "case_id": "csv_disease_012",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "b1e8b7a65f8b41c98a97933b52f5871550d6fb5920847d0183a497a8256a1874"
+    },
+    {
+      "case_id": "csv_disease_013",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "7da1aff1cfcfb324be7f3135c9ebc90deb12262e89367430904bf02f5b4f9cda"
+    },
+    {
+      "case_id": "csv_disease_014",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "a1ba4554fd0852c78af62a13e8a6bc1f9b00f19c7f9a4e47eb056344fb314bb5"
+    },
+    {
+      "case_id": "csv_disease_015",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "c1184efed842306fda329b7687a38caacd7e8630c73eb72206bba80be0a24248"
+    },
+    {
+      "case_id": "csv_disease_016",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "cc8293228c364bda38f8bf5c529e48ebd54f8facdd5eb49b8bbc88df0105b4ad"
+    },
+    {
+      "case_id": "csv_disease_017",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "6bee0cd190890168f99b2632843d02188ec1333fdf702b20bf3331282c006d19"
+    },
+    {
+      "case_id": "csv_disease_018",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "5d731044b18edfcfa3ad62007bc94ed5fffa06d8abe137d0edf3f9108633b11b"
+    },
+    {
+      "case_id": "csv_disease_019",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "c00b3a9eb640ee5ca7b1bd1a81e0ee43d4d6916178b2d123579dffdfa09aa53e"
+    },
+    {
+      "case_id": "csv_disease_020",
+      "input_and_output_contract": "passed",
+      "input_unmodified": true,
+      "can_finalize": false,
+      "issue_counts_by_type": {
+        "unsupported": 1,
+        "missing": 3
+      },
+      "issue_counts_by_severity": {
+        "info": 1,
+        "blocking": 3
+      },
+      "private_replay_sha256": "0e68fabe2c468dd08c792cd43a18f72410534ac35563a1e97fe01f2b9e4a887f"
+    }
+  ],
+  "mapped_cases": 24,
+  "can_finalize_true": 0,
+  "contains_patient_text": false
+}

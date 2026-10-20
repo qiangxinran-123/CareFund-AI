@@ -61,6 +61,7 @@ def validate(request: dict, *, policy: ValidationPolicy | None = None) -> dict:
     if policy is None:
         issues.append(issue("missing", "validation.policy", "尚未配置经团队确认的必填事实与材料规则，禁止直接确认导出。"))
     else:
+
         for field in policy.recommended_document_fields:
             if not any(fact["source_type"] == "document" and fact["evidence_ids"] for fact in by_field[field]):
                 issues.append(issue(
@@ -73,6 +74,7 @@ def validate(request: dict, *, policy: ValidationPolicy | None = None) -> dict:
                     "missing", field, "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
                     severity="warning",
                 ))
+
         if policy.require_processed_document and not any(
             doc["processing_status"] == "processed" for doc in request["documents"]
         ):
