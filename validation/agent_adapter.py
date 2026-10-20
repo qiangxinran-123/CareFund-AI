@@ -89,6 +89,30 @@ def _draft_issues(request: dict, policy: ValidationPolicy | None) -> list[dict]:
 
 def prepare_agent_draft_request(
     request: dict, *, policy: ValidationPolicy | None = None,
+
+    application: dict | None = None, generation_request: dict | None = None,
+) -> tuple[dict, dict]:
+    """Return (AgentDraftRequest, ValidationResult) with explicit ID semantics.
+
+    Legacy policies retain all IDs. demo_v1 explicitly sends blocking IDs only;
+    the full, unmodified issue list stays in the paired result for UI/audit.
+    B must never call A if can_finalize is false. To check generation revision,
+    supply the current stored application and formal DraftGenerationRequest.
+    """
+    if (application is None) != (generation_request is None):
+        raise AgentAdaptationError("Provide application and generation_request together.")
+    report = (
+        validate_for_generation(request, application, generation_request, policy=policy)
+        if application is not None else result(request, _draft_issues(request, policy))
+    )
+    draft_request = {key: request[key] for key in _IDENTITY}
+    draft_request.update(
+        candidate_facts=deepcopy(request["facts"]),
+        validation_issue_ids=[
+            item["issue_id"] for item in report["issues"]
+            if policy is None or policy.draft_issue_scope == "all" or item["severity"] == "blocking"
+        ],
+=======
 ) -> tuple[dict, dict]:
     """Return (AgentDraftRequest, current ValidationResult), preserving ALL issues.
 
@@ -101,10 +125,33 @@ def prepare_agent_draft_request(
     draft_request.update(
         candidate_facts=deepcopy(request["facts"]),
         validation_issue_ids=[item["issue_id"] for item in report["issues"]],
+
     )
     check_model(report, "validation.schema.json", "ValidationResult")
     check_model(draft_request, "agent.schema.json", "AgentDraftRequest")
     return draft_request, report
+
+
+
+def validate_for_generation(
+    request: dict, application: dict, generation_request: dict,
+    *, policy: ValidationPolicy | None = None,
+) -> dict:
+    """Check a fresh stored Application snapshot and expected revision before A."""
+    check_model(application, "application.schema.json", "Application")
+    check_model(generation_request, "draft.schema.json", "DraftGenerationRequest")
+    issues = _draft_issues(request, policy)
+    if not (
+        application["application_id"] == request["application_id"]
+        and application["revision"] == request["application_revision"] == generation_request["expected_revision"]
+    ):
+        issues.append(issue("conflict", "application.revision", "生成请求或分析快照版本过期，需读取当前申请并重新校验。"))
+    if not application["patient_info"]["display_name"].strip():
+        issues.append(issue("missing", "patient.display_name", "申请人显示名称不能为空白。"))
+    report = result(request, issues)
+    check_model(report, "validation.schema.json", "ValidationResult")
+    return report
+
 
 
 def validate_agent_draft(
