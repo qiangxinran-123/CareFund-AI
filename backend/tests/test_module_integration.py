@@ -152,3 +152,9 @@ def test_backend_adapter_calls_real_validation_module(monkeypatch) -> None:
     assert result.application_revision == app.revision
     assert result.can_finalize is True
     assert all(issue.severity != "blocking" for issue in result.issues)
+
+
+def test_real_validation_uses_backend_integration_policy_by_default(monkeypatch) -> None:
+    monkeypatch.delenv("CAREFUND_VALIDATION_POLICY", raising=False)
+    service = RealValidationService()
+    assert service._policy is not None

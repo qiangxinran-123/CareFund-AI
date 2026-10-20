@@ -40,3 +40,7 @@ def register_exception_handlers(app: FastAPI) -> None:
         ]
         return _response(422, "VALIDATION_FAILED", "Request validation failed", details)
 
+    @app.exception_handler(Exception)
+    async def handle_unexpected_error(_request: Request, _exc: Exception) -> JSONResponse:
+        return _response(500, "INTERNAL_ERROR", "Unexpected server error")
+

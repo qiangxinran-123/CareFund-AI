@@ -11,7 +11,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="CareFund-AI Backend",
         version="1.0.0",
-        description="Contract-first backend prototype with deterministic Mock adapters.",
+        description="Contract-first local backend with persistent state and pluggable adapters.",
     )
     register_exception_handlers(app)
     app.include_router(health_router, prefix="/api/v1")

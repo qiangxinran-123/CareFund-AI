@@ -101,7 +101,11 @@ class RealValidationService:
     def _load_policy():
         policy_path = os.getenv("CAREFUND_VALIDATION_POLICY")
         if not policy_path:
-            return None
+            policy_path = str(
+                Path(__file__).resolve().parents[1]
+                / "config"
+                / "validation-policy.integration.json"
+            )
         try:
             from validation import ValidationPolicy
 
