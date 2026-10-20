@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, expect, it, vi } from 'vitest'
 import type { AnalysisApi } from '../../api/analysis'
 import { ApiError } from '../../api/client'
@@ -46,6 +46,63 @@ it('shows no-material guidance without inventing a hard requirement', async () =
   expect(screen.getByText(/仍可以整理已填写的内容/)).toBeTruthy()
 })
 
+it('combines reliably related validation issues with their facts and keeps unassociated issues visible', async () => {
+  const analysisApi = api({ getLatest: vi.fn().mockResolvedValue(result()) })
+  render(<AnalysisPanel api={analysisApi} application={application} documents={[document]} />)
+
+  expect(await screen.findByRole('heading', { name: '核对您的申请信息' })).toBeTruthy()
+  expect(screen.getByText('需要处理：3 项 · 其他已整理信息：1 条')).toBeTruthy()
+  expect(screen.getByText('需要处理的信息')).toBeTruthy()
+  expect(screen.getByTestId('validation-issue-issue_conflict')).toBeTruthy()
+  expect(screen.getByTestId('validation-issue-issue_unsupported')).toBeTruthy()
+  expect(screen.getByTestId('validation-issue-issue_missing')).toBeTruthy()
+  expect(screen.getAllByTestId('validation-issue-issue_conflict')).toHaveLength(1)
+  expect(screen.queryByText('已确认')).toBeNull()
+  expect(analysisApi.start).not.toHaveBeenCalled()
+  expect(analysisApi.submitAnswers).not.toHaveBeenCalled()
+})
+
+it('does not show an empty independent issue section when every issue is already attached to a fact', async () => {
+  const analysis = result()
+  analysis.validation = { ...analysis.validation, issues: [analysis.validation.issues[1]] }
+  render(<AnalysisPanel api={api({ getLatest: vi.fn().mockResolvedValue(analysis) })} application={application} />)
+
+  expect(await screen.findByTestId('validation-issue-issue_conflict')).toBeTruthy()
+  expect(screen.queryByRole('heading', { name: '需要您核对的信息' })).toBeNull()
+  expect(screen.queryByText('目前没有需要补充或核对的信息。这不代表平台审核通过。')).toBeNull()
+})
+
+it('opens the unique formal follow-up path from an issue card and reuses answer submission', async () => {
+  const refreshed = result({ application_revision: application.revision + 1, questions: [] })
+  refreshed.validation = { ...refreshed.validation, application_revision: application.revision + 1, issues: [] }
+  const submitAnswers = vi.fn().mockResolvedValue(job('queued', application.revision + 1))
+  const analysisApi = api({
+    getLatest: vi.fn().mockResolvedValueOnce(result()).mockResolvedValueOnce(refreshed),
+    getJob: vi.fn().mockResolvedValue(job('succeeded', application.revision + 1)),
+    submitAnswers,
+  })
+  render(<AnalysisPanel api={analysisApi} application={application} pollIntervalMs={0} />)
+
+  const missingIssue = await screen.findByTestId('validation-issue-issue_missing')
+  const questionButton = await within(missingIssue).findByRole('button', { name: '补充信息' })
+  expect(within(screen.getByTestId('validation-issue-issue_conflict')).queryByRole('button', { name: '补充信息' })).toBeNull()
+  fireEvent.click(questionButton)
+  const dialog = await screen.findByRole('dialog')
+  fireEvent(dialog, new Event('cancel', { cancelable: true }))
+  await waitFor(() => expect(globalThis.document.activeElement).toBe(questionButton))
+  expect(submitAnswers).not.toHaveBeenCalled()
+  fireEvent.click(questionButton)
+  const input = await screen.findByLabelText('请填写补充说明')
+  expect(globalThis.document.activeElement).toBe(input)
+  fireEvent.change(input, { target: { value: '杭州' } })
+  fireEvent.click(screen.getByRole('button', { name: '确认提交' }))
+  await waitFor(() => expect(submitAnswers).toHaveBeenCalledWith(application.application_id, {
+    expected_revision: application.revision,
+    answers: [{ question_id: 'q_required', answer: '杭州' }],
+  }, expect.any(AbortSignal)))
+  expect(await screen.findByText('信息已更新，核对完成。')).toBeTruthy()
+})
+
 it('shows submitting and prevents duplicate analysis requests', async () => {
   const pending = deferred<AnalysisJob>()
   const start = vi.fn(() => pending.promise)
@@ -75,7 +132,7 @@ it('shows queued and running states, then fetches the result and stops polling',
   expect(await screen.findByText('正在整理您的资料，请稍候。')).toBeTruthy()
   await act(async () => { secondPoll.resolve(job('succeeded')) })
   expect(await screen.findByText('资料整理完成，请查看需要核对的信息。')).toBeTruthy()
-  expect(screen.getByText(/已整理 3 条信息/)).toBeTruthy()
+  expect(screen.getByText('需要处理：3 项 · 其他已整理信息：1 条')).toBeTruthy()
   expect(getJob).toHaveBeenCalledTimes(2)
   await new Promise((resolve) => window.setTimeout(resolve, 5))
   expect(getJob).toHaveBeenCalledTimes(2)
@@ -129,15 +186,16 @@ it('submits answers, follows the returned revision, and refreshes the latest res
     getJob: vi.fn().mockResolvedValue(job('succeeded', application.revision + 1)),
   })
   render(<AnalysisPanel api={analysisApi} application={application} onRefreshApplication={refreshApplication} pollIntervalMs={0} />)
-  fireEvent.change(await screen.findByLabelText(/请补充所在城市/), { target: { value: '杭州' } })
-  fireEvent.click(screen.getByRole('button', { name: '提交补充信息' }))
-  expect(await screen.findByText('补充信息已提交，资料已重新整理，请查看下方结果。')).toBeTruthy()
+  fireEvent.click(within(await screen.findByTestId('validation-issue-issue_missing')).getByRole('button', { name: '补充信息' }))
+  fireEvent.change(await screen.findByLabelText('请填写补充说明'), { target: { value: '杭州' } })
+  fireEvent.click(screen.getByRole('button', { name: '确认提交' }))
+  expect(await screen.findByText('信息已更新，核对完成。')).toBeTruthy()
   expect(analysisApi.submitAnswers).toHaveBeenCalledWith(application.application_id, {
     expected_revision: application.revision,
     answers: [{ question_id: 'q_required', answer: '杭州' }],
   }, expect.any(AbortSignal))
   expect(refreshApplication).toHaveBeenCalledTimes(1)
-  expect(screen.getByText('暂时没有需要补充的信息。')).toBeTruthy()
+  expect(screen.queryByRole('heading', { name: '还需要了解这些信息' })).toBeNull()
 })
 
 it('keeps an answer after a 409 revision conflict', async () => {
@@ -146,9 +204,10 @@ it('keeps an answer after a 409 revision conflict', async () => {
     submitAnswers: vi.fn().mockRejectedValue(new ApiError('冲突', 'http', 409)),
   })
   render(<AnalysisPanel api={analysisApi} application={application} />)
-  const input = await screen.findByLabelText(/请补充所在城市/) as HTMLTextAreaElement
+  fireEvent.click(within(await screen.findByTestId('validation-issue-issue_missing')).getByRole('button', { name: '补充信息' }))
+  const input = await screen.findByLabelText('请填写补充说明') as HTMLTextAreaElement
   fireEvent.change(input, { target: { value: '仍需保留' } })
-  fireEvent.click(screen.getByRole('button', { name: '提交补充信息' }))
+  fireEvent.click(screen.getByRole('button', { name: '确认提交' }))
   expect(await screen.findByRole('alert')).toHaveProperty('textContent', '申请信息已更新，请刷新后重新操作。')
   expect(input.value).toBe('仍需保留')
 })

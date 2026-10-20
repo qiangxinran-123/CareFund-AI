@@ -1,0 +1,683 @@
+{
+  "checked_at": "2026-10-20T13:06:40.553696+00:00",
+  "mode": "offline_saved_response_regression",
+  "policy": "source-neutral-presentation-v1",
+  "new_model_calls": 0,
+  "real_cases": 60,
+  "fictional_cases": 27,
+  "counts": {
+    "facts_unchanged_neutral_presentation_verified": 81,
+    "eligible_literal_draft_unchanged": 5,
+    "unsafe_draft_blocked_before_model": 1
+  },
+  "historical_finding_cases_checked": 20,
+  "historical_outputs_modified": false,
+  "raw_model_defects_claimed_fixed": false,
+  "live_workflow_or_prompt_changed": false,
+  "code_policy_regression_passed": true,
+  "runtime_sha256": {
+    "agent/agent_service.py": "a04cc671fe355c9601393a690cda1e6b5ed62721531727eaeebf23146c89efc2",
+    "agent/extract_presentation.py": "5fb92fee433a9a048630706dd156ce658c8a987c9079af4ae36c1f504e531aac",
+    "agent/draft_input_policy.py": "09e52db7cfd161f1ad151625627514e4b4300cf6ada7425d2fc2a378ad61a318",
+    "agent/draft_policy.py": "fa9894bb9419fdcd8d3c12f23b3ed1b23739e3670280f55a1b3f57d9de37c5f5",
+    "agent/dify_runner.py": "fffb4a995dedfa9fe2ed2b9d307f245ca542946a546372fe702cbd83e66234f9"
+  },
+  "limits": [
+    "Deterministic presentation coverage and bounded input-instruction guard, not medical accuracy.",
+    "Draft lexical guard cannot detect every paraphrase, encoding or instruction.",
+    "B/D confirmation, revision transactions, evidence truth and final export remain separate integration responsibilities."
+  ],
+  "cases": [
+    {
+      "review_id": "S001",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "cce60bb6787f25b9f0c5fb6aeccde96f3a6c84f42803dc5b15b1ce42e5c33aa1",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S002",
+      "result": "eligible_literal_draft_unchanged",
+      "original_response_canonical_sha256": "d1bf4f71e197800d670d2168341292a78bad8942a9757f1d3b71c798e33fafae",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S003",
+      "result": "eligible_literal_draft_unchanged",
+      "original_response_canonical_sha256": "2fcfa064cebcaadf00f866db1c74fa816915978ce575546b8d7d6f2b45a5ec6a",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S004",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "884edff9616ace3beadc4c4fb5a8cf544febbe0994fb20604a6bfd3d035c83e8",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S005",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "21a32d32d1eb06e276a520453b5f64caebc7cc2da82090913b86107e437e4b02",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S006",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "404223dfb6ef35a8d6cf7f7efe9d2a418d1a5e9ce24fe81fd7ed8922c6f16beb",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S007",
+      "result": "eligible_literal_draft_unchanged",
+      "original_response_canonical_sha256": "2b5fa24c2d5f98925f1408de9ac3d77fd547f6b34ebbbf6402108e1af90273d3",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S008",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "204b263773ebf567c609d2f3ef80b372ff22f2e04f49df60a320bc4168d48bf4",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S009",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "17ebf8fe77195a94ce1011f15ee1ab1e7593ad43b84461f4c8d9d910d252d4f0",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S010",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "d87b5b7c170dba2d26f4cf186dee574c8ba31b822e198ed109e3758c0bfdd380",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S011",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "c896c90b06d547da03c63cf88d77fa327179e9955d49420f0a70c407862d2739",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S012",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "63f15c36dbfaa86f3b6e670e62f2a183861ac90e66f80cc85496faa532f8fde1",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S013",
+      "result": "eligible_literal_draft_unchanged",
+      "original_response_canonical_sha256": "2cccdb48c98cc210a974c911aa28a1543409c5479326585815fbbc20fc450e9e",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S014",
+      "result": "unsafe_draft_blocked_before_model",
+      "original_response_canonical_sha256": "d631751fed1e0ca24d78d229fae881df8edca4d5abb4ec078f4aa099be0c552f",
+      "historical_findings": [
+        "quoted_instruction_in_draft"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "S015",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "6984197bb50a51b3a6997499515cb795f9ed7122b2d34bf248222adff4e921b8",
+      "historical_findings": [
+        "leading_conflict_question"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "S016",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "b141ba82c410a5ef3b4733208d4ee90c66bc4f729c70ba603577cb5a4427c6da",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S017",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "969ba18af92e016fb562894fb07d9dfe5c9eb36611c760c813c812c290d31f96",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S018",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "6bdebdb82608b1d71ca27db9c37bb471983314c6ccac21657a437d084e50dd87",
+      "historical_findings": [
+        "historical_unsupported_platform_currency_wording"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "S019",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "ca4480512b9aafac0cf676991ef2895603b676ff5f017673f5eb6ac1c08a61a7",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S020",
+      "result": "eligible_literal_draft_unchanged",
+      "original_response_canonical_sha256": "21a21d385bcfa14aee4c1cb9211c9b1dea50d06a3632e3814854ec2442126c39",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S021",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "21f668063d1264ea787631f8c0a8e757d49d489ccb4fc7116cee4f8f82070359",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S022",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "5dd6fd0af34e1e6c6b62be3ca5912c1053fdbc4a98d761d4e7429de31f6f9ffe",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S023",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "5c1a97b378f8fc9d8b8e7c4edb04462c8873c93a1cd94be8fb1799ce9f903d50",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S024",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "3ebf07158720f81d7c772bf74899d802c1ea6176bee07243757b7917b69188af",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S025",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "2b3373263afbc82e6193e1e37238f0110986b293cfa7f3dd70e58a04be32c422",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "S026",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "78202d1edf36e45ae8e1f93afaa655d1640485aa546707ada7dc8bc216233807",
+      "historical_findings": [
+        "redundant_currency_question"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "S027",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "7d2a4c7be5c4ccc04fe3c01c933538364c521be202681eb2e5bf9023a1063893",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R001",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "9f3ee5ba093a6095c8ea64cdc01ff73d38bba1bba8d30f37af6e14a4a0d9f545",
+      "historical_findings": [
+        "warning_suggests_unsupplied_spelling",
+        "ambiguity_not_prioritized_in_questions"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R002",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "fcb9c2c3598bed73b859e16bd722b9b1acbac99246d6e70c887d31e423139cac",
+      "historical_findings": [
+        "ambiguity_not_prioritized_in_questions"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R003",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "efbe0130099a68b65b267330f6c79c750489d558bc058a801b0f5eb234fb7ad0",
+      "historical_findings": [
+        "ambiguity_not_prioritized_in_questions"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R004",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "1db2b48e21098f3d0ec2b31f61d9906f00ea291aa3ffdac39bdeea8418ffad7e",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R005",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "feebb8bca810d793232f913fd14f4fb04ec157f48b4b354cc54df95f4b15dca7",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R006",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "74e640ab26e326bd3fcbc1d4a6cf5aa73a0c2ab76437de78a84f58ad0c2f9bce",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R007",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "35fe6e937441cd944265852a9946a638ff3933715c567e7dc890e08e85b21b4d",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R008",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "2ee40c636271348bc26303af02bc294fd68f724cce7c6ae13ec2826b6852a7c2",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R009",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "09b691104f30ea0d33b4184a3b402a5e667f6087bf95816ce04f4109d320ec21",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R010",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "4eb8b4cca150ee2bef027760414af90cbd869febd33ba7ea45ec1ea1149c41d5",
+      "historical_findings": [
+        "missing_information_without_followup"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R011",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "d1ab226c966c8995b9e121460144a33caf0499dc1ea67271a03e06edf39ab6fa",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R012",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "a7ec50959c90087f3bc130e14764429c03f136325de2008d39f60e4154cda4aa",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R013",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "a35640a6a14056fb98eed2190823d01e9a3544e201aaf2fb08bc741e5b681f25",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R014",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "53ea6fa4e9ffb356055a857a0693995641bea79a44eee1e0430d86213e391307",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R015",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "92c81d54207918f37488cbba000c9be0698f12fc2436d6caf2b6667e09ee0389",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R016",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "5fc601426955eae8551eb81d7f4aa7ead2e11942a08342e5019feb4dc710d3cf",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R017",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "15b0b7590e4fbd2a48ec7ac922c57ca65c6dd5083a2fe75e628f303ca6abc39a",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R018",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "bcfd04c5b9bdccf0dda256e82f68ad6538f638bbdcd2dde136e4beb7842321e0",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R019",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "2683b00ede94671dfec28269a314614c68969c3107ca795908adec479243a042",
+      "historical_findings": [
+        "warning_suggests_unsupplied_spelling"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R020",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "444fbbfd0c379e9a096c8b0c49cae477faedfe8ec18ee73d0e7ef4c4c43b2d8b",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R021",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "bb12d6d0fa939d1ec8446e0b3d75bebdd02c55405ea81fe6e7ff0eb85625416b",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R022",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "8b1476237c0f143ad378dd66bec57cb8fccd90aa1a464372b9b7cd8cb6717f43",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R023",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "8f48f3a4b3f7d13e71ecbd8c6f7bfe1223f1e9519e6ea799fd914d454c406d49",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R024",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "5bd00a1f0d60b660ee0b3a0b247682d83bd3c02b0d5f8df12ca8c6ec42bbbc12",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R025",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "c86510e12dd18250a8c74708705ed595b9edaabfbee42525d33719e09b9bfe37",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R026",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "8aeab5fdaf11f73b35155ce5bb617251b0640a107092957186a239364d47885a",
+      "historical_findings": [
+        "warning_speculates_unsupplied_medical_relation"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R027",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "b692c2b9712c7d6be169fd29fc0bd58341c75d41a75fc29cf4dcfa1908ad6092",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R028",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "a4a7eb6f856dcc795ba4614b18468a5db24783d304e9c231f8cf56c6cb97b2d0",
+      "historical_findings": [
+        "warning_suggests_unsupplied_spelling",
+        "ambiguity_not_prioritized_in_questions"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R029",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "81590a86c0a39debaf0a42be2c89019b4bc95d8acedbeef928e6a8db23fa4457",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R030",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "b3885c661163151716dbe258714fe941d558911c870c2f081ed22366b385705c",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R031",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "de27d5e951abfdb59bf8b6248f23339b12b0a73c879c46cb1e886e367d968af0",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R032",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "c849282dd9b70576f1bc5940c9a18677136545cb1af59113d58cc7c9685062fb",
+      "historical_findings": [
+        "warning_suggests_unsupplied_spelling"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R033",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "6ae1b6b2148c14727e629778fcca6d9a0a59f41814812286e5173b749104e27a",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R034",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "08966f416382c043c01d29d63aa2175683c477a22076d8c1fc43cbb15e09bfb2",
+      "historical_findings": [
+        "missing_information_without_followup"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R035",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "8ea0a195bbed415f4ad157cb8a67206e4e4cd42fe71615b85055caf0636123e8",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R036",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "59d7ca337e5996444e0c8b7b8cd74d58b5f2eea1ee2bb1f01efc9d03d3a1941f",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R037",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "022fa62b5dd234ba9f3d526cbb777094a1072bb1b660972cddd9fc47f59040eb",
+      "historical_findings": [
+        "warning_suggests_unsupplied_spelling"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R038",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "77283ff25b6a1fee98d4fc0c8e6751977b5d7a900e9b4b32407e4019e742d225",
+      "historical_findings": [
+        "missing_information_without_followup"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R039",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "8f25b36525b47a7d8ca00acf671741006f3864a845c862f897159323331af537",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R040",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "5ffbaca7f1efb00030f85ffd6ad90977b197450b6aeb18982a8f0463bb320e45",
+      "historical_findings": [
+        "warning_suggests_unsupplied_spelling"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R041",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "d815f1159c80274ce3c6332aada2dc8bb7a5731f693399bc5a33063a5b7c5ca7",
+      "historical_findings": [
+        "ambiguity_not_prioritized_in_questions"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R042",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "2fa72eaa345d472113581ea15eb13630da409f591442734596103774904cc354",
+      "historical_findings": [
+        "warning_suggests_unsupplied_spelling"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R043",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "1fca080266bcfa9a6c3a1264666ed87c9fab3b9101beb062d3d2d12dcc2ecc37",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R044",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "e038ea99db6ffcef7d1ac5f7500de0d743b40cf7945f1beb3d9046a44703fc1e",
+      "historical_findings": [
+        "ambiguity_not_prioritized_in_questions"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    },
+    {
+      "review_id": "R045",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "5f2d345cf694f54291a5f01848d6eb8edd2ac34b31b638afc2148995f06f8fa3",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R046",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "16e98f96976f5307c31297a9d6669ecfb44aa15c53c86cdd12fdd584642ee394",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R047",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "98861063f3146296a95ae8fa4a7dd19bef15063f403d9eab980d7bdde9af09cb",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R048",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "67fd48ade5be821c0f2432f7e07e6a2109300b0b9e397ba64677f48827002723",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R049",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "8b96499dbdfec66c2ece056926f68220ee23fb3041170083a0efdb6cbfbff99e",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R050",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "4f5d463b0fada8b1f2bb3fc0ed91daf2c4d5f0df072ab73d6c4e06f0b7a32cef",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R051",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "d79b34453789c3e360df02ac93c125fa394b9fb267afe8f20dc7eb5d73c1fe9f",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R052",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "d54a8cfbdd3c4bbc867e5dc9c5fe1498ddbe63e8aa8434ca8d2b734a85bfe72e",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R053",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "9feb9bbef00dde33f245c8bcf8e57fb4b28fa1a6e6f3f6f27980ded71f96cc09",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R054",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "ed95d98bbd1625cbef82f98ebf33fe8b0acbf49d4668df7d0969a37f7f25aaed",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R055",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "07fdca400491e91b8b5a40295c3dbe94667c200b4db119f25b570d12fda1ae2d",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R056",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "4742d0339e76c8d140b487c9d14afed08ecb1b4d457934a863ecf1cb718999e2",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R057",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "76fb32733cc0f61a2e3778fac297696b3251efdced1d75a7532fdd50ac49832f",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R058",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "7bba21056d776b5182aa96075654cedea70928becfb3f276e0eb10fced9c1165",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R059",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "337a3935a1ef57a9c32cfd2eda44d01e20f9f9e5213ba4d425d63da5b700b391",
+      "historical_findings": [],
+      "finding_disposition": "regression_retained"
+    },
+    {
+      "review_id": "R060",
+      "result": "facts_unchanged_neutral_presentation_verified",
+      "original_response_canonical_sha256": "0b5c96375c764b45d405a0b77c26e36c06f6447e8b9344942353e2814171e443",
+      "historical_findings": [
+        "ambiguity_not_prioritized_in_questions"
+      ],
+      "finding_disposition": "addressed_by_current_A_policy"
+    }
+  ]
+}

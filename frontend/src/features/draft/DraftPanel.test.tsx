@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { afterEach, expect, it, vi } from 'vitest'
 import type { DraftApi } from '../../api/draft'
 import { ApiError } from '../../api/client'
-import { application, document, result } from '../analysis/testFixtures'
+import { application, document as uploadedDocument, result } from '../analysis/testFixtures'
 import { draft, exportResponse } from './testFixtures'
 import { DraftPanel } from './DraftPanel'
 
@@ -28,7 +28,7 @@ function api(overrides: Partial<DraftApi> = {}): DraftApi {
 
 it('requires an active user check before confirming, then enables export only after server confirmation', async () => {
   const service = api()
-  render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} documents={[document]} mockMode={false} />)
+  render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} documents={[uploadedDocument]} mockMode={false} />)
   const confirm = await screen.findByRole('button', { name: '我已核对，确认草稿' })
   expect((confirm as HTMLButtonElement).disabled).toBe(true)
   expect((screen.getByRole('button', { name: '导出申请资料包' }) as HTMLButtonElement).disabled).toBe(true)
@@ -106,6 +106,60 @@ it('exports contract JSON metadata and recovers from an export failure', async (
   await screen.findByRole('link', { name: '下载申请资料包' })
   expect(exportMock).toHaveBeenCalledTimes(2)
   expect(screen.queryByText(/PDF 导出成功/)).toBeNull()
+})
+
+it('shows a completion view only after a current confirmed draft receives a usable download address', async () => {
+  const confirmed = draft({ status: 'confirmed', confirmed_at: '2026-10-17T03:30:00Z' })
+  const service = api({ getLatest: vi.fn().mockResolvedValue(confirmed) })
+  render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} mockMode={false} />)
+
+  fireEvent.click(await screen.findByRole('button', { name: '导出申请资料包' }))
+  const title = await screen.findByRole('heading', { name: '申请资料已整理完成' })
+  expect(document.activeElement).toBe(title)
+  expect(screen.getByText(/本系统仅协助整理材料，不代表平台已受理或审核通过/)).toBeTruthy()
+  expect(screen.getByRole('link', { name: '下载申请资料包' }).getAttribute('href')).toBe('https://example.test/download/export.json')
+  expect(service.exportApplication).toHaveBeenCalledTimes(1)
+})
+
+it('does not show completion when the export result has no usable delivery address', async () => {
+  const confirmed = draft({ status: 'confirmed', confirmed_at: '2026-10-17T03:30:00Z' })
+  const service = api({ getLatest: vi.fn().mockResolvedValue(confirmed), exportApplication: vi.fn().mockResolvedValue(exportResponse({ download_url: null })) })
+  render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} mockMode={false} />)
+
+  fireEvent.click(await screen.findByRole('button', { name: '导出申请资料包' }))
+  await screen.findByText('已收到导出结果，但服务端未提供下载地址。')
+  expect(screen.queryByRole('heading', { name: '申请资料已整理完成' })).toBeNull()
+  expect(screen.queryByRole('link', { name: '下载申请资料包' })).toBeNull()
+})
+
+it('returns to the existing draft view without issuing another draft operation', async () => {
+  const confirmed = draft({ status: 'confirmed', confirmed_at: '2026-10-17T03:30:00Z' })
+  const service = api({ getLatest: vi.fn().mockResolvedValue(confirmed) })
+  render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} mockMode={false} />)
+
+  fireEvent.click(await screen.findByRole('button', { name: '导出申请资料包' }))
+  await screen.findByRole('heading', { name: '申请资料已整理完成' })
+  fireEvent.click(screen.getByRole('button', { name: '查看申请内容' }))
+  await screen.findByRole('heading', { name: '确认并导出申请' })
+  expect(screen.getByText('病情说明')).toBeTruthy()
+  expect(service.generate).not.toHaveBeenCalled()
+  expect(service.confirm).not.toHaveBeenCalled()
+  expect(service.exportApplication).toHaveBeenCalledTimes(1)
+})
+
+it('invalidates the completion view when the current application revision changes', async () => {
+  const confirmed = draft({ status: 'confirmed', confirmed_at: '2026-10-17T03:30:00Z' })
+  const service = api({ getLatest: vi.fn().mockResolvedValue(confirmed) })
+  const { rerender } = render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} mockMode={false} />)
+
+  fireEvent.click(await screen.findByRole('button', { name: '导出申请资料包' }))
+  await screen.findByRole('heading', { name: '申请资料已整理完成' })
+  const updatedApplication = { ...application, revision: application.revision + 1 }
+  const latestAnalysis = finalizableAnalysis()
+  rerender(<DraftPanel analysis={{ ...latestAnalysis, application_revision: updatedApplication.revision, validation: { ...latestAnalysis.validation, application_revision: updatedApplication.revision } }} api={service} application={updatedApplication} mockMode={false} />)
+
+  await screen.findByRole('heading', { name: '确认并导出申请' })
+  expect(screen.queryByTestId('draft-completion')).toBeNull()
 })
 
 it('ignores a late draft response after switching applications', async () => {

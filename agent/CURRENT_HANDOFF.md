@@ -1,3 +1,19 @@
+# A 模块当前交付入口（2026-10-20 最终联调）
+
+本轮按《联调修改.docx》完成 A 的门禁及错误处理适配：配对完整、同申请同版本的 D 结果后允许 info/非阻断 warning，blocking、无效引用、版本不匹配和未确认事实继续拒绝。
+
+**当前接入和验收请读 [FINAL_INTEGRATION_HANDOFF.md](FINAL_INTEGRATION_HANDOFF.md)。** A 132 项、契约 10 项、A/B/D 专项 9 项离线测试通过，旧 87 份响应再次回归；真实 API 复测单独留证，不用旧回放冒充新调用。正式 DSL 未改，公共 JSON 契约未改。
+
+新增调用：`service.draft(draft_request, validation_result=complete_d_result)`。该关键字是 B 进程内上下文，不是 JSON 新字段。旧 B 适配器也可使用 D 的显式 blocking 投影，完整问题必须保留在配对结果中。完整示例、后台同步调用方式、安全错误类型、D 目录问题均见上述交接文档。
+
+本次真实复测已完成：北京时间 2026-10-20 21:21，经 B 的真实进程内适配器 → A → 真实 Dify，抽取 3.952 秒、草稿 4.117 秒，两次均通过，0 次重试。证据为 `verification/integration-final-20261020/live-results.json`；完整 6 条 info/warning 保留，未补出诊断、已付费或日期。此前 `live-status.json` 仅保留输入前的历史快照。
+
+本轮已上传 `feature/agent`，功能提交为 `ed47bd2`，审查入口为 [草稿 PR #6](https://github.com/qiangxinran-123/CareFund-AI/pull/6)，目标 main，尚未合并。此后只补充发布状态文档，功能代码与已验证交付包一致；包内“尚未上传”是发布前快照。后面的 PR #1 状态属于 10 月 17 日历史记录。
+
+---
+
+以下为 2026-10-17 的已发布快照，保留历史测试及打包说明；本轮规则和状态以上述新入口为准。
+
 # A 模块当前交付入口（2026-10-17 内容修复后）
 
 上一轮复核发现的 A 警告、追问和指令草稿问题，已完成代码修复及保存响应回归。请先读本文件和 [修复报告](verification/content-fix-20261017/README.md)。旧报告与旧压缩包保留当时状态，其中的未修复标签不代表本次交付状态。

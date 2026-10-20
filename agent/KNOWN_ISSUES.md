@@ -1,4 +1,4 @@
-> **2026-10-17 修复后交付入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [代码修复报告](verification/content-fix-20261017/README.md)。此前警告、追问和指令草稿问题已由 A 代码处理，108 项单元测试通过；原 87 份结果及全部 1,341 份可解析批量响应已离线回归，0 次新 API 调用。以下问题和计数保留各历史阶段状态，不代表本轮仍未修复。
+> **2026-10-20 最终联调入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [A 最终联调交接](FINAL_INTEGRATION_HANDOFF.md)。A 已增加完整 D 结果配对的严重性门禁、安全异常分类及两次合成真实调用入口；A 132 项、B/D 专项 9 项离线测试通过，另有 2 次合成真实 B→A→Dify 调用通过。以下段落是历史阶段说明，旧“所有 issue ID 都阻止”规则不覆盖本次有完整 D 上下文的调用。
 
 # A 模块已知问题与待完成项（v2）
 

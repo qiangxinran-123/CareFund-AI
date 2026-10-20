@@ -8,7 +8,7 @@ interface Props {
   result: ExportResponse | null
 }
 
-function safeDownloadUrl(value: string | null): string | null {
+export function safeDownloadUrl(value: string | null): string | null {
   if (!value) return null
   try {
     const url = new URL(value, window.location.origin)

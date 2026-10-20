@@ -1,0 +1,21 @@
+{
+  "started_at": "2026-10-20T13:09:07.124009+00:00",
+  "status": "awaiting_local_credentials",
+  "transport": "B RealAgentService -> A AgentService -> real Dify Service API",
+  "input_class": "synthetic_only",
+  "max_generation_calls": 2,
+  "calls_attempted": 0,
+  "automatic_retries": 0,
+  "scope": "In-process adapters only; not HTTP /analyze, frontend, OCR, persistence or end-to-end export.",
+  "backend_adapter_sha256": "c8621ba12fd6b8f629659cacb4d23958a33e17b73dbe1165cd47c625c626fdaa",
+  "a_runtime_sha256": {
+    "agent_service.py": "a04cc671fe355c9601393a690cda1e6b5ed62721531727eaeebf23146c89efc2",
+    "draft_gate.py": "167c81a8a90a37e64888ed213c7a80069663d6c558b307b36be6c6ca7e645201",
+    "errors.py": "bbed3936ad2005106179f105689a8d33bc8404713d0be1ec8286fb1fe6b2b14d",
+    "dify_runner.py": "fffb4a995dedfa9fe2ed2b9d307f245ca542946a546372fe702cbd83e66234f9"
+  },
+  "snapshot_at": "2026-10-20T13:17:12.330881+00:00",
+  "new_success_claimed": false,
+  "requires_local_credentials": true,
+  "cases": []
+}
