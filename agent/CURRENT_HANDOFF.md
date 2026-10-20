@@ -6,7 +6,9 @@
 
 新增调用：`service.draft(draft_request, validation_result=complete_d_result)`。该关键字是 B 进程内上下文，不是 JSON 新字段。旧 B 适配器也可使用 D 的显式 blocking 投影，完整问题必须保留在配对结果中。完整示例、后台同步调用方式、安全错误类型、D 目录问题均见上述交接文档。
 
-本次真实复测已完成：北京时间 2026-10-20 21:21，经 B 的真实进程内适配器 → A → 真实 Dify，抽取 3.952 秒、草稿 4.117 秒，两次均通过，0 次重试。证据为 `verification/integration-final-20261020/live-results.json`；完整 6 条 info/warning 保留，未补出诊断、已付费或日期。此前 `live-status.json` 仅保留输入前的历史快照。本轮代码尚未提交或推送，后面的 GitHub 状态属于 10 月 17 日版本。
+本次真实复测已完成：北京时间 2026-10-20 21:21，经 B 的真实进程内适配器 → A → 真实 Dify，抽取 3.952 秒、草稿 4.117 秒，两次均通过，0 次重试。证据为 `verification/integration-final-20261020/live-results.json`；完整 6 条 info/warning 保留，未补出诊断、已付费或日期。此前 `live-status.json` 仅保留输入前的历史快照。
+
+本轮已上传 `feature/agent`，功能提交为 `ed47bd2`，审查入口为 [草稿 PR #6](https://github.com/qiangxinran-123/CareFund-AI/pull/6)，目标 main，尚未合并。此后只补充发布状态文档，功能代码与已验证交付包一致；包内“尚未上传”是发布前快照。后面的 PR #1 状态属于 10 月 17 日历史记录。
 
 ---
 

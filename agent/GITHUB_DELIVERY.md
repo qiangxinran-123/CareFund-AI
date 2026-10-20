@@ -2,6 +2,8 @@
 
 # A 模块 GitHub 交付说明
 
+2026-10-20 发布：INT-02（A 对接）、INT-06、INT-07（A 对接）、INT-08 的本轮 A 修改、脱敏/合成证据和接入说明已上传 `feature/agent`，功能提交 `ed47bd2`，见 [草稿 PR #6](https://github.com/qiangxinran-123/CareFund-AI/pull/6)。A 132 项、契约 10 项、批量控制 20 项、B/D 专项 9 项通过；两次真实 B→A→Dify 合成调用通过，耗时分别 3.952、4.117 秒。D 隔离测试的目录与夹具前提，以及 B 的最小接入方式见 [最终联调交接](FINAL_INTEGRATION_HANDOFF.md)。只修改 agent/，未上传密钥、真实医疗原文、CSV、.local/ 或 ZIP，未合并 main；发布没有新增生成调用。以下段落保留此前交付状态。
+
 2026-10-17 发布：当前 DeepSeek 工作流、A 内容修复代码、脱敏测试结果及复验工具已推送到 `feature/agent`，功能提交为 `755a0c2`，现有 [PR #1](https://github.com/qiangxinran-123/CareFund-AI/pull/1) 已包含更新。A 108 项、契约 10 项、批量控制工具 20 项离线测试通过；87 个重点案例及全部 1,341 份可解析批量保存响应已回归，历史非法响应仍拒绝，详见本页顶部的当前交接入口。仅更新 agent/，未上传真实医疗原文、完整 CSV、密钥或 .local/，未合并 main。本次 GitHub 发布没有新增 API 调用；下面是此前交付的历史记录。
 
 2026-10-16 更新：以下为原 GitHub 交付及 A/D 首轮适配记录。最新本地 DeepSeek 配置、9 次真实运行及两份 DSL 同步见 [DEEPSEEK_SETUP.md](DEEPSEEK_SETUP.md)，这些更新尚未提交或推送，不能据此认为远程 PR 已包含它们。
