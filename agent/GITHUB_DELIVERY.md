@@ -1,6 +1,8 @@
-> **2026-10-17 修复后交付入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [代码修复报告](verification/content-fix-20261017/README.md)。此前警告、追问和指令草稿问题已由 A 代码处理，108 项单元测试通过；原 87 份结果及全部 1,341 份可解析批量响应已离线回归，0 次新 API 调用。以下问题和计数保留各历史阶段状态，不代表本轮仍未修复。
+> **2026-10-20 最终联调入口：** 请先读 [CURRENT_HANDOFF.md](CURRENT_HANDOFF.md) 和 [A 最终联调交接](FINAL_INTEGRATION_HANDOFF.md)。A 已增加完整 D 结果配对的严重性门禁、安全异常分类及两次合成真实调用入口；A 132 项、B/D 专项 9 项离线测试通过，另有 2 次合成真实 B→A→Dify 调用通过。以下段落是历史阶段说明，旧“所有 issue ID 都阻止”规则不覆盖本次有完整 D 上下文的调用。
 
 # A 模块 GitHub 交付说明
+
+2026-10-20 发布：INT-02（A 对接）、INT-06、INT-07（A 对接）、INT-08 的本轮 A 修改、脱敏/合成证据和接入说明已上传 `feature/agent`，功能提交 `ed47bd2`，见 [草稿 PR #6](https://github.com/qiangxinran-123/CareFund-AI/pull/6)。A 132 项、契约 10 项、批量控制 20 项、B/D 专项 9 项通过；两次真实 B→A→Dify 合成调用通过，耗时分别 3.952、4.117 秒。D 隔离测试的目录与夹具前提，以及 B 的最小接入方式见 [最终联调交接](FINAL_INTEGRATION_HANDOFF.md)。只修改 agent/，未上传密钥、真实医疗原文、CSV、.local/ 或 ZIP，未合并 main；发布没有新增生成调用。以下段落保留此前交付状态。
 
 2026-10-17 发布：当前 DeepSeek 工作流、A 内容修复代码、脱敏测试结果及复验工具已推送到 `feature/agent`，功能提交为 `755a0c2`，现有 [PR #1](https://github.com/qiangxinran-123/CareFund-AI/pull/1) 已包含更新。A 108 项、契约 10 项、批量控制工具 20 项离线测试通过；87 个重点案例及全部 1,341 份可解析批量保存响应已回归，历史非法响应仍拒绝，详见本页顶部的当前交接入口。仅更新 agent/，未上传真实医疗原文、完整 CSV、密钥或 .local/，未合并 main。本次 GitHub 发布没有新增 API 调用；下面是此前交付的历史记录。
 

@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-10-20T13:12:40.975884+00:00",
+  "source_document_sha256": "4532ceabe5b9ae9bf8e5adaea6a2e8b94be1ab2b48f0989149e376356aa68d0f",
+  "peer_repository_ref": "26018f73303db1009c1db015974708f60d683aa1",
+  "tests": [
+    {
+      "command": "python -m unittest discover -s agent/tests",
+      "tests": 132,
+      "passed": true
+    },
+    {
+      "command": "python -m unittest discover -s contracts/tests",
+      "tests": 10,
+      "passed": true
+    },
+    {
+      "command": "python agent/verification/integration-final-20261020/verify_peers.py --team-root <prepared-peer-checkout>",
+      "tests": 9,
+      "passed": true
+    },
+    {
+      "command": "python -m pytest backend/tests -q",
+      "tests": 11,
+      "passed": true,
+      "scope": "Peer snapshot, original mocked tests"
+    },
+    {
+      "command": "python -m unittest discover -s validation/tests -t .",
+      "tests": 119,
+      "passed": true,
+      "scope": "Final D package placed in expected layout; 20 historical fixture newline conversions matched exact preexisting hashes; source Git blobs and manifests unchanged"
+    },
+    {
+      "command": "python -m unittest discover -s agent/verification/full-csv-20261017 -p test_full_csv.py",
+      "tests": 20,
+      "passed": true
+    }
+  ],
+  "runtime_sha256": {
+    "agent/agent_service.py": "a04cc671fe355c9601393a690cda1e6b5ed62721531727eaeebf23146c89efc2",
+    "agent/draft_gate.py": "167c81a8a90a37e64888ed213c7a80069663d6c558b307b36be6c6ca7e645201",
+    "agent/errors.py": "bbed3936ad2005106179f105689a8d33bc8404713d0be1ec8286fb1fe6b2b14d",
+    "agent/dify_runner.py": "fffb4a995dedfa9fe2ed2b9d307f245ca542946a546372fe702cbd83e66234f9",
+    "agent/extract_presentation.py": "5fb92fee433a9a048630706dd156ce658c8a987c9079af4ae36c1f504e531aac",
+    "agent/draft_input_policy.py": "09e52db7cfd161f1ad151625627514e4b4300cf6ada7425d2fc2a378ad61a318",
+    "agent/draft_policy.py": "fa9894bb9419fdcd8d3c12f23b3ed1b23739e3670280f55a1b3f57d9de37c5f5",
+    "agent/integration_smoke.py": "9e05eb2b4b17ff55bb2fb396365838ebac9f564bedd9176587e1760abbb50238",
+    "agent/workflow.deepseek-extract.yml": "560dc5f38b81d1ac9752eef123357fcfd7c6b2d25e8593214afdf0c5c3a0eae3",
+    "agent/workflow.deepseek-draft.yml": "6ace13cd39a2980577b36801939b55e138912ff47f7e04ebd07e2e652300d052"
+  },
+  "peer_production_sha256": {
+    "backend/services/agent.py": "c8621ba12fd6b8f629659cacb4d23958a33e17b73dbe1165cd47c625c626fdaa",
+    "validation/policies/demo_v1.json": "5d14acaff5014d39653b5bcbfede716234334865873f43e73d3bf5ea42feb8b4",
+    "validation/agent_adapter.py": "8e6e0b6544d48daa4df364a9b24125b95906203270e175eb2f5e94af32e65e8e"
+  },
+  "saved_response_regression": {
+    "total": 87,
+    "extraction_facts_unchanged": 81,
+    "eligible_drafts": 5,
+    "instruction_draft_blocked": 1
+  },
+  "new_model_calls_from_these_offline_checks": 0,
+  "shared_contracts_changed": false,
+  "other_team_source_changed": false,
+  "github_published_this_revision": false,
+  "live_smoke_recorded_separately": true,
+  "pip_check_passed": true
+}
