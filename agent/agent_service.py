@@ -6,24 +6,32 @@ from .draft_policy import DRAFT_WARNING, sections_for_facts
 from .extract_policy import EXTRACT_FACT_FIELDS, EXTRACT_QUESTION_FIELDS
 from .extract_presentation import present
 from .draft_input_policy import contains_generation_instruction
+from .draft_gate import prepare_draft_gate
+from .errors import AgentError, AgentContractError
 from jsonschema import Draft202012Validator, FormatChecker
 from referencing import Registry, Resource
-
-class AgentError(ValueError):
-    pass
 
 class AgentService:
     def __init__(self, runner, schema_dir=None):
         self.runner = runner
         self.last_extract_raw_response = None
         self.last_extract_presentation_report = None
+        self.last_draft_validation_result = None
+        self.last_draft_gate_report = None
         directory = Path(schema_dir) if schema_dir else Path(__file__).resolve().parents[1] / 'contracts' / 'schemas'
         schemas = [json.loads(p.read_text(encoding='utf-8')) for p in directory.glob('*.json')]
         self.registry = Registry().with_resources((s['$id'], Resource.from_contents(s)) for s in schemas)
         self.schema = next(s for s in schemas if s['title'] == 'CareFund Agent Contract V1')
+        self.validation_schema = next(s for s in schemas if s['title'] == 'CareFund Validation Contract V1')
 
     def validate(self, value, name):
-        schema = dict(self.schema, **{'$ref': '#/$defs/' + name})
+        self._validate(value, name, self.schema)
+
+    def validate_validation_result(self, value):
+        self._validate(value, 'ValidationResult', self.validation_schema)
+
+    def _validate(self, value, name, contract):
+        schema = dict(contract, **{'$ref': '#/$defs/' + name})
         errors = list(Draft202012Validator(schema, registry=self.registry, format_checker=FormatChecker()).iter_errors(value))
         if errors:
             error = errors[0]
@@ -33,7 +41,7 @@ class AgentService:
             if error.validator == 'required' and isinstance(error.instance, dict):
                 missing = sorted(set(error.validator_value) - error.instance.keys())
                 detail += '; missing ' + ', '.join(missing)
-            raise AgentError('Schema validation failed: ' + name + ' (' + detail + ')')
+            raise AgentContractError('Schema validation failed: ' + name + ' (' + detail + ')')
 
     @staticmethod
     def unique(items, key):
@@ -105,13 +113,11 @@ class AgentService:
         self.last_extract_presentation_report = report
         return rendered
 
-    def validate_draft_request(self, request):
+    def validate_draft_request(self, request, *, validation_result=None):
         """Validate local draft prerequisites before credentials or network access."""
         self.validate(request, 'AgentDraftRequest')
         self.unique(request['candidate_facts'], 'fact_id')
-        # Conservative local policy pending team confirmation of issue severity handling.
-        if request['validation_issue_ids']:
-            raise AgentError('Resolve validation issues before drafting')
+        prepare_draft_gate(request, validation_result, self.validate_validation_result)
         eligible = {f['fact_id'] for f in request['candidate_facts'] if f['user_confirmed'] and f['verification_status'] not in ('conflicting', 'unsupported')}
         if not eligible or len(eligible) != len(request['candidate_facts']):
             raise AgentError('Provide only confirmed, non-conflicting facts')
@@ -128,9 +134,15 @@ class AgentService:
         self.validate(preview, 'AgentDraftResponse')
         return eligible
 
-    def draft(self, request):
-        eligible = self.validate_draft_request(request)
-        result = self.run('draft', request, 'AgentDraftRequest', 'AgentDraftResponse')
+    def draft(self, request, *, validation_result=None):
+        self.last_draft_validation_result = None
+        self.last_draft_gate_report = None
+        # Freeze both snapshots before the synchronous model call. B still owns
+        # the transaction checking whether the stored revision is current.
+        request, validation_result = copy.deepcopy(request), copy.deepcopy(validation_result)
+        eligible = self.validate_draft_request(request, validation_result=validation_result)
+        model_request, gate_report = prepare_draft_gate(request, validation_result, self.validate_validation_result)
+        result = self.run('draft', model_request, 'AgentDraftRequest', 'AgentDraftResponse')
         if not result['candidate_sections']:
             raise AgentError('Empty candidate draft')
         for section in result['candidate_sections']:
@@ -140,4 +152,6 @@ class AgentService:
             raise AgentError('Draft content must preserve each input fact in the literal draft format')
         if result['warnings'] != [DRAFT_WARNING]:
             raise AgentError('Draft warnings must use the local policy notice')
+        self.last_draft_validation_result = copy.deepcopy(validation_result)
+        self.last_draft_gate_report = gate_report
         return result

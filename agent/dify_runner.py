@@ -4,7 +4,8 @@ import os
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
-from .agent_service import AgentError
+from .errors import (AgentError, AgentConfigurationError, AgentContractError,
+                     AgentHTTPError, AgentTransportError, AgentWorkflowError)
 
 
 _SAFE_ERROR_CODES = frozenset({
@@ -43,9 +44,9 @@ def parse_object(text):
     try:
         value = json.loads(text, object_pairs_hook=_pairs, parse_constant=_constant)
     except (ValueError, TypeError, UnicodeError):
-        raise AgentError('Dify returned invalid JSON') from None
+        raise AgentContractError('Dify returned invalid JSON') from None
     if not isinstance(value, dict):
-        raise AgentError('Dify returned a non-object JSON value')
+        raise AgentContractError('Dify returned a non-object JSON value')
     return value
 
 
@@ -60,13 +61,13 @@ class DifyRunner:
         parsed = urlsplit(base_url)
         if (parsed.scheme != 'https' or not parsed.hostname or parsed.username
                 or parsed.password or parsed.query or parsed.fragment):
-            raise AgentError('Dify base URL must be an HTTPS API base URL')
+            raise AgentConfigurationError('Dify base URL must be an HTTPS API base URL')
         if not (extract_api_key or draft_api_key) or not isinstance(user, str) or not user.strip():
-            raise AgentError('At least one Dify workflow API key and opaque user ID are required')
+            raise AgentConfigurationError('At least one Dify workflow API key and opaque user ID are required')
         if extract_api_key and extract_api_key == draft_api_key:
-            raise AgentError('Use separate extraction and draft workflow API keys')
+            raise AgentConfigurationError('Use separate extraction and draft workflow API keys')
         if not 0 < timeout <= 300:
-            raise AgentError('Invalid Dify timeout')
+            raise AgentConfigurationError('Invalid Dify timeout')
         self._keys = {'extract': extract_api_key, 'draft': draft_api_key}
         self.user = user
         self.url = base_url.rstrip('/') + '/workflows/run'
@@ -84,7 +85,7 @@ class DifyRunner:
         self.last_result_shape = None
         key = self._keys.get(operation)
         if not key:
-            raise AgentError('Dify workflow is not configured for this operation')
+            raise AgentConfigurationError('Dify workflow is not configured for this operation')
         payload = {'inputs': {'request_json': json.dumps(request, ensure_ascii=False, allow_nan=False)},
                    'response_mode': 'blocking', 'user': self.user}
         req = Request(self.url, data=json.dumps(payload, ensure_ascii=False).encode('utf-8'),
@@ -100,19 +101,18 @@ class DifyRunner:
                 reason = _http_error_code(exc)
             finally:
                 exc.close()
-            suffix = ' (' + reason + ')' if reason else ''
-            raise AgentError('Dify HTTP error: ' + str(code) + suffix) from None
+            raise AgentHTTPError(code, reason) from None
         except (URLError, TimeoutError, OSError):
-            raise AgentError('Dify network request failed or timed out; execution may still be running') from None
+            raise AgentTransportError('Dify network request failed or timed out; execution may still be running') from None
         if len(raw) > 4 * 1024 * 1024:
-            raise AgentError('Dify response exceeds size limit')
+            raise AgentContractError('Dify response exceeds size limit')
         body = parse_object(raw)
         data = body.get('data')
         if not isinstance(data, dict) or data.get('status') != 'succeeded':
-            raise AgentError('Dify workflow did not succeed')
+            raise AgentWorkflowError('Dify workflow did not succeed')
         outputs = data.get('outputs')
         if not isinstance(outputs, dict) or not isinstance(outputs.get('result'), str):
-            raise AgentError('Dify workflow must return a result string')
+            raise AgentContractError('Dify workflow must return a result string')
         result = parse_object(outputs['result'])
         self.last_result_shape = {
             'has_candidate_sections': 'candidate_sections' in result,

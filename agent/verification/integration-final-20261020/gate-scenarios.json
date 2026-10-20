@@ -1,0 +1,90 @@
+{
+  "checked_at": "2026-10-20T13:12:40.975018+00:00",
+  "policy": "demo_v1",
+  "source_ref": "26018f73303db1009c1db015974708f60d683aa1",
+  "source_layout": "D final package from validation/validation, placed at validation only in ignored test copy",
+  "cases": [
+    {
+      "case": "clean",
+      "data_class": "synthetic",
+      "generation_allowed": true,
+      "confirmation_allowed": true,
+      "export_allowed": true,
+      "mock_runner_calls": 1,
+      "issue_severities": [],
+      "all_issues_preserved": true,
+      "new_model_calls": 0
+    },
+    {
+      "case": "info",
+      "data_class": "synthetic",
+      "generation_allowed": true,
+      "confirmation_allowed": true,
+      "export_allowed": true,
+      "mock_runner_calls": 1,
+      "issue_severities": [
+        "info"
+      ],
+      "all_issues_preserved": true,
+      "new_model_calls": 0
+    },
+    {
+      "case": "warning",
+      "data_class": "synthetic",
+      "generation_allowed": true,
+      "confirmation_allowed": true,
+      "export_allowed": true,
+      "mock_runner_calls": 1,
+      "issue_severities": [
+        "warning",
+        "warning",
+        "warning"
+      ],
+      "all_issues_preserved": true,
+      "new_model_calls": 0
+    },
+    {
+      "case": "conflict",
+      "data_class": "synthetic",
+      "generation_allowed": false,
+      "confirmation_allowed": false,
+      "export_allowed": false,
+      "mock_runner_calls": 0,
+      "issue_severities": [
+        "info",
+        "blocking"
+      ],
+      "all_issues_preserved": true,
+      "new_model_calls": 0
+    },
+    {
+      "case": "stale",
+      "data_class": "synthetic",
+      "generation_allowed": false,
+      "confirmation_allowed": false,
+      "export_allowed": false,
+      "mock_runner_calls": 0,
+      "issue_severities": [
+        "blocking"
+      ],
+      "all_issues_preserved": true,
+      "new_model_calls": 0
+    },
+    {
+      "case": "invalid_reference",
+      "data_class": "synthetic",
+      "generation_allowed": false,
+      "confirmation_allowed": false,
+      "export_allowed": false,
+      "mock_runner_calls": 0,
+      "issue_severities": [
+        "blocking",
+        "blocking"
+      ],
+      "all_issues_preserved": true,
+      "new_model_calls": 0
+    }
+  ],
+  "new_model_calls": 0,
+  "not_live_end_to_end": true
+}
