@@ -7,10 +7,12 @@ from datetime import datetime, timezone
 from hashlib import sha256
 import logging
 import os
+import re
 from typing import Annotated
 from uuid import uuid4
 
-from fastapi import APIRouter, File, Form, Header, UploadFile, status
+from fastapi import APIRouter, File, Form, Header, Request, UploadFile, status
+from fastapi.responses import FileResponse
 from starlette.concurrency import run_in_threadpool
 
 from ..errors import ApiError
@@ -609,7 +611,9 @@ async def confirm_draft(application_id: str, payload: DraftConfirmationRequest) 
     response_model=ExportResponse,
     operation_id="export_application",
 )
-async def export_application(application_id: str, payload: ExportRequest) -> ExportResponse:
+async def export_application(
+    application_id: str, payload: ExportRequest, request: Request
+) -> ExportResponse:
     lock = store.lock_for(application_id)
     with lock:
         record = get_record(application_id)
@@ -658,13 +662,64 @@ async def export_application(application_id: str, payload: ExportRequest) -> Exp
             raise ApiError(409, "STATE_CONFLICT", "Application changed during export")
         if not final_validation.can_finalize:
             raise ApiError(422, "EXPORT_BLOCKED", "Draft failed export validation")
+        export_id = f"export_{uuid4().hex}"
+        created_at = now()
+        exported_application = record.application.model_copy(
+            update={"status": "exported", "updated_at": created_at}
+        )
+        package = {
+            "schema_version": "1.0",
+            "export_id": export_id,
+            "created_at": created_at.isoformat().replace("+00:00", "Z"),
+            "application": exported_application.model_dump(mode="json"),
+            "documents": [item.model_dump(mode="json") for item in record.documents],
+            "evidence": [item.model_dump(mode="json") for item in record.evidence],
+            "facts": [item.model_dump(mode="json") for item in record.facts],
+            "analysis": record.analysis.model_dump(mode="json"),
+            "draft": draft.model_dump(mode="json"),
+            "export_validation": final_validation.model_dump(mode="json"),
+        }
+        try:
+            store.write_export(export_id, package)
+        except OSError as exc:
+            logger.exception("Failed to write export package %s", export_id)
+            raise ApiError(500, "INTERNAL_ERROR", "Could not prepare export package") from exc
+        previous_status = record.application.status
+        previous_updated_at = record.application.updated_at
         record.application.status = "exported"
-        record.application.updated_at = now()
-        store.save(record)
+        record.application.updated_at = created_at
+        try:
+            store.save(record)
+        except Exception:
+            record.application.status = previous_status
+            record.application.updated_at = previous_updated_at
+            store.remove_export(export_id)
+            raise
         return ExportResponse(
-            export_id=f"export_{uuid4().hex}",
+            export_id=export_id,
             application_id=application_id,
             draft_id=draft.draft_id,
-            created_at=now(),
-            download_url=None,
+            created_at=created_at,
+            download_url=str(
+                request.url_for("download_application_export", export_id=export_id)
+            ),
         )
+
+
+@router.get(
+    "/exports/{export_id}/download",
+    response_class=FileResponse,
+    include_in_schema=False,
+)
+async def download_application_export(export_id: str) -> FileResponse:
+    if re.fullmatch(r"export_[0-9a-f]{32}", export_id) is None:
+        raise ApiError(404, "RESOURCE_NOT_FOUND", "Export package not found")
+    export_path = store.export_path(export_id)
+    if not export_path.is_file():
+        raise ApiError(404, "RESOURCE_NOT_FOUND", "Export package not found")
+    return FileResponse(
+        export_path,
+        media_type="application/json",
+        filename=f"carefund-{export_id}.json",
+        headers={"Cache-Control": "no-store"},
+    )

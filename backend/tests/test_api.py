@@ -1,6 +1,7 @@
 import os
 import time
 from concurrent.futures import ThreadPoolExecutor
+from urllib.parse import urlsplit
 
 os.environ["CAREFUND_AGENT_MODE"] = "mock"
 os.environ["CAREFUND_VALIDATION_MODE"] = "mock"
@@ -129,7 +130,31 @@ def test_mock_happy_path_reaches_export() -> None:
         },
     )
     assert exported.status_code == 200
-    assert exported.json()["format"] == "json"
+    export_body = exported.json()
+    assert export_body["format"] == "json"
+    assert export_body["download_url"] is not None
+
+    download = client.get(urlsplit(export_body["download_url"]).path)
+    assert download.status_code == 200
+    assert download.headers["content-type"].startswith("application/json")
+    assert download.headers["cache-control"] == "no-store"
+    assert "attachment" in download.headers["content-disposition"]
+    package = download.json()
+    assert package["schema_version"] == "1.0"
+    assert package["export_id"] == export_body["export_id"]
+    assert package["application"]["application_id"] == application_id
+    assert package["draft"]["draft_id"] == draft_body["draft_id"]
+    assert package["draft"]["status"] == "confirmed"
+    assert package["export_validation"]["can_finalize"] is True
+
+
+def test_unknown_or_malformed_export_is_not_downloadable() -> None:
+    missing = client.get(f"/api/v1/exports/export_{'0' * 32}/download")
+    malformed = client.get("/api/v1/exports/not-an-export/download")
+    assert missing.status_code == 404
+    assert malformed.status_code == 404
+    assert missing.json()["error"]["code"] == "RESOURCE_NOT_FOUND"
+    assert malformed.json()["error"]["code"] == "RESOURCE_NOT_FOUND"
 
 
 def test_stale_revision_has_contract_error_shape() -> None:

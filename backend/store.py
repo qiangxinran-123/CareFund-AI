@@ -60,12 +60,14 @@ class PersistentStore:
             else (Path(__file__).resolve().parent / "instance")
         )
         self.upload_dir = self.data_dir / "uploads"
+        self.export_dir = self.data_dir / "exports"
         self.db_path = self.data_dir / "carefund.sqlite3"
         self._lock = RLock()
         self._record_locks: dict[str, RLock] = {}
         self.applications: dict[str, ApplicationRecord] = {}
         self.data_dir.mkdir(parents=True, exist_ok=True)
         self.upload_dir.mkdir(parents=True, exist_ok=True)
+        self.export_dir.mkdir(parents=True, exist_ok=True)
         self._initialize_database()
         self._load()
 
@@ -218,6 +220,26 @@ class PersistentStore:
     def remove_upload(self, document_id: str) -> None:
         self.upload_path(document_id).unlink(missing_ok=True)
 
+    def export_path(self, export_id: str) -> Path:
+        return self.export_dir / f"{export_id}.json"
+
+    def write_export(self, export_id: str, payload: dict) -> Path:
+        destination = self.export_path(export_id)
+        temporary = self.export_dir / f".{export_id}.{uuid4().hex}.tmp"
+        content = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8") + b"\n"
+        try:
+            with temporary.open("xb") as output:
+                output.write(content)
+                output.flush()
+                os.fsync(output.fileno())
+            os.replace(temporary, destination)
+        finally:
+            temporary.unlink(missing_ok=True)
+        return destination
+
+    def remove_export(self, export_id: str) -> None:
+        self.export_path(export_id).unlink(missing_ok=True)
+
     def clear(self) -> None:
         """Clear runtime state. Intended for tests and explicit local reset only."""
         with self._lock, self._connect() as connection:
@@ -227,6 +249,9 @@ class PersistentStore:
         if self.upload_dir.exists():
             shutil.rmtree(self.upload_dir)
         self.upload_dir.mkdir(parents=True, exist_ok=True)
+        if self.export_dir.exists():
+            shutil.rmtree(self.export_dir)
+        self.export_dir.mkdir(parents=True, exist_ok=True)
 
 
 store = PersistentStore()
