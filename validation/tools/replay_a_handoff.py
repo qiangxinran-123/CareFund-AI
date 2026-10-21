@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
+from validation.tests.fixture_integrity import original_fixture_bytes
 
 from validation import build_validation_request, prepare_agent_draft_request, validate, validate_agent_draft
 from validation.rules.agent_literal import matches_literal_sections
@@ -18,7 +19,7 @@ def run(output: Path) -> dict:
     output.mkdir(parents=True, exist_ok=True)
     provenance = read("PROVENANCE.json")
     for entry in provenance["files"]:
-        content = (FIXTURES / entry["path"]).read_bytes()
+        content = original_fixture_bytes(FIXTURES, entry)
         if len(content) != entry["bytes"] or hashlib.sha256(content).hexdigest() != entry["sha256"]:
             raise ValueError("Original A fixture hash mismatch.")
 

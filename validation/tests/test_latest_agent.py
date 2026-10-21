@@ -13,7 +13,7 @@ from validation.tools.replay_latest_a import evaluate, service
 from validation.tests.fixtures.a_20261018.agent.agent_service import AgentError
 from validation.tests.fixtures.a_20261018.agent.draft_input_policy import contains_generation_instruction
 from validation.tests.fixtures.a_20261018.agent.draft_policy import DRAFT_WARNING, sections_for_facts
-from .test_agent_adapter import document_only_demo, extract_pair
+from validation.tests.test_agent_adapter import document_only_demo, extract_pair
 
 
 def text_snapshot(text):

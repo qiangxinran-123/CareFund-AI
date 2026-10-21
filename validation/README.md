@@ -1,5 +1,7 @@
 # D 模块：事实校验与证据溯源
 
+**2026-10-21 合并修复：** 请先看 `validation/REPAIR_20261021.md`。本轮修复语法、重复方法、CLI 和确认导出门禁合并残留，并清理误放目录。原 Policy 与正式契约保持兼容。
+
 
 最新进展请先读 `validation/CURRENT_STATUS.md`（2026-10-20）与 `validation/INT07_INT08_HANDOFF.md`。演示规则为 `validation/policies/demo_v1.json`，旧交接文档和验证目录保留历史上下文。
 

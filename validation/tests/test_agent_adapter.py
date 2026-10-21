@@ -15,8 +15,9 @@ from validation import (
     validate_agent_draft, validate_for_confirmation, validate_for_export,
 )
 from validation.schema import check_model
-from .fixtures.a_handoff.agent.agent_service import AgentError, AgentService
-from .fixtures.a_handoff.agent.draft_policy import DRAFT_WARNING, sections_for_facts
+from validation.tests.fixture_integrity import original_fixture_bytes
+from validation.tests.fixtures.a_handoff.agent.agent_service import AgentError, AgentService
+from validation.tests.fixtures.a_handoff.agent.draft_policy import DRAFT_WARNING, sections_for_facts
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -67,7 +68,7 @@ class ExtractAdapterTests(unittest.TestCase):
         self.assertEqual("cc29e6de047c49d20c79d628ed4dfa6a839c104c", provenance["source_commit"])
         for entry in provenance["files"]:
             with self.subTest(path=entry["path"]):
-                content = (FIXTURES / entry["path"]).read_bytes()
+                content = original_fixture_bytes(FIXTURES, entry)
                 self.assertEqual(entry["bytes"], len(content))
                 self.assertEqual(entry["sha256"], hashlib.sha256(content).hexdigest())
 

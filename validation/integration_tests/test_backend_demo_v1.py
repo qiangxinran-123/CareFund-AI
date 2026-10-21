@@ -56,15 +56,20 @@ def test_original_backend_confirmation_export_execute_current_d_checks(monkeypat
                                        Draft.model_validate(draft), ExportRequest.model_validate(export)).can_finalize
 
 
-def test_bad_policy_and_no_policy_never_silently_enable_export(monkeypatch):
+def test_bad_policy_is_rejected_and_backend_default_is_explicit(monkeypatch):
     monkeypatch.setenv("CAREFUND_VALIDATION_POLICY", "validation/policies/not_present.json")
     with pytest.raises(RuntimeError):
         RealValidationService()
     monkeypatch.delenv("CAREFUND_VALIDATION_POLICY", raising=False)
+    # B now deliberately loads its reviewed integration policy if the env var
+    # is absent. Respect that change; a missing Policy passed to D still blocks.
+    default = RealValidationService()
+    assert default._policy is not None
     app, request = scenario()
-    report = RealValidationService().validate(Application.model_validate(app), *models(request), [])
-    assert not report.can_finalize
-    assert any(issue.field == "validation.policy" for issue in report.issues)
+    from validation import validate
+    report = validate(request, policy=None)
+    assert not report["can_finalize"]
+    assert any(issue["field"] == "validation.policy" for issue in report["issues"])
 
 
 def test_original_backend_adapter_maps_invalid_calendar_date_to_safe_error(monkeypatch):

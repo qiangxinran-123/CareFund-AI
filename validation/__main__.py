@@ -6,21 +6,13 @@ from pathlib import Path
 import sys
 from uuid import uuid4
 
-
 from . import ContractValidationError, load_policy, validate, validate_for_export
-
-from . import ContractValidationError, ValidationPolicy, validate, validate_for_export
-
 
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Check CareFund-AI facts locally.")
     parser.add_argument("request", type=Path, help="ValidationRequest JSON file")
-
     parser.add_argument("--policy", help="Explicit policy JSON path or demo_v1; no implicit fallback")
-
-    parser.add_argument("--policy", type=Path, help="Explicit local business-rule configuration")
-
     parser.add_argument("--application", type=Path)
     parser.add_argument("--draft", type=Path)
     parser.add_argument("--export-request", type=Path)
@@ -34,11 +26,7 @@ def main(argv=None) -> int:
         return json.loads(path.read_text(encoding="utf-8-sig"))
 
     try:
-
         policy = load_policy(args.policy) if args.policy else None
-
-        policy = ValidationPolicy.from_dict(read(args.policy)) if args.policy else None
-
         request = read(args.request)
         if args.export_request:
             response = validate_for_export(

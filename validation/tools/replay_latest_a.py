@@ -14,6 +14,7 @@ from validation import build_validation_request, validate, validate_agent_draft
 from validation.rules import ValidationPolicy
 from validation.rules.agent_literal import matches_literal_sections
 from validation.schema import check_model
+from validation.tests.fixture_integrity import original_fixture_bytes
 from validation.tests.fixtures.a_20261018.agent.agent_service import AgentService, AgentError
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -31,7 +32,7 @@ def service(runner):
 def evaluate() -> tuple[dict, dict]:
     provenance = read("PROVENANCE.json")
     for item in provenance["files"]:
-        content = (FIXTURE / item["path"]).read_bytes()
+        content = original_fixture_bytes(FIXTURE, item)
         if len(content) != item["bytes"] or hashlib.sha256(content).hexdigest() != item["sha256"]:
             raise ValueError("Latest A fixture fingerprint mismatch.")
     suite = read("agent/verification/content-review-20261017/synthetic-replay.json")
