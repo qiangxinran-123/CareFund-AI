@@ -89,6 +89,11 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
   const blockingIssues = analysisCurrent ? analysis!.validation.issues.filter((issue) => issue.severity === 'blocking') : []
   const missingFacts = draft && analysisCurrent ? missingDraftFactIds(draft.sections, analysis!.facts) : []
   const canFinalize = analysisCurrent && analysis!.validation.can_finalize && blockingIssues.length === 0
+  const generateBlocked = !analysisCurrent ? '请先完成当前版本的信息整理和核对；旧版本结果不能用于生成新草稿。'
+    : !analysis!.validation.can_finalize ? blockingIssues.length > 0
+      ? `当前有 ${blockingIssues.length} 项需要先处理的信息，暂时不能生成草稿。`
+      : '当前校验尚未允许生成草稿，请先完成需要处理的信息。'
+    : null
   const downloadUrl = safeDownloadUrl(exportResult?.download_url ?? null)
   const completionVisible = Boolean(
     showCompletion
@@ -210,12 +215,11 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
                 {phase === 'loading' ? '正在查看已有草稿…' : draft ? `草稿版本 ${draft.draft_revision} · ${draft.status === 'confirmed' ? '已由您确认' : stale ? '需要重新生成' : '已生成，等待您核对'}` : '尚未生成申请初稿'}
               </p>
             </div>
-            <button className="button-primary w-full shrink-0 sm:w-auto" disabled={phase !== 'idle' || !analysisCurrent} onClick={() => void runAction('generate')} type="button">
+            <button className="button-primary w-full shrink-0 sm:w-auto" disabled={phase !== 'idle' || Boolean(generateBlocked)} onClick={() => void runAction('generate')} type="button">
               {phase === 'generating' ? '正在生成申请初稿…' : draft ? '重新生成申请初稿' : '生成申请初稿'}
             </button>
           </div>
-          {!analysisCurrent && <p className="mt-3 text-sm text-amber-900">请先完成当前版本的信息整理和核对；旧版本结果不能用于生成新草稿。</p>}
-          {blockingIssues.length > 0 && <p className="mt-3 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-900">当前有 {blockingIssues.length} 项需要先处理的信息。您仍可生成草稿，但在处理前不能确认或导出。</p>}
+          {generateBlocked && <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">{generateBlocked}</p>}
           {stale && <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">申请信息已更新（当前版本 {application.revision}），之前的草稿需要重新生成。</p>}
           <div aria-live="polite" className="mt-3 min-h-6">
             {notice && <p className="text-sm text-emerald-800" role="status">{notice}</p>}
