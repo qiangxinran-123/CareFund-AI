@@ -48,7 +48,7 @@ export function DocumentManager({
     setUploadState('idle')
   }, [applicationId])
 
-  const loadDocuments = useCallback(async () => {
+  const loadDocuments = useCallback(async (preserveDocuments: UploadedDocument[] = []) => {
     if (!applicationId) return
     controllerRef.current?.abort()
     const controller = new AbortController()
@@ -59,8 +59,12 @@ export function DocumentManager({
     try {
       const result = await api.list(applicationId, controller.signal)
       if (request === requestRef.current) {
-        setDocuments(result)
-        onDocumentsChange?.(result)
+        const next = [
+          ...result,
+          ...preserveDocuments.filter((document) => !result.some((item) => item.document_id === document.document_id)),
+        ]
+        setDocuments(next)
+        onDocumentsChange?.(next)
       }
     } catch (error) {
       if (request === requestRef.current && !controller.signal.aborted) {
@@ -86,12 +90,12 @@ export function DocumentManager({
 
   async function handleUploaded(document: UploadedDocument) {
     setDeferred(false)
-    setDocuments((current) => current.some((item) => item.document_id === document.document_id)
-      ? current
-      : [document, ...current])
-    onDocumentsChange?.(documents.some((item) => item.document_id === document.document_id)
+    const nextDocuments = documents.some((item) => item.document_id === document.document_id)
       ? documents
-      : [document, ...documents])
+      : [document, ...documents]
+    setDocuments(nextDocuments)
+    onDocumentsChange?.(nextDocuments)
+    await loadDocuments(nextDocuments)
     if (!onRefreshApplication) return
     setRevisionReady(false)
     setRevisionError(null)

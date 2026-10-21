@@ -97,7 +97,11 @@ it('disables duplicate submission while uploading', async () => {
 
 it('shows returned metadata after upload and refreshes the application revision', async () => {
   const refresh = vi.fn().mockResolvedValue(undefined)
-  const documentApi = api()
+  const documentApi = api({
+    list: vi.fn()
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([uploaded({ processing_status: 'processed' })]),
+  })
   render(<DocumentManager api={documentApi} application={application} onRefreshApplication={refresh} />)
   await waitForEmptyList()
   fireEvent.change(screen.getByLabelText('选择材料'), {
@@ -106,8 +110,9 @@ it('shows returned metadata after upload and refreshes the application revision'
   fireEvent.click(screen.getByRole('button', { name: '上传材料' }))
   expect(await screen.findByText('材料已上传，您可以继续添加其他材料。后续处理状态请以列表为准。')).toBeTruthy()
   expect(screen.getByText('record.pdf')).toBeTruthy()
-  expect(screen.getByText('已上传，等待处理')).toBeTruthy()
+  expect(screen.getByText('处理完成')).toBeTruthy()
   expect(refresh).toHaveBeenCalledTimes(1)
+  expect(documentApi.list).toHaveBeenCalledTimes(2)
   expect(documentApi.upload).toHaveBeenCalledWith(expect.objectContaining({
     applicationId: 'app_test_001', expectedRevision: 3,
   }))
