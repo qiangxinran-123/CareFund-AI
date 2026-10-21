@@ -66,4 +66,4 @@ python -m agent.integration_smoke --mode backend --non-interactive
 
 ## 当前状态
 
-本轮离线结果与真实验收汇总见 verification/second-integration-20261021/summary.json，新真实响应见同目录 live-results.json。抽取耗时 8.568 秒，草稿 7.639 秒；候选未自动确认、引用有效，四条已确认事实及“尚未确诊”原文逐字保留。首次缺少凭据的检查保留为历史记录，当前真实验收已通过。2026-10-20 的线上成功仍为独立历史证据，没有改写。D 导入问题及 B 下载功能在当前 main 已更新，不再列为 A 待修问题。本轮交付分支为 fix/agent-second-integration，目标为 main；是否合并以 GitHub PR 状态为准。
+本轮离线结果与真实验收汇总见 verification/second-integration-20261021/summary.json，新真实响应见同目录 live-results.json。抽取耗时 8.568 秒，草稿 7.639 秒；候选未自动确认、引用有效，四条已确认事实及“尚未确诊”原文逐字保留。首次缺少凭据的检查保留为历史记录，当前真实验收已通过。2026-10-20 的线上成功仍为独立历史证据，没有改写。D 导入问题及 B 下载功能在当前 main 已更新，不再列为 A 待修问题。本轮交付分支为 fix/agent-second-integration-1，对应 [PR #13](https://github.com/qiangxinran-123/CareFund-AI/pull/13)，目标为 main；是否合并以 GitHub PR 状态为准。
