@@ -68,12 +68,34 @@ it('keeps the draft visible and offers retry after confirmation failure', async 
   expect((screen.getByRole('button', { name: '我已核对，确认草稿' }) as HTMLButtonElement).disabled).toBe(false)
 })
 
-it('shows blocking issues and prevents confirm/export without preventing generation', async () => {
+it('shows blocking issues and prevents generating, confirming, and exporting', async () => {
   render(<DraftPanel analysis={result()} api={api()} application={application} />)
   await screen.findByText(/1 项需要先处理的信息/)
-  expect((screen.getByRole('button', { name: '重新生成申请初稿' }) as HTMLButtonElement).disabled).toBe(false)
+  expect((screen.getByRole('button', { name: '重新生成申请初稿' }) as HTMLButtonElement).disabled).toBe(true)
   expect((screen.getByRole('button', { name: '我已核对，确认草稿' }) as HTMLButtonElement).disabled).toBe(true)
   expect((screen.getByRole('button', { name: '导出申请资料包' }) as HTMLButtonElement).disabled).toBe(true)
+})
+
+it('allows generation when only non-blocking validation issues remain and can_finalize is true', async () => {
+  const analysis = finalizableAnalysis()
+  analysis.validation = {
+    ...analysis.validation,
+    issues: [{
+      issue_id: 'issue_info', type: 'unsupported', severity: 'info', field: 'patient.medical_summary',
+      message: '仅作提示。', related_fact_ids: ['fact_user'],
+    }],
+  }
+  const generate = vi.fn().mockResolvedValue(draft())
+  render(<DraftPanel analysis={analysis} api={api({ generate })} application={application} />)
+
+  const button = await screen.findByRole('button', { name: '重新生成申请初稿' })
+  expect((button as HTMLButtonElement).disabled).toBe(false)
+  fireEvent.click(button)
+  await waitFor(() => expect(generate).toHaveBeenCalledWith(
+    application.application_id,
+    { expected_revision: application.revision },
+    expect.any(AbortSignal),
+  ))
 })
 
 it('marks mismatched revisions stale and disables confirmation and export', async () => {
