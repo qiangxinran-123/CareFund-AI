@@ -49,6 +49,21 @@ class SmokeSetupTests(unittest.TestCase):
         self.assertEqual((first, second), ('one', 'two'))
         prompt.assert_not_called()
 
+    def test_missing_keys_non_interactive_never_prompts(self):
+        with patch.dict(os.environ, {}, clear=True), patch.object(integration_smoke.getpass, 'getpass') as prompt:
+            with self.assertRaisesRegex(AgentError, 'Both DIFY'):
+                integration_smoke.credentials(False, non_interactive=True)
+            prompt.assert_not_called()
+
+    def test_role_lookup_rejects_invalid_transport_before_sending_keys(self):
+        with patch.object(integration_smoke, 'build_opener') as opened:
+            for base, keys in [('http://example.com/v1', ('one', 'two')),
+                               ('https://api.dify.ai/v1', ('same', 'same')),
+                               ('https://api.dify.ai/v1', ('one', ''))]:
+                with self.assertRaises(AgentError):
+                    integration_smoke.identify(base, keys)
+            opened.assert_not_called()
+
 
 if __name__ == '__main__':
     unittest.main()
