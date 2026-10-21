@@ -1,3 +1,5 @@
+> 2026-10-21 第二次修改：当前接入、验收模式及未完成事项以 [SECOND_INTEGRATION_HANDOFF.md](SECOND_INTEGRATION_HANDOFF.md) 为准。下文保留第一轮记录，不能作为本轮线上验收结果。
+
 # A 最终联调交接（2026-10-20）
 
 对应《联调修改.docx》中的 INT-02（A 对接）、INT-06、INT-07（A 对接）、INT-08。只修改 `agent/`；共享 contracts、B/D/C 源码未修改。文档提出的问题先与最新代码核对，已有功能不重复开发。

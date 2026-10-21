@@ -1,0 +1,190 @@
+{
+  "started_at": "2026-10-21T07:10:23.206442+00:00",
+  "status": "two_real_calls_passed",
+  "transport": "A AgentService -> real Dify Service API",
+  "mode": "agent",
+  "backend_draft_issue_projection_applied": false,
+  "input_class": "synthetic_only",
+  "max_generation_calls": 2,
+  "calls_attempted": 2,
+  "operations_attempted": 2,
+  "automatic_retries": 0,
+  "cases": [
+    {
+      "operation": "extract",
+      "status": "contract_references_and_synthetic_checks_passed",
+      "elapsed_seconds": 8.568,
+      "candidate_facts": [
+        {
+          "fact_id": "fact_001",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "user_input",
+          "evidence_ids": [],
+          "verification_status": "pending",
+          "user_confirmed": false
+        },
+        {
+          "fact_id": "fact_002",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 3000000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_demo_001"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": false
+        }
+      ],
+      "questions": [
+        {
+          "question_id": "question_a_eea7dab862f18ede",
+          "field": "patient.medical_summary",
+          "question": "是否愿意补充患者的病情原文或检查进展？尚未确诊或暂不清楚时可以如实说明。",
+          "reason": "可选补充有助于整理病情陈述，不代表平台必填要求。",
+          "required": false
+        },
+        {
+          "question_id": "question_a_f6567948b4a87bb0",
+          "field": "treatment.paid_cost",
+          "question": "是否愿意补充已支付的医疗费用及币种？暂不清楚可以保留未知。",
+          "reason": "当前未记录已支付费用，不能据此补出金额。",
+          "required": false
+        }
+      ]
+    },
+    {
+      "operation": "draft",
+      "status": "literal_draft_and_D_candidate_checks_passed",
+      "elapsed_seconds": 7.639,
+      "candidate_sections": [
+        {
+          "title": "患者与申请人的关系",
+          "content": "用户自述，患者与申请人的关系：“母亲”",
+          "fact_ids": [
+            "fact_draft_001"
+          ]
+        },
+        {
+          "title": "病情及检查情况",
+          "content": "用户自述，病情及检查情况：“医生表示可能是肺部肿瘤，仍在检查，尚未确诊。”",
+          "fact_ids": [
+            "fact_draft_002"
+          ]
+        },
+        {
+          "title": "已支付医疗费",
+          "content": "用户自述，已支付医疗费：人民币20000.00元",
+          "fact_ids": [
+            "fact_draft_003"
+          ]
+        },
+        {
+          "title": "后续预估治疗费",
+          "content": "提交材料记载（真伪未经本模块核验），后续预估治疗费：人民币30000.00元",
+          "fact_ids": [
+            "fact_draft_004"
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "In-process adapters only; not HTTP /analyze, frontend, OCR, persistence or end-to-end export.",
+  "backend_adapter_sha256": "407ab09b3c93fc5461f7767cf55349ef0f59e06e3cb42a7a314110c82b9270a1",
+  "a_runtime_sha256": {
+    "agent_service.py": "a04cc671fe355c9601393a690cda1e6b5ed62721531727eaeebf23146c89efc2",
+    "draft_gate.py": "167c81a8a90a37e64888ed213c7a80069663d6c558b307b36be6c6ca7e645201",
+    "errors.py": "bbed3936ad2005106179f105689a8d33bc8404713d0be1ec8286fb1fe6b2b14d",
+    "dify_runner.py": "6946050224a16a3f44267df79328212ca229ac0266a9c5ec1e052d5192eda1d0"
+  },
+  "app_info_mappings": [
+    {
+      "input_slot": 1,
+      "operation": "extract",
+      "app_name": "CareFund-信息抽取与追问-修订版"
+    },
+    {
+      "input_slot": 2,
+      "operation": "draft",
+      "app_name": "CareFund-已确认事实草稿-首版"
+    }
+  ],
+  "base_url": "https://api.dify.ai/v1",
+  "draft_validation": {
+    "schema_version": "1.0",
+    "validation_id": "validation_58eed18787764244b3a801cc3c3633fe",
+    "application_id": "app_synthetic_draft_001",
+    "application_revision": 3,
+    "issues": [
+      {
+        "issue_id": "issue_df0ffd7b78874b4bbb95f4ace2118092",
+        "type": "unsupported",
+        "severity": "info",
+        "field": "patient.relationship_to_applicant",
+        "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+        "related_fact_ids": [
+          "fact_draft_001"
+        ]
+      },
+      {
+        "issue_id": "issue_ccc1096e6a0c49c7ab55ef85daec6a66",
+        "type": "unsupported",
+        "severity": "info",
+        "field": "patient.medical_summary",
+        "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+        "related_fact_ids": [
+          "fact_draft_002"
+        ]
+      },
+      {
+        "issue_id": "issue_cc2394fefe85447584e03a8da15ae488",
+        "type": "unsupported",
+        "severity": "info",
+        "field": "treatment.paid_cost",
+        "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+        "related_fact_ids": [
+          "fact_draft_003"
+        ]
+      },
+      {
+        "issue_id": "issue_da326bb1690444958ba066c88efaa311",
+        "type": "missing",
+        "severity": "warning",
+        "field": "patient.medical_summary",
+        "message": "演示建议补充该信息的材料来源；当前可保留为用户陈述，不作材料已证实结论。",
+        "related_fact_ids": [
+          "fact_draft_002"
+        ]
+      },
+      {
+        "issue_id": "issue_09d48b6bfd1a4df2a9cb5966de89ec2f",
+        "type": "missing",
+        "severity": "warning",
+        "field": "contact.city",
+        "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+        "related_fact_ids": []
+      },
+      {
+        "issue_id": "issue_9e66ceb9a1744e3095731bc651630015",
+        "type": "missing",
+        "severity": "warning",
+        "field": "treatment.recorded_date",
+        "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+        "related_fact_ids": []
+      }
+    ],
+    "can_finalize": true,
+    "evaluated_at": "2026-10-21T07:10:42Z"
+  },
+  "finished_at": "2026-10-21T07:10:50.353890+00:00",
+  "review": "Synthetic extraction: relationship and documented estimate only, pending/unconfirmed with valid evidence. Draft: all four confirmed facts retained literally, uncertainty and source qualifications preserved. No HTTP/browser/OCR E2E claimed."
+}

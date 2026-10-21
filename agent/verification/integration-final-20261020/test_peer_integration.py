@@ -146,7 +146,7 @@ class PeerIntegrationTests(unittest.TestCase):
             self.assertEqual(f'app_thread_{index}', result['application_id'])
             self.assertEqual(index, raw['application_revision'])
 
-    def test_smoke_entrypoint_uses_two_backend_operations_with_fake_transport(self):
+    def test_smoke_entrypoint_distinguishes_A_and_unmodified_B_with_fake_transport(self):
         from agent import integration_smoke
 
         def transport(runner, operation, request):
@@ -164,17 +164,23 @@ class PeerIntegrationTests(unittest.TestCase):
             return response
 
         peer_root = Path(__import__('backend').__file__).resolve().parents[1]
-        with tempfile.TemporaryDirectory() as temporary:
-            output = Path(temporary) / 'synthetic-dry-run'
-            args = ['integration_smoke', '--backend-root', str(peer_root), '--output', str(output)]
-            with patch('sys.argv', args), patch.object(integration_smoke, 'credentials', return_value=('https://api.dify.ai/v1', 'first-private', 'second-private')), \
-                    patch.object(integration_smoke, 'identify', return_value=({'extract': 'first-private', 'draft': 'second-private'}, [])), \
-                    patch.object(DifyRunner, '__call__', transport):
-                self.assertEqual(0, integration_smoke.main())
-            report = json.loads((output / 'status.json').read_bytes())
-            self.assertEqual(2, report['calls_attempted'])
-            self.assertEqual('two_real_calls_passed', report['status'])
-            self.assertNotIn('private', json.dumps(report))
+        for mode, expected_exit in [('agent', 0), ('backend', 1)]:
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temporary:
+                output = Path(temporary) / 'synthetic-dry-run'
+                args = ['integration_smoke', '--mode', mode, '--backend-root', str(peer_root), '--output', str(output)]
+                with patch('sys.argv', args), patch.object(integration_smoke, 'credentials', return_value=('https://api.dify.ai/v1', 'first-private', 'second-private')), \
+                        patch.object(integration_smoke, 'identify', return_value=({'extract': 'first-private', 'draft': 'second-private'}, [])), \
+                        patch.object(DifyRunner, '__call__', transport):
+                    self.assertEqual(expected_exit, integration_smoke.main())
+                report = json.loads((output / 'status.json').read_bytes())
+                self.assertEqual(2 if mode == 'agent' else 1, report['calls_attempted'])
+                self.assertEqual(2, report['operations_attempted'])
+                self.assertEqual(mode, report['mode'])
+                self.assertFalse(report['backend_draft_issue_projection_applied'])
+                self.assertEqual(expected_exit == 0, report['status'] == 'two_real_calls_passed')
+                if mode == 'backend':
+                    self.assertEqual('agent_rejected', report['agent_error_code'])
+                self.assertNotIn('private', json.dumps(report))
         # The generated status is a test fixture only; this test mocks transport.
 
     def test_smoke_entrypoint_stops_after_first_generation_failure(self):

@@ -77,6 +77,21 @@ class DifyTests(unittest.TestCase):
     def test_untrusted_base(self):
         for url in ['http://example.com/v1','https://user:pass@example.com/v1','https://example.com/v1?token=x']:
             with self.assertRaises(AgentError): DifyRunner(extract_api_key='x',user='u',base_url=url)
+    def test_invalid_configuration_is_safe_and_rejected_before_network(self):
+        from agent.errors import AgentConfigurationError
+        cases = [dict(base_url='https://example.com:bad/v1'),
+                 dict(base_url='https://[invalid/v1'), dict(base_url=None),
+                 dict(base_url='https://example.com/ v1'),
+                 dict(extract_api_key='private\nvalue'), dict(extract_api_key='   '),
+                 dict(extract_api_key=123), dict(timeout='90'), dict(timeout=True)]
+        for overrides in cases:
+            with self.subTest(fields=list(overrides)), patch('agent.dify_runner.build_opener') as opened:
+                options = dict(extract_api_key='test-secret', user='user_demo')
+                options.update(overrides)
+                with self.assertRaises(AgentConfigurationError) as caught:
+                    DifyRunner(**options)
+                self.assertNotIn('private', str(caught.exception))
+                opened.assert_not_called()
     def test_revision_rejected_after_transport(self):
         self.result['application_revision']=2
         with patch.object(self.runner._opener,'open',return_value=self.envelope()):
