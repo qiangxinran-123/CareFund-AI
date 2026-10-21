@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-21T07:04:56.290112+00:00",
+  "baseline": "b9c1f668b561a27fd8d9a45340ce1353473d0c0e",
+  "scope": "A-only second integration; offline generation transport mocked; no browser/HTTP/OCR E2E",
+  "tests": [
+    {
+      "name": "agent",
+      "exit_code": 0,
+      "log": "agent.txt"
+    },
+    {
+      "name": "contracts",
+      "exit_code": 0,
+      "log": "contracts.txt"
+    },
+    {
+      "name": "peer_integration",
+      "exit_code": 0,
+      "log": "peer_integration.txt"
+    }
+  ],
+  "expected_test_counts": {
+    "agent": 135,
+    "contracts": 10,
+    "peer_integration": 9
+  },
+  "new_real_generation_calls": 2,
+  "live_acceptance": "agent_mode_two_real_calls_passed",
+  "preflight_exit_code": 1,
+  "preflight_report": "credential-preflight.json",
+  "remaining_backend_issue": "Full issue IDs forwarded without paired complete ValidationResult",
+  "source_sha256": {
+    "dify_runner.py": "6946050224a16a3f44267df79328212ca229ac0266a9c5ec1e052d5192eda1d0",
+    "integration_smoke.py": "fdc76ef8c6a78ad890b5bb1e3d1910a3d7f272fc8cea827c6786108b3cb1cc3d",
+    "workflow.deepseek-extract.yml": "560dc5f38b81d1ac9752eef123357fcfd7c6b2d25e8593214afdf0c5c3a0eae3",
+    "workflow.deepseek-draft.yml": "6ace13cd39a2980577b36801939b55e138912ff47f7e04ebd07e2e652300d052"
+  },
+  "live_report": "live-results.json",
+  "live_finished_at": "2026-10-21T07:10:50.353890+00:00",
+  "preflight_note": "Historical missing-credential check retained; superseded for live status by live-results.json."
+}

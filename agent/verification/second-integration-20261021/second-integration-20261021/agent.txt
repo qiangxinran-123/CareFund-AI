@@ -1,0 +1,7 @@
+usage: batch_check [-h] [--suite SUITE] [--operation {all,extract,draft}]
+                   [--limit LIMIT] [--gui] [--report REPORT]
+batch_check: error: Report already exists; use --report with a new path to preserve previous attempts
+----------------------------------------------------------------------
+Ran 135 tests in 0.388s
+
+OK
