@@ -58,15 +58,26 @@ class _NoRedirect(HTTPRedirectHandler):
 class DifyRunner:
     def __init__(self, *, extract_api_key=None, user, base_url='https://api.dify.ai/v1',
                  timeout=90, draft_api_key=None):
-        parsed = urlsplit(base_url)
+        try:
+            parsed = urlsplit(base_url)
+            parsed.port  # Validate malformed or out-of-range ports before HTTP.
+        except (TypeError, ValueError):
+            raise AgentConfigurationError('Dify base URL is invalid') from None
+        if not isinstance(base_url, str) or any(c.isspace() for c in base_url):
+            raise AgentConfigurationError('Dify base URL is invalid')
         if (parsed.scheme != 'https' or not parsed.hostname or parsed.username
                 or parsed.password or parsed.query or parsed.fragment):
             raise AgentConfigurationError('Dify base URL must be an HTTPS API base URL')
+        for key in (extract_api_key, draft_api_key):
+            if key is not None and (not isinstance(key, str) or not key
+                                    or any(c.isspace() for c in key)
+                                    or not key.isascii()):
+                raise AgentConfigurationError('Dify workflow API key is invalid')
         if not (extract_api_key or draft_api_key) or not isinstance(user, str) or not user.strip():
             raise AgentConfigurationError('At least one Dify workflow API key and opaque user ID are required')
         if extract_api_key and extract_api_key == draft_api_key:
             raise AgentConfigurationError('Use separate extraction and draft workflow API keys')
-        if not 0 < timeout <= 300:
+        if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or not 0 < timeout <= 300:
             raise AgentConfigurationError('Invalid Dify timeout')
         self._keys = {'extract': extract_api_key, 'draft': draft_api_key}
         self.user = user
@@ -77,8 +88,8 @@ class DifyRunner:
 
     @classmethod
     def from_env(cls, *, user):
-        return cls(extract_api_key=os.getenv('DIFY_EXTRACT_API_KEY'),
-                   draft_api_key=os.getenv('DIFY_DRAFT_API_KEY'), user=user,
+        return cls(extract_api_key=os.getenv('DIFY_EXTRACT_API_KEY') or None,
+                   draft_api_key=os.getenv('DIFY_DRAFT_API_KEY') or None, user=user,
                    base_url=os.getenv('DIFY_BASE_URL', 'https://api.dify.ai/v1'))
 
     def __call__(self, operation, request):

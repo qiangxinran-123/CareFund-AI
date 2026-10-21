@@ -1,4 +1,4 @@
-"""INT-06: at most two synthetic generations through B -> A -> real Dify.
+"""Second integration: at most two synthetic generations in A or unchanged B mode.
 
 Requires the existing B/D checkout and their optional test dependencies. No
 web server, OCR execution or frontend is claimed by this in-process check.
@@ -19,16 +19,19 @@ from urllib.request import Request, build_opener
 from .agent_service import AgentError, AgentService
 from .batch_check import semantic_checks
 from .dify_runner import DifyRunner, _NoRedirect, parse_object
+from .errors import AgentConfigurationError
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_NAMES = {'CareFund-信息抽取与追问-修订版': 'extract', 'CareFund-已确认事实草稿-首版': 'draft'}
 
 
-def credentials(gui):
+def credentials(gui, *, non_interactive=False):
     base = os.getenv('DIFY_BASE_URL', 'https://api.dify.ai/v1')
     first, second = os.getenv('DIFY_EXTRACT_API_KEY'), os.getenv('DIFY_DRAFT_API_KEY')
     if first and second:
         return base, first, second
+    if non_interactive:
+        raise AgentConfigurationError('Both DIFY_EXTRACT_API_KEY and DIFY_DRAFT_API_KEY are required; no API calls made')
     if not gui:
         return base, getpass.getpass('Dify app key 1 (hidden): ').strip(), getpass.getpass('Dify app key 2 (hidden): ').strip()
     import tkinter as tk
@@ -67,6 +70,10 @@ def credentials(gui):
 
 
 def identify(base, keys):
+    if len(keys) != 2 or not all(keys):
+        raise AgentError('Two distinct workflow API keys are required')
+    DifyRunner(user='synthetic_preflight', base_url=base,
+               extract_api_key=keys[0], draft_api_key=keys[1])
     roles, mappings = {}, []
     for slot, key in enumerate(keys, 1):
         request = Request(base.rstrip('/') + '/info', headers={'Authorization': 'Bearer ' + key})
@@ -94,14 +101,22 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--backend-root', type=Path, default=ROOT)
     parser.add_argument('--gui', action='store_true')
+    parser.add_argument('--non-interactive', action='store_true',
+                        help='Require both keys in the environment; never prompt')
+    parser.add_argument('--mode', choices=('agent', 'backend'), default='backend',
+                        help='agent: A with complete D context; backend: unchanged B adapter')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
+    if args.gui and args.non_interactive:
+        parser.error('--gui and --non-interactive are mutually exclusive')
     peer_root = args.backend_root.resolve()
     out = args.output or ROOT / 'agent/.local' / ('int06-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ'))
     out.mkdir(parents=True, exist_ok=False)
     report = dict(started_at=datetime.now(timezone.utc).isoformat(), status='preflight',
-        transport='B RealAgentService -> A AgentService -> real Dify Service API',
-        input_class='synthetic_only', max_generation_calls=2, calls_attempted=0,
+        transport=('A AgentService -> real Dify Service API' if args.mode == 'agent'
+                   else 'B RealAgentService -> A AgentService -> real Dify Service API'),
+        mode=args.mode, backend_draft_issue_projection_applied=False,
+        input_class='synthetic_only', max_generation_calls=2, calls_attempted=0, operations_attempted=0,
         automatic_retries=0, cases=[], backend_root=str(peer_root),
         scope='In-process adapters only; not HTTP /analyze, frontend, OCR, persistence or end-to-end export.')
     secrets = []
@@ -128,7 +143,7 @@ def main():
             for name in ('agent_service.py', 'draft_gate.py', 'errors.py', 'dify_runner.py')}
         report['status'] = 'awaiting_local_credentials'
         save()
-        base, first, second = credentials(args.gui)
+        base, first, second = credentials(args.gui, non_interactive=args.non_interactive)
         if not first or not second:
             report['status'] = 'cancelled_before_api_call'
             save()
@@ -143,7 +158,13 @@ def main():
 
         def factory(application_id):
             runner = DifyRunner(user=application_id, extract_api_key=roles['extract'], draft_api_key=roles['draft'], base_url=base)
-            return AgentService(runner), AgentError
+            def counted_runner(operation, request):
+                if report['calls_attempted'] >= report['max_generation_calls']:
+                    raise AgentError('Synthetic generation call limit reached')
+                report['calls_attempted'] += 1
+                save()
+                return runner(operation, request)
+            return AgentService(counted_runner), AgentError
 
         adapter = RealAgentService()
         # Inject only the in-memory credential factory, never mock B/A methods or HTTP.
@@ -161,10 +182,16 @@ def main():
         evidence = [Evidence.model_validate(e) for d in extract['extracted_documents'] for e in d['evidence']]
         record = dict(operation='extract', status='calling')
         report['cases'].append(record)
-        report['calls_attempted'] += 1
+        report['operations_attempted'] += 1
         save()
         started = time.monotonic()
-        facts, questions = adapter.extract(app, documents, evidence, [], {})
+        if args.mode == 'agent':
+            result = factory(app.application_id)[0].extract(extract)
+            facts = [Fact.model_validate(f) for f in result['candidate_facts']]
+            from backend.models import AgentQuestion
+            questions = [AgentQuestion.model_validate(q) for q in result['questions']]
+        else:
+            facts, questions = adapter.extract(app, documents, evidence, [], {})
         response = dict(candidate_facts=[f.model_dump(mode='json') for f in facts], questions=[q.model_dump(mode='json') for q in questions], warnings=[])
         expected = dict(money_exact={'treatment.estimated_cost': [{'currency': 'CNY', 'amount_minor': 3000000}]},
                         no_paid_cost=True, no_date_value=True, no_medical_summary=True, relationship_any=['母亲'], must_question=True)
@@ -173,7 +200,7 @@ def main():
             failures.append('unprovided_paid_cost_or_recorded_date')
         if failures or flags:
             raise AgentError('Synthetic extraction semantic checks failed: ' + ', '.join(failures + flags))
-        record.update(status='backend_A_contract_references_and_synthetic_checks_passed', elapsed_seconds=round(time.monotonic() - started, 3),
+        record.update(status='contract_references_and_synthetic_checks_passed', elapsed_seconds=round(time.monotonic() - started, 3),
                       candidate_facts=response['candidate_facts'], questions=response['questions'])
         save()
 
@@ -190,20 +217,26 @@ def main():
         if not checked['can_finalize']:
             raise AgentError('Synthetic draft rejected by deterministic demo_v1 preflight')
         report['draft_validation'] = checked
-        gate_ids = set(prepared['validation_issue_ids'])
-        gate_issues = [ValidationIssue.model_validate(i) for i in checked['issues'] if i['issue_id'] in gate_ids]
+        full_issues = [ValidationIssue.model_validate(i) for i in checked['issues']]
         record = dict(operation='draft', status='calling')
         report['cases'].append(record)
-        report['calls_attempted'] += 1
+        report['operations_attempted'] += 1
         save()
         started = time.monotonic()
-        sections = adapter.draft_sections(app, [Fact.model_validate(f) for f in draft['candidate_facts']], gate_issues)
+        if args.mode == 'agent':
+            full_request = dict(prepared, validation_issue_ids=[i['issue_id'] for i in checked['issues']])
+            result = factory(app.application_id)[0].draft(full_request, validation_result=checked)
+            sections_payload = result['candidate_sections']
+        else:
+            # Match B's HTTP route: do not repair its severity mapping in this test.
+            sections = adapter.draft_sections(app, [Fact.model_validate(f) for f in draft['candidate_facts']], full_issues)
+            sections_payload = [s.model_dump(mode='json', exclude={'section_id'}) for s in sections]
         response = {k: draft[k] for k in ('schema_version', 'application_id', 'application_revision')}
         from .draft_policy import DRAFT_WARNING
-        response.update(candidate_sections=[s.model_dump(mode='json', exclude={'section_id'}) for s in sections], warnings=[DRAFT_WARNING])
+        response.update(candidate_sections=sections_payload, warnings=[DRAFT_WARNING])
         if not validate_agent_draft(snapshot, response, policy=policy)['can_finalize']:
             raise AgentError('D rejected the actual synthetic draft response')
-        record.update(status='backend_A_literal_draft_and_D_candidate_checks_passed', elapsed_seconds=round(time.monotonic() - started, 3),
+        record.update(status='literal_draft_and_D_candidate_checks_passed', elapsed_seconds=round(time.monotonic() - started, 3),
                       candidate_sections=response['candidate_sections'])
         report.update(status='two_real_calls_passed', finished_at=datetime.now(timezone.utc).isoformat())
         save()
@@ -212,6 +245,8 @@ def main():
         report.update(status='stopped_on_failure_no_retry', error_type=type(exc).__name__, error_code=exc.code, error=str(exc))
     except Exception as exc:
         report.update(status='stopped_on_local_or_backend_error_no_retry', error_type=type(exc).__name__)
+        if isinstance(exc.__cause__, AgentError):
+            report['agent_error_code'] = exc.__cause__.code
     save()
     return 1
 

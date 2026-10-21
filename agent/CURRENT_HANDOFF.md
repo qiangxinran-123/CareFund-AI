@@ -1,3 +1,5 @@
+> 2026-10-21 第二次修改：当前接入、验收模式及未完成事项以 [SECOND_INTEGRATION_HANDOFF.md](SECOND_INTEGRATION_HANDOFF.md) 为准。下文保留第一轮记录，不能作为本轮线上验收结果。
+
 # A 模块当前交付入口（2026-10-20 最终联调）
 
 本轮按《联调修改.docx》完成 A 的门禁及错误处理适配：配对完整、同申请同版本的 D 结果后允许 info/非阻断 warning，blocking、无效引用、版本不匹配和未确认事实继续拒绝。
