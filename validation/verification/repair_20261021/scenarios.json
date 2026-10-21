@@ -1,0 +1,1763 @@
+[
+  {
+    "case": "clean",
+    "data_class": "synthetic_only",
+    "application": {
+      "application_id": "app_int07_demo",
+      "schema_version": "1.0",
+      "revision": 2,
+      "status": "ready_for_draft",
+      "patient_info": {
+        "display_name": "合成演示患者",
+        "medical_summary": "仍在检查，尚未确诊。"
+      },
+      "created_at": "2026-10-20T00:00:00Z",
+      "updated_at": "2026-10-20T00:00:00Z"
+    },
+    "validation_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "documents": [
+        {
+          "document_id": "doc_int07_demo",
+          "application_id": "app_int07_demo",
+          "filename": "synthetic-only.pdf",
+          "media_type": "application/pdf",
+          "size_bytes": 128,
+          "uploaded_at": "2026-10-20T00:00:00Z",
+          "processing_status": "processed"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "ev_int07_0",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 1,
+          "text_excerpt": "仍在检查，尚未确诊。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_1",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 2,
+          "text_excerpt": "后续预估治疗费用人民币12500元。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_2",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 3,
+          "text_excerpt": "患者与申请人关系：母亲",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_3",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 4,
+          "text_excerpt": "当前所在：示例城市",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_4",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 5,
+          "text_excerpt": "记录日期2026年10月20日",
+          "extraction_method": "manual"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ]
+    },
+    "agent_draft_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "candidate_facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ],
+      "validation_issue_ids": []
+    },
+    "generation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_66aa9f264e37495cbac4f6cc25df219d",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "confirmation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_c06e1caa9cbe4a25990e9778c9ba3b6d",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "export_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_8ad3c6f061b74570974abee082abb8e0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "expected_allowed": true
+  },
+  {
+    "case": "info",
+    "data_class": "synthetic_only",
+    "application": {
+      "application_id": "app_int07_demo",
+      "schema_version": "1.0",
+      "revision": 2,
+      "status": "ready_for_draft",
+      "patient_info": {
+        "display_name": "合成演示患者",
+        "medical_summary": "仍在检查，尚未确诊。"
+      },
+      "created_at": "2026-10-20T00:00:00Z",
+      "updated_at": "2026-10-20T00:00:00Z"
+    },
+    "validation_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "documents": [
+        {
+          "document_id": "doc_int07_demo",
+          "application_id": "app_int07_demo",
+          "filename": "synthetic-only.pdf",
+          "media_type": "application/pdf",
+          "size_bytes": 128,
+          "uploaded_at": "2026-10-20T00:00:00Z",
+          "processing_status": "processed"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "ev_int07_0",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 1,
+          "text_excerpt": "仍在检查，尚未确诊。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_1",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 2,
+          "text_excerpt": "后续预估治疗费用人民币12500元。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_2",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 3,
+          "text_excerpt": "患者与申请人关系：母亲",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_3",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 4,
+          "text_excerpt": "当前所在：示例城市",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_4",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 5,
+          "text_excerpt": "记录日期2026年10月20日",
+          "extraction_method": "manual"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "user_input",
+          "evidence_ids": [],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ]
+    },
+    "agent_draft_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "candidate_facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "user_input",
+          "evidence_ids": [],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ],
+      "validation_issue_ids": []
+    },
+    "generation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_b1eea41070074667b82fd927a0547171",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_c4bd3af4e1e549e993036fc75fd97587",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "contact.city",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_int07_3"
+          ]
+        }
+      ],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "confirmation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_6ed2028f701b4af88622fe9ad60250fc",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_521d50f4bfb345b7bb830a38448e08ff",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "contact.city",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_int07_3"
+          ]
+        }
+      ],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "export_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_153684a06d6b479fa1fcd0c8ca0e3864",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_7aa97344b4b346a0a2beba269a164232",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "contact.city",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_int07_3"
+          ]
+        }
+      ],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "expected_allowed": true
+  },
+  {
+    "case": "warning",
+    "data_class": "synthetic_only",
+    "application": {
+      "application_id": "app_int07_demo",
+      "schema_version": "1.0",
+      "revision": 2,
+      "status": "ready_for_draft",
+      "patient_info": {
+        "display_name": "合成演示患者",
+        "medical_summary": "仍在检查，尚未确诊。"
+      },
+      "created_at": "2026-10-20T00:00:00Z",
+      "updated_at": "2026-10-20T00:00:00Z"
+    },
+    "validation_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "documents": [
+        {
+          "document_id": "doc_int07_demo",
+          "application_id": "app_int07_demo",
+          "filename": "synthetic-only.pdf",
+          "media_type": "application/pdf",
+          "size_bytes": 128,
+          "uploaded_at": "2026-10-20T00:00:00Z",
+          "processing_status": "processed"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "ev_int07_0",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 1,
+          "text_excerpt": "仍在检查，尚未确诊。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_1",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 2,
+          "text_excerpt": "后续预估治疗费用人民币12500元。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_2",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 3,
+          "text_excerpt": "患者与申请人关系：母亲",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_3",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 4,
+          "text_excerpt": "当前所在：示例城市",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_4",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 5,
+          "text_excerpt": "记录日期2026年10月20日",
+          "extraction_method": "manual"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ]
+    },
+    "agent_draft_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "candidate_facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ],
+      "validation_issue_ids": []
+    },
+    "generation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_fd825ee334494580afc6a941459df9a1",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_cc5c4aea510e4b27b8a2740ca703efc2",
+          "type": "missing",
+          "severity": "warning",
+          "field": "patient.relationship_to_applicant",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_0e49cbac38954108b66a4979abddf172",
+          "type": "missing",
+          "severity": "warning",
+          "field": "contact.city",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_f4a1a96214f74a059db207591b23d8cc",
+          "type": "missing",
+          "severity": "warning",
+          "field": "treatment.recorded_date",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        }
+      ],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "confirmation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_352fd271301d489db2af4cb633659dd8",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_c02e7abf67ce427cbb4c21c979931b2f",
+          "type": "missing",
+          "severity": "warning",
+          "field": "patient.relationship_to_applicant",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_5b784ec1c8504810a8b67ea63317abd1",
+          "type": "missing",
+          "severity": "warning",
+          "field": "contact.city",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_a596ea9ef4b94cfcb99c3c243493df46",
+          "type": "missing",
+          "severity": "warning",
+          "field": "treatment.recorded_date",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        }
+      ],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "export_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_a0aef34769314bf885f1b4595b81e1a2",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_4f2fb8c68c494401b303d2863c02e04b",
+          "type": "missing",
+          "severity": "warning",
+          "field": "patient.relationship_to_applicant",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_27a95198ea074eb8943218c971310732",
+          "type": "missing",
+          "severity": "warning",
+          "field": "contact.city",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        },
+        {
+          "issue_id": "issue_70682c7abe5a458790ee015245e88cad",
+          "type": "missing",
+          "severity": "warning",
+          "field": "treatment.recorded_date",
+          "message": "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+          "related_fact_ids": []
+        }
+      ],
+      "can_finalize": true,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "expected_allowed": true
+  },
+  {
+    "case": "conflict",
+    "data_class": "synthetic_only",
+    "application": {
+      "application_id": "app_int07_demo",
+      "schema_version": "1.0",
+      "revision": 2,
+      "status": "ready_for_draft",
+      "patient_info": {
+        "display_name": "合成演示患者",
+        "medical_summary": "仍在检查，尚未确诊。"
+      },
+      "created_at": "2026-10-20T00:00:00Z",
+      "updated_at": "2026-10-20T00:00:00Z"
+    },
+    "validation_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "documents": [
+        {
+          "document_id": "doc_int07_demo",
+          "application_id": "app_int07_demo",
+          "filename": "synthetic-only.pdf",
+          "media_type": "application/pdf",
+          "size_bytes": 128,
+          "uploaded_at": "2026-10-20T00:00:00Z",
+          "processing_status": "processed"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "ev_int07_0",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 1,
+          "text_excerpt": "仍在检查，尚未确诊。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_1",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 2,
+          "text_excerpt": "后续预估治疗费用人民币12500元。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_2",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 3,
+          "text_excerpt": "患者与申请人关系：母亲",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_3",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 4,
+          "text_excerpt": "当前所在：示例城市",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_4",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 5,
+          "text_excerpt": "记录日期2026年10月20日",
+          "extraction_method": "manual"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_cost_other",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 2000000
+            }
+          },
+          "source_type": "user_input",
+          "evidence_ids": [],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ]
+    },
+    "agent_draft_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "candidate_facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_cost_other",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 2000000
+            }
+          },
+          "source_type": "user_input",
+          "evidence_ids": [],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ],
+      "validation_issue_ids": [
+        "issue_408bb78d6265490da25fa572cc51e552"
+      ]
+    },
+    "generation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_be8a4af8df5d413a8467bf3564fe135e",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_42c4d4aaf41d4e0e8ecca2251f63b0ff",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_cost_other"
+          ]
+        },
+        {
+          "issue_id": "issue_408bb78d6265490da25fa572cc51e552",
+          "type": "inconsistent_amount",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "同一事实字段存在不同取值，需人工澄清，系统不自动择一。",
+          "related_fact_ids": [
+            "fact_int07_1",
+            "fact_cost_other"
+          ]
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "confirmation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_d0c45fae41c74617b0b0604444164666",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_f02fb9c8b0f946bb9b74a089ad79735a",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_cost_other"
+          ]
+        },
+        {
+          "issue_id": "issue_b25c2e5d4bb641c1925120b0ecb9574c",
+          "type": "inconsistent_amount",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "同一事实字段存在不同取值，需人工澄清，系统不自动择一。",
+          "related_fact_ids": [
+            "fact_int07_1",
+            "fact_cost_other"
+          ]
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "export_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_7e16edb3b7164801a9e6d426723eca28",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_9a212945786b4ce5bf614590cd9a360e",
+          "type": "unsupported",
+          "severity": "info",
+          "field": "treatment.estimated_cost",
+          "message": "该事实仅来自用户陈述，不代表材料证明或平台审核通过。",
+          "related_fact_ids": [
+            "fact_cost_other"
+          ]
+        },
+        {
+          "issue_id": "issue_dcc1d33dc5de44068e28e5f4761d5fb1",
+          "type": "inconsistent_amount",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "同一事实字段存在不同取值，需人工澄清，系统不自动择一。",
+          "related_fact_ids": [
+            "fact_int07_1",
+            "fact_cost_other"
+          ]
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "expected_allowed": false
+  },
+  {
+    "case": "stale",
+    "data_class": "synthetic_only",
+    "application": {
+      "application_id": "app_int07_demo",
+      "schema_version": "1.0",
+      "revision": 3,
+      "status": "ready_for_draft",
+      "patient_info": {
+        "display_name": "合成演示患者",
+        "medical_summary": "仍在检查，尚未确诊。"
+      },
+      "created_at": "2026-10-20T00:00:00Z",
+      "updated_at": "2026-10-20T00:00:00Z"
+    },
+    "validation_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "documents": [
+        {
+          "document_id": "doc_int07_demo",
+          "application_id": "app_int07_demo",
+          "filename": "synthetic-only.pdf",
+          "media_type": "application/pdf",
+          "size_bytes": 128,
+          "uploaded_at": "2026-10-20T00:00:00Z",
+          "processing_status": "processed"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "ev_int07_0",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 1,
+          "text_excerpt": "仍在检查，尚未确诊。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_1",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 2,
+          "text_excerpt": "后续预估治疗费用人民币12500元。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_2",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 3,
+          "text_excerpt": "患者与申请人关系：母亲",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_3",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 4,
+          "text_excerpt": "当前所在：示例城市",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_4",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 5,
+          "text_excerpt": "记录日期2026年10月20日",
+          "extraction_method": "manual"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ]
+    },
+    "agent_draft_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "candidate_facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_1"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ],
+      "validation_issue_ids": [
+        "issue_1607781a1e114b12acd3b443da0e83e3"
+      ]
+    },
+    "generation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_f342d3bae8204f22928f413836dd5a0a",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_1607781a1e114b12acd3b443da0e83e3",
+          "type": "conflict",
+          "severity": "blocking",
+          "field": "application.revision",
+          "message": "生成请求或分析快照版本过期，需读取当前申请并重新校验。",
+          "related_fact_ids": []
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "confirmation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_8eb3e62900a84afbb4cde8b81c0d6b6a",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_5d38c5d0b3ae4c488636331ec3649864",
+          "type": "conflict",
+          "severity": "blocking",
+          "field": "draft.revision",
+          "message": "申请、草稿或请求版本不匹配，旧结果不得确认或导出。",
+          "related_fact_ids": []
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "export_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_2646f9c2ad374a36b3b03035a55d5c1c",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_7d464940e5b44e6091e0c68fe09a3fe5",
+          "type": "conflict",
+          "severity": "blocking",
+          "field": "draft.revision",
+          "message": "申请、草稿或请求版本不匹配，旧结果不得确认或导出。",
+          "related_fact_ids": []
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "expected_allowed": false
+  },
+  {
+    "case": "invalid_reference",
+    "data_class": "synthetic_only",
+    "application": {
+      "application_id": "app_int07_demo",
+      "schema_version": "1.0",
+      "revision": 2,
+      "status": "ready_for_draft",
+      "patient_info": {
+        "display_name": "合成演示患者",
+        "medical_summary": "仍在检查，尚未确诊。"
+      },
+      "created_at": "2026-10-20T00:00:00Z",
+      "updated_at": "2026-10-20T00:00:00Z"
+    },
+    "validation_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "documents": [
+        {
+          "document_id": "doc_int07_demo",
+          "application_id": "app_int07_demo",
+          "filename": "synthetic-only.pdf",
+          "media_type": "application/pdf",
+          "size_bytes": 128,
+          "uploaded_at": "2026-10-20T00:00:00Z",
+          "processing_status": "processed"
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "ev_int07_0",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 1,
+          "text_excerpt": "仍在检查，尚未确诊。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_1",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 2,
+          "text_excerpt": "后续预估治疗费用人民币12500元。",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_2",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 3,
+          "text_excerpt": "患者与申请人关系：母亲",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_3",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 4,
+          "text_excerpt": "当前所在：示例城市",
+          "extraction_method": "manual"
+        },
+        {
+          "evidence_id": "ev_int07_4",
+          "document_id": "doc_int07_demo",
+          "source_type": "document",
+          "page": 5,
+          "text_excerpt": "记录日期2026年10月20日",
+          "extraction_method": "manual"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_nonexistent"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ]
+    },
+    "agent_draft_request": {
+      "schema_version": "1.0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "candidate_facts": [
+        {
+          "fact_id": "fact_int07_0",
+          "field": "patient.medical_summary",
+          "value": {
+            "kind": "text",
+            "value": "仍在检查，尚未确诊。"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_0"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_1",
+          "field": "treatment.estimated_cost",
+          "value": {
+            "kind": "money",
+            "value": {
+              "currency": "CNY",
+              "amount_minor": 1250000
+            }
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_nonexistent"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_2",
+          "field": "patient.relationship_to_applicant",
+          "value": {
+            "kind": "text",
+            "value": "母亲"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_2"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_3",
+          "field": "contact.city",
+          "value": {
+            "kind": "text",
+            "value": "示例城市"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_3"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        },
+        {
+          "fact_id": "fact_int07_4",
+          "field": "treatment.recorded_date",
+          "value": {
+            "kind": "date",
+            "value": "2026-10-20"
+          },
+          "source_type": "document",
+          "evidence_ids": [
+            "ev_int07_4"
+          ],
+          "verification_status": "pending",
+          "user_confirmed": true
+        }
+      ],
+      "validation_issue_ids": [
+        "issue_967a3b9b063847e099e09961d5f95ff1",
+        "issue_55e8b5a020904e90843debf81937900d"
+      ]
+    },
+    "generation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_48ad8726ebe64e71b57248690bb6c2b0",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_967a3b9b063847e099e09961d5f95ff1",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "事实引用了不存在的证据。",
+          "related_fact_ids": [
+            "fact_int07_1"
+          ]
+        },
+        {
+          "issue_id": "issue_55e8b5a020904e90843debf81937900d",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "引用文本未明确支持该事实；不得猜测或夸大。",
+          "related_fact_ids": [
+            "fact_int07_1"
+          ]
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "confirmation_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_905a7a1fa9ba4c52a28e02888aefd6ed",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_dcf6c7c8342f450086ded98d9217a1e1",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "事实引用了不存在的证据。",
+          "related_fact_ids": [
+            "fact_int07_1"
+          ]
+        },
+        {
+          "issue_id": "issue_cf47d26c60884cd4a5ae0a1743d3d20b",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "引用文本未明确支持该事实；不得猜测或夸大。",
+          "related_fact_ids": [
+            "fact_int07_1"
+          ]
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "export_validation": {
+      "schema_version": "1.0",
+      "validation_id": "validation_447c4fca68e841a38976c799352908e4",
+      "application_id": "app_int07_demo",
+      "application_revision": 2,
+      "issues": [
+        {
+          "issue_id": "issue_39edb193d848433a9b6492bb7886c020",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "事实引用了不存在的证据。",
+          "related_fact_ids": [
+            "fact_int07_1"
+          ]
+        },
+        {
+          "issue_id": "issue_5495f80dac07460892fd091a56623cf2",
+          "type": "unsupported",
+          "severity": "blocking",
+          "field": "treatment.estimated_cost",
+          "message": "引用文本未明确支持该事实；不得猜测或夸大。",
+          "related_fact_ids": [
+            "fact_int07_1"
+          ]
+        }
+      ],
+      "can_finalize": false,
+      "evaluated_at": "2026-10-21T05:17:25Z"
+    },
+    "expected_allowed": false
+  }
+]

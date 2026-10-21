@@ -23,7 +23,8 @@ def main():
     args.output.mkdir(parents=True, exist_ok=True)
     commands = [[sys.executable, "-B", "-m", "unittest", "contracts.tests.test_contracts",
                  "validation.tests.test_validation", "validation.tests.test_agent_adapter",
-                 "validation.tests.test_latest_agent", "validation.tests.test_demo_v1", "-v"]]
+                 "validation.tests.test_latest_agent", "validation.tests.test_demo_v1",
+                 "validation.tests.test_import_integrity", "-v"]]
     if args.with_backend:
         # B's API tests configure Mock globals at module-import time. Keep them
         # in their own process so collection order cannot leak a Real singleton.
