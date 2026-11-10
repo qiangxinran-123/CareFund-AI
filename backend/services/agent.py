@@ -13,7 +13,7 @@ from ..models import (
     Fact,
     TextValue,
     UploadedDocument,
-    ValidationIssue,
+    ValidationResult,
 )
 
 
@@ -71,7 +71,7 @@ class MockAgentService:
         return facts, questions
 
     def draft_sections(
-        self, application: Application, facts: list[Fact], issues: list[ValidationIssue]
+        self, application: Application, facts: list[Fact], validation: ValidationResult
     ) -> list[DraftSection]:
         summary_facts = [fact for fact in facts if fact.field == "patient.medical_summary"]
         content = (
@@ -148,18 +148,21 @@ class RealAgentService:
         )
 
     def draft_sections(
-        self, application: Application, facts: list[Fact], issues: list[ValidationIssue]
+        self, application: Application, facts: list[Fact], validation: ValidationResult
     ) -> list[DraftSection]:
         request = {
             "schema_version": "1.0",
             "application_id": application.application_id,
             "application_revision": application.revision,
             "candidate_facts": [fact.model_dump(mode="json") for fact in facts],
-            "validation_issue_ids": [issue.issue_id for issue in issues],
+            "validation_issue_ids": [issue.issue_id for issue in validation.issues],
         }
         service, agent_error = self._service(application.application_id)
         try:
-            result = service.draft(request)
+            result = service.draft(
+                request,
+                validation_result=validation.model_dump(mode="json"),
+            )
         except agent_error as exc:
             raise AgentIntegrationError(str(exc)) from exc
         return [

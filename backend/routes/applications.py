@@ -500,7 +500,7 @@ async def generate_draft(application_id: str, payload: DraftGenerationRequest) -
             raise ApiError(422, "VALIDATION_FAILED", "Current application is not ready for draft generation")
         application_snapshot = record.application.model_copy(deep=True)
         facts_snapshot = [item.model_copy(deep=True) for item in analysis.facts]
-        issues_snapshot = [item.model_copy(deep=True) for item in analysis.validation.issues]
+        validation_snapshot = analysis.validation.model_copy(deep=True)
         prior_draft_revision = 0 if record.draft is None else record.draft.draft_revision
 
     try:
@@ -508,7 +508,7 @@ async def generate_draft(application_id: str, payload: DraftGenerationRequest) -
             agent_service.draft_sections,
             application_snapshot,
             facts_snapshot,
-            issues_snapshot,
+            validation_snapshot,
         )
     except AgentIntegrationError as exc:
         raise ApiError(503, "AGENT_UNAVAILABLE", str(exc)) from exc

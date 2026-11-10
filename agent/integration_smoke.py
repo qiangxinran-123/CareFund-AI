@@ -133,7 +133,7 @@ def main():
         if not (peer_root / 'backend/services/agent.py').is_file():
             raise AgentError('Provide a Backend checkout using --backend-root')
         sys.path.insert(0, str(peer_root))
-        from backend.models import Application, Evidence, Fact, UploadedDocument, ValidationIssue
+        from backend.models import Application, Evidence, Fact, UploadedDocument, ValidationResult
         from backend.services.agent import RealAgentService
         from validation import load_policy, prepare_agent_draft_request, validate_agent_draft
         policy = load_policy('demo_v1')
@@ -217,7 +217,7 @@ def main():
         if not checked['can_finalize']:
             raise AgentError('Synthetic draft rejected by deterministic demo_v1 preflight')
         report['draft_validation'] = checked
-        full_issues = [ValidationIssue.model_validate(i) for i in checked['issues']]
+        full_validation = ValidationResult.model_validate(checked)
         record = dict(operation='draft', status='calling')
         report['cases'].append(record)
         report['operations_attempted'] += 1
@@ -228,8 +228,9 @@ def main():
             result = factory(app.application_id)[0].draft(full_request, validation_result=checked)
             sections_payload = result['candidate_sections']
         else:
-            # Match B's HTTP route: do not repair its severity mapping in this test.
-            sections = adapter.draft_sections(app, [Fact.model_validate(f) for f in draft['candidate_facts']], full_issues)
+            # Match B's HTTP route: preserve the full validation result so A can
+            # classify non-blocking issues and project only blocking IDs.
+            sections = adapter.draft_sections(app, [Fact.model_validate(f) for f in draft['candidate_facts']], full_validation)
             sections_payload = [s.model_dump(mode='json', exclude={'section_id'}) for s in sections]
         response = {k: draft[k] for k in ('schema_version', 'application_id', 'application_revision')}
         from .draft_policy import DRAFT_WARNING

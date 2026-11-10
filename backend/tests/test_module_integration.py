@@ -13,6 +13,8 @@ from backend.models import (
     PatientInfo,
     TextValue,
     UploadedDocument,
+    ValidationIssue,
+    ValidationResult,
 )
 from backend.services.agent import RealAgentService
 from backend.services.validation import RealValidationService
@@ -86,6 +88,7 @@ def test_backend_adapter_calls_real_agent_draft_boundary() -> None:
 
     def runner(operation: str, request: dict) -> dict:
         assert operation == "draft"
+        assert request["validation_issue_ids"] == []
         return {
             "schema_version": request["schema_version"],
             "application_id": request["application_id"],
@@ -96,7 +99,24 @@ def test_backend_adapter_calls_real_agent_draft_boundary() -> None:
 
     adapter = RealAgentService()
     adapter._service = lambda _application_id: (AgentService(runner), AgentError)
-    sections = adapter.draft_sections(application(), [fact], [])
+    validation = ValidationResult(
+        validation_id="validation_integration_info",
+        application_id=application().application_id,
+        application_revision=application().revision,
+        issues=[
+            ValidationIssue(
+                issue_id="issue_integration_info",
+                type="unsupported",
+                severity="info",
+                field=fact.field,
+                message="该信息来自用户陈述，尚未由材料独立核实。",
+                related_fact_ids=[fact.fact_id],
+            )
+        ],
+        can_finalize=True,
+        evaluated_at=NOW,
+    )
+    sections = adapter.draft_sections(application(), [fact], validation)
 
     assert len(sections) == 1
     assert sections[0].fact_ids == [fact.fact_id]

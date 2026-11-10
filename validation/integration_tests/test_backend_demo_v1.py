@@ -1,16 +1,13 @@
 """Use B/A's unmodified adapters; no model API, OCR engine or HTTP server."""
 
-from copy import deepcopy
-from unittest.mock import Mock
-
 import pytest
 
 from agent.agent_service import AgentError, AgentService
 from agent.draft_policy import DRAFT_WARNING, sections_for_facts
 from backend.models import Application, Draft, DraftConfirmationRequest, Evidence, ExportRequest, Fact, UploadedDocument
-from backend.services.agent import AgentIntegrationError, RealAgentService
+from backend.services.agent import RealAgentService
 from backend.services.validation import RealValidationService, ValidationIntegrationError
-from validation import DEMO_V1_POLICY_PATH, prepare_agent_draft_request
+from validation import DEMO_V1_POLICY_PATH
 from validation.tests.test_demo_v1 import actions, formal_draft, scenario
 
 
@@ -81,28 +78,29 @@ def test_original_backend_adapter_maps_invalid_calendar_date_to_safe_error(monke
         RealValidationService().validate(Application.model_validate(app), *models(request), [])
 
 
-def test_unmodified_backend_all_ids_mapping_is_reproduced_not_hidden(monkeypatch):
+def test_backend_pairs_full_validation_and_projects_nonblocking_issues(monkeypatch):
     monkeypatch.setenv("CAREFUND_VALIDATION_POLICY", str(DEMO_V1_POLICY_PATH))
     app, request = scenario("info")
     d_adapter = RealValidationService()
     application = Application.model_validate(app)
     report = d_adapter.validate(application, *models(request), [])
     assert report.can_finalize and report.issues
-    runner = Mock()
+    captured = {}
+
+    def runner(operation, value):
+        captured["operation"] = operation
+        captured["request"] = value
+        response = {key: value[key] for key in ("schema_version", "application_id", "application_revision")}
+        response.update(
+            candidate_sections=sections_for_facts(value["candidate_facts"]),
+            warnings=[DRAFT_WARNING],
+        )
+        return response
+
     a_adapter = RealAgentService()
     a_adapter._service = lambda app_id: (AgentService(runner), AgentError)
-    # B currently forwards all IDs. This expected error records the owner action.
-    with pytest.raises(AgentIntegrationError):
-        a_adapter.draft_sections(application, models(request)[2], report.issues)
-    runner.assert_not_called()
-    # The documented, explicit D policy mapping works with the same A service.
-    prepared, fresh = prepare_agent_draft_request(
-        request, policy=d_adapter._policy, application=app,
-        generation_request={"expected_revision": app["revision"]},
-    )
-    assert fresh["can_finalize"] is True
-    assert fresh["issues"] and not prepared["validation_issue_ids"]
-    result = {key: prepared[key] for key in ("schema_version", "application_id", "application_revision")}
-    result.update(candidate_sections=sections_for_facts(prepared["candidate_facts"]), warnings=[DRAFT_WARNING])
-    generated = AgentService(lambda op, value: deepcopy(result)).draft(prepared)
-    assert generated["candidate_sections"]
+    sections = a_adapter.draft_sections(application, models(request)[2], report)
+
+    assert captured["operation"] == "draft"
+    assert captured["request"]["validation_issue_ids"] == []
+    assert sections
