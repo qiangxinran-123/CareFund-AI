@@ -11,6 +11,7 @@ const application: Application = {
   revision: 3,
   status: 'collecting',
   patient_info: { display_name: '虚构称呼', age_group: null, medical_summary: null },
+  financial_info: { paid_cost: null, estimated_cost: null, funding_target: null },
   created_at: '2026-10-17T01:00:00Z',
   updated_at: '2026-10-17T01:00:00Z',
 }

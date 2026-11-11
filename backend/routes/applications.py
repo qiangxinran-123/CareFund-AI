@@ -329,6 +329,7 @@ async def create_application(payload: CreateApplicationRequest) -> ApplicationRe
         revision=1,
         status="collecting",
         patient_info=payload.patient_info,
+        financial_info=payload.financial_info,
         created_at=timestamp,
         updated_at=timestamp,
     )
@@ -356,10 +357,16 @@ async def update_application(application_id: str, payload: UpdateApplicationRequ
     with lock:
         record = get_record(application_id)
         require_revision(record, payload.expected_revision)
-        patch = payload.patient_info.model_dump(exclude_unset=True)
-        current = record.application.patient_info.model_dump()
-        current.update(patch)
-        record.application.patient_info = type(record.application.patient_info)(**current)
+        if payload.patient_info is not None:
+            patch = payload.patient_info.model_dump(exclude_unset=True)
+            current = record.application.patient_info.model_dump()
+            current.update(patch)
+            record.application.patient_info = type(record.application.patient_info)(**current)
+        if payload.financial_info is not None:
+            patch = payload.financial_info.model_dump(exclude_unset=True)
+            current = record.application.financial_info.model_dump()
+            current.update(patch)
+            record.application.financial_info = type(record.application.financial_info)(**current)
         record.application.revision += 1
         record.application.status = "collecting"
         record.application.updated_at = now()

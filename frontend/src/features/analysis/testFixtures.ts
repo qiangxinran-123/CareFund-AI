@@ -3,6 +3,7 @@ import type { AnalysisJob, AnalysisResult, Application, UploadedDocument } from 
 export const application: Application = {
   application_id: 'app_test_001', schema_version: '1.0', revision: 3, status: 'reviewing',
   patient_info: { display_name: '测试用户', age_group: 'adult', medical_summary: '测试自述' },
+  financial_info: { paid_cost: null, estimated_cost: null, funding_target: null },
   created_at: '2026-10-17T01:00:00Z', updated_at: '2026-10-17T02:00:00Z',
 }
 

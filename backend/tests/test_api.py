@@ -169,6 +169,99 @@ def test_stale_revision_has_contract_error_shape() -> None:
     assert response.json()["request_id"].startswith("req_")
 
 
+def test_financial_info_is_created_updated_and_restored() -> None:
+    created_response = client.post(
+        "/api/v1/applications",
+        json={
+            "patient_info": {
+                "display_name": "资金字段测试用户",
+                "age_group": None,
+                "medical_summary": None,
+            },
+            "financial_info": {
+                "paid_cost": {"currency": "CNY", "amount_minor": 120050},
+                "estimated_cost": {"currency": "CNY", "amount_minor": 300000},
+                "funding_target": {"currency": "CNY", "amount_minor": 250000},
+            },
+        },
+    )
+    assert created_response.status_code == 201
+    application = created_response.json()["application"]
+    application_id = application["application_id"]
+    assert application["financial_info"]["paid_cost"]["amount_minor"] == 120050
+
+    updated_response = client.patch(
+        f"/api/v1/applications/{application_id}",
+        json={
+            "expected_revision": 1,
+            "financial_info": {
+                "estimated_cost": {"currency": "CNY", "amount_minor": 360000},
+                "funding_target": None,
+            },
+        },
+    )
+    assert updated_response.status_code == 200
+    updated = updated_response.json()["application"]
+    assert updated["revision"] == 2
+    assert updated["financial_info"] == {
+        "paid_cost": {"currency": "CNY", "amount_minor": 120050},
+        "estimated_cost": {"currency": "CNY", "amount_minor": 360000},
+        "funding_target": None,
+    }
+
+    restored = client.get(f"/api/v1/applications/{application_id}")
+    assert restored.status_code == 200
+    assert restored.json()["application"]["financial_info"] == updated["financial_info"]
+
+
+def test_update_requires_patient_or_financial_changes() -> None:
+    created = create_application()
+    application_id = created["application"]["application_id"]
+    response = client.patch(
+        f"/api/v1/applications/{application_id}",
+        json={"expected_revision": 1},
+    )
+    assert response.status_code == 422
+
+
+def test_mock_analysis_carries_user_entered_costs_into_facts() -> None:
+    created_response = client.post(
+        "/api/v1/applications",
+        json={
+            "patient_info": {
+                "display_name": "资金分析测试用户",
+                "age_group": "adult",
+                "medical_summary": "用于资金分析的合成病情说明。",
+            },
+            "financial_info": {
+                "paid_cost": {"currency": "CNY", "amount_minor": 120050},
+                "estimated_cost": {"currency": "CNY", "amount_minor": 300000},
+                "funding_target": {"currency": "CNY", "amount_minor": 250000},
+            },
+        },
+    )
+    application_id = created_response.json()["application"]["application_id"]
+    job_response = client.post(
+        f"/api/v1/applications/{application_id}/analyze",
+        json={"expected_revision": 1, "idempotency_key": "analysis_financial_001"},
+    )
+    assert job_response.status_code == 202
+    completed = wait_for_job(application_id, job_response.json()["job_id"])
+    assert completed["status"] == "succeeded"
+
+    analysis = client.get(f"/api/v1/applications/{application_id}/analysis").json()
+    facts_by_field = {fact["field"]: fact for fact in analysis["facts"]}
+    assert facts_by_field["treatment.paid_cost"]["value"]["value"] == {
+        "currency": "CNY",
+        "amount_minor": 120050,
+    }
+    assert facts_by_field["treatment.estimated_cost"]["value"]["value"] == {
+        "currency": "CNY",
+        "amount_minor": 300000,
+    }
+    assert "funding.target" not in facts_by_field
+
+
 def test_missing_summary_blocks_draft() -> None:
     created = create_application(medical_summary=None)
     application_id = created["application"]["application_id"]

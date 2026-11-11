@@ -8,6 +8,7 @@ from backend.models import (
     Application,
     Evidence,
     Fact,
+    FinancialInfo,
     Money,
     MoneyValue,
     PatientInfo,
@@ -32,6 +33,11 @@ def application() -> Application:
             display_name="合成测试用户",
             age_group="adult",
             medical_summary="用户自述正在接受示例性治疗。",
+        ),
+        financial_info=FinancialInfo(
+            paid_cost=Money(currency="CNY", amount_minor=120_050),
+            estimated_cost=Money(currency="CNY", amount_minor=300_000),
+            funding_target=Money(currency="CNY", amount_minor=250_000),
         ),
         created_at=NOW,
         updated_at=NOW,
@@ -70,6 +76,9 @@ def test_backend_adapter_calls_real_agent_service_contract() -> None:
 
     assert captured["operation"] == "extract"
     assert captured["request"]["user_input"]["description"] == existing.value.value
+    assert captured["request"]["user_input"]["treatment.paid_cost"] == "CNY 1200.50"
+    assert captured["request"]["user_input"]["treatment.estimated_cost"] == "CNY 3000.00"
+    assert captured["request"]["user_input"]["funding_target"] == "CNY 2500.00"
     assert facts == [existing]
     assert len(questions) <= 3
     assert all(question.required is False for question in questions)

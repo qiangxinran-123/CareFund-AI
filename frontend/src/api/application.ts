@@ -19,6 +19,7 @@ function assertApplicationResponse(value: ApplicationResponse | undefined): Appl
     || typeof value.application.application_id !== 'string'
     || !Number.isInteger(value.application.revision)
     || !value.application.patient_info
+    || !value.application.financial_info
     || !Array.isArray(value.documents)
     || !Array.isArray(value.evidence)
   ) {
