@@ -56,6 +56,21 @@ it('prevents duplicate confirmation while the request is in flight', async () =>
   await screen.findByRole('button', { name: '草稿已确认' })
 })
 
+it('visualizes draft generation and the following user-confirmation gate', async () => {
+  let resolveGenerate!: (value: ReturnType<typeof draft>) => void
+  const pending = new Promise<ReturnType<typeof draft>>((resolve) => { resolveGenerate = resolve })
+  const service = api({ generate: vi.fn().mockReturnValue(pending) })
+  render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} />)
+
+  fireEvent.click(await screen.findByRole('button', { name: '重新生成申请初稿' }))
+  expect(screen.getByTestId('ai-process-draft-generation').dataset.processStatus).toBe('active')
+  expect(screen.getByText(/AI 只能整理已确认事实/)).toBeTruthy()
+  resolveGenerate(draft())
+  await waitFor(() => expect(screen.getByTestId('ai-process-draft-generation').dataset.processStatus).toBe('complete'))
+  expect(screen.getByTestId('ai-process-draft-confirmation').dataset.processStatus).toBe('waiting_user')
+  expect(screen.getByText(/请逐节核对内容与来源/)).toBeTruthy()
+})
+
 it('keeps the draft visible and offers retry after confirmation failure', async () => {
   const service = api({ confirm: vi.fn().mockRejectedValue(new ApiError('服务端拒绝确认', 'http', 422)) })
   render(<DraftPanel analysis={finalizableAnalysis()} api={service} application={application} />)
@@ -70,7 +85,7 @@ it('keeps the draft visible and offers retry after confirmation failure', async 
 
 it('shows blocking issues and prevents generating, confirming, and exporting', async () => {
   render(<DraftPanel analysis={result()} api={api()} application={application} />)
-  await screen.findByText(/1 项需要先处理的信息/)
+  expect((await screen.findAllByText(/1 项需要先处理的信息/)).length).toBeGreaterThan(0)
   expect((screen.getByRole('button', { name: '重新生成申请初稿' }) as HTMLButtonElement).disabled).toBe(true)
   expect((screen.getByRole('button', { name: '我已核对，确认草稿' }) as HTMLButtonElement).disabled).toBe(true)
   expect((screen.getByRole('button', { name: '导出申请资料包' }) as HTMLButtonElement).disabled).toBe(true)
