@@ -1,4 +1,4 @@
-"""Regression guard against broken conflict resolution in the D package."""
+"""Regression guards for package integrity and named Policy loading."""
 
 import ast
 from contextlib import redirect_stdout
@@ -30,7 +30,7 @@ class ImportIntegrityTests(unittest.TestCase):
         tree = ast.parse((ROOT / "rules/policy.py").read_text(encoding="utf-8-sig"))
         cls = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == "ValidationPolicy")
         self.assertEqual(1, sum(isinstance(node, ast.FunctionDef) and node.name == "__post_init__" for node in cls.body))
-        data = json.loads((ROOT / "policies/demo_v1.json").read_text(encoding="utf-8-sig"))
+        data = json.loads((ROOT / "policies/carefund_v1.json").read_text(encoding="utf-8-sig"))
         from validation import ValidationPolicy
         for key in ("recommended_fields", "recommended_document_fields"):
             with self.subTest(key=key):
@@ -38,14 +38,14 @@ class ImportIntegrityTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     ValidationPolicy.from_dict(invalid)
 
-    def test_cli_demo_v1_option_is_registered_once_and_executes_named_policy(self):
+    def test_cli_carefund_v1_option_executes_frozen_policy(self):
         output = io.StringIO()
         with redirect_stdout(output):
-            code = main([str(ROOT / "examples/request.demo.json"), "--policy", "demo_v1"])
+            code = main([str(ROOT / "examples/request.demo.json"), "--policy", "carefund_v1"])
         report = json.loads(output.getvalue())
         self.assertEqual(0, code)
         self.assertTrue(report["can_finalize"])
-        self.assertEqual("demo_v1", load_policy("demo_v1").policy_name)
+        self.assertEqual("carefund_v1", load_policy("carefund_v1").policy_name)
 
     def test_accidental_nested_validation_package_is_absent(self):
         self.assertFalse((ROOT / "validation").exists(), "Remove duplicate validation/validation after preserving current outer files.")

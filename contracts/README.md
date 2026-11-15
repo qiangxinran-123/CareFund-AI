@@ -1,6 +1,6 @@
 # CareFund-AI 统一接口契约 V1
 
-本目录定义 CareFund-AI 四个技术模块之间的稳定数据边界。它只描述契约，不实现 FastAPI 路由、React 页面、OCR、事实核查算法或 Dify 工作流。
+本目录定义 CareFund-AI 各运行组件之间的稳定数据边界。它只描述契约，不实现 FastAPI 路由、React 页面、OCR、事实核查算法或 Dify 工作流。
 
 ## 模块职责与调用方向
 
@@ -26,7 +26,7 @@ Frontend ──REST /api/v1──> Backend
 - `schemas/validation.schema.json`：校验请求/结果、问题、异步分析任务和聚合分析结果。
 - `schemas/draft.schema.json`：草稿、章节、确认请求及 V1 JSON 导出。
 - `openapi.yaml`：OpenAPI 3.1 公共 Backend REST API。文件采用 JSON 表示；JSON 是合法的 YAML 1.2，便于仅用 Python 标准库解析。
-- `examples/`：一致的虚构 Mock JSON，可供四个模块独立开发。
+- `examples/`：一致的虚构 Mock JSON，可供各组件独立开发和测试。
 - `tests/test_contracts.py`：Schema、OpenAPI、示例与跨对象业务前置条件测试。
 
 OpenAPI 通过外部 `$ref` 直接复用上述 Schema。禁止复制字段后分别维护两套模型。
@@ -82,7 +82,7 @@ Draft 状态为 `generated`、`confirmed`、`stale`。用户输入或附件集�
 
 ## Mock JSON 的使用
 
-- Frontend：用四份示例制作 API Mock；字段和枚举必须以 Schema 为准。
+- Frontend：使用契约示例制作 API Mock；字段和枚举必须以 Schema 为准。
 - Backend：以 OpenAPI 实现公开路由，并在服务边界校验请求/响应；通过适配器转换 Agent/Dify 输入输出。
 - Agent：以 `AgentExtractRequest/Response`、`AgentDraftRequest/Response` 为规范化边界，仅输出候选内容。
 - Validation：以 `ValidationRequest/Result` 为边界，并实现 ID 引用、金额/日期、来源语义和确定性 `can_finalize` 规则。

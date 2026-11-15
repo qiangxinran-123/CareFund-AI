@@ -1,4 +1,4 @@
-"""A correction creates a new candidate; it cannot silently replace confirmed history."""
+"""A user correction creates a new candidate; it cannot replace confirmed history."""
 import copy
 import unittest
 from unittest.mock import Mock

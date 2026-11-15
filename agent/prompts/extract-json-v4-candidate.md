@@ -130,7 +130,7 @@ extracted_documents 为空，只能说明“本次输入未附材料”，不得
 
 
 
-开发测试版字段约定（新增字段待团队确认）：
+CareFund V1 正式抽取字段约定：
 
 已有 candidate_facts 必须原样保留，包括原有 field；以下规则只用于新事实和新追问。
 

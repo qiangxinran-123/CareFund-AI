@@ -1,7 +1,5 @@
 """Extraction scope regressions, including the saved DeepSeek field escape."""
 import copy
-import json
-from pathlib import Path
 import unittest
 from unittest.mock import Mock
 
@@ -26,14 +24,16 @@ class ExtractionScopeTests(unittest.TestCase):
     def service(self):
         return AgentService(lambda operation, request: copy.deepcopy(self.response))
 
-    def test_saved_deepseek_fundraising_fields_are_rejected(self):
-        agent = Path(__file__).resolve().parents[1]
-        suite = json.loads((agent / 'verification/batch/synthetic-cases.json').read_bytes())
-        case = next(c for c in suite['cases'] if c['case_id'] == 'extract_0042')
-        response = json.loads((agent / 'verification/deepseek-batch-20261016/'
-                               'extract_0042.response.json').read_bytes())
+    def test_model_fundraising_fields_are_rejected(self):
+        case = copy.deepcopy(self.request)
+        response = copy.deepcopy(self.response)
+        response['candidate_facts'] = [self.fact(
+            'fundraising.target_amount',
+            'fact_out_of_scope',
+            value={'kind': 'money', 'value': {'amount_minor': 5000000, 'currency': 'CNY'}},
+        )]
         with self.assertRaisesRegex(AgentError, 'New candidate field is outside the extraction scope'):
-            AgentService(lambda operation, request: response).extract(case['request'])
+            AgentService(lambda operation, request: response).extract(case)
 
     def test_mixed_response_is_rejected_whole_without_retry_or_mutation(self):
         self.response['candidate_facts'] = [self.fact(), self.fact('fundraising.target_amount', 'fact_other')]

@@ -1,4 +1,4 @@
-"""Business completeness rules must be explicitly chosen by the team."""
+"""Validated configuration for CareFund business completeness rules."""
 
 from dataclasses import dataclass, field
 import re

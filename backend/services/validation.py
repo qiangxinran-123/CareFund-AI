@@ -1,4 +1,4 @@
-"""Adapter between Backend models and D's deterministic validation module."""
+"""Adapter between Backend models and deterministic Validation functions."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ from ..models import (
 
 
 class ValidationIntegrationError(RuntimeError):
-    """Safe backend-facing error for malformed validation integration calls."""
+    """Safe backend-facing error for rejected Validation service calls."""
 
 
 class MockValidationService:
@@ -104,7 +104,7 @@ class RealValidationService:
             policy_path = str(
                 Path(__file__).resolve().parents[1]
                 / "config"
-                / "validation-policy.integration.json"
+                / "validation-policy.v1.json"
             )
         try:
             from validation import ValidationPolicy

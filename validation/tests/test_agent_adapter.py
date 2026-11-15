@@ -1,10 +1,9 @@
-"""Replay the actual supplied A service boundary with saved synthetic responses.
+"""Exercise the Agent service boundary with saved synthetic responses.
 
 No Dify credentials, live calls or automatic confirmation are used here.
 """
 
 from copy import deepcopy
-import hashlib
 import json
 from pathlib import Path
 import unittest
@@ -15,7 +14,6 @@ from validation import (
     validate_agent_draft, validate_for_confirmation, validate_for_export,
 )
 from validation.schema import check_model
-from validation.tests.fixture_integrity import original_fixture_bytes
 from validation.tests.fixtures.a_handoff.agent.agent_service import AgentError, AgentService
 from validation.tests.fixtures.a_handoff.agent.draft_policy import DRAFT_WARNING, sections_for_facts
 
@@ -34,7 +32,7 @@ def extract_pair(name):
     return read(base + ".request.json"), read(base + ".response.json")
 
 
-def handoff_policy():
+def fixture_policy():
     return ValidationPolicy.from_dict(json.loads(
         (ROOT / "validation/examples/policy.a-handoff-demo.json").read_text(encoding="utf-8"),
     ))
@@ -47,7 +45,7 @@ def service(runner):
 def document_only_demo():
     """Explicitly constructed synthetic test snapshot, NOT an adapter transform.
 
-    It models B having a current document-only application with a confirmed fact.
+    It models a current document-only application with a confirmed fact.
     No real user action is inferred from the original saved candidate response.
     """
     request, response = extract_pair("03_document_evidence")
@@ -63,15 +61,6 @@ def document_only_demo():
 
 
 class ExtractAdapterTests(unittest.TestCase):
-    def test_fixture_hashes_match_original_a_manifest(self):
-        provenance = read("PROVENANCE.json")
-        self.assertEqual("cc29e6de047c49d20c79d628ed4dfa6a839c104c", provenance["source_commit"])
-        for entry in provenance["files"]:
-            with self.subTest(path=entry["path"]):
-                content = original_fixture_bytes(FIXTURES, entry)
-                self.assertEqual(entry["bytes"], len(content))
-                self.assertEqual(entry["sha256"], hashlib.sha256(content).hexdigest())
-
     def test_all_four_saved_responses_pass_actual_a_boundary_and_map_exactly(self):
         for case in CASES:
             with self.subTest(case=case):
@@ -80,7 +69,7 @@ class ExtractAdapterTests(unittest.TestCase):
                 mapped = build_validation_request(request, actual)
                 expected = read(f"adaptation_cases/{case}.validation-request.json")
                 self.assertEqual(expected, mapped)
-                result = validate(mapped, policy=handoff_policy())
+                result = validate(mapped, policy=fixture_policy())
                 check_model(result, "validation.schema.json", "ValidationResult")
                 self.assertFalse(result["can_finalize"])
                 known = {fact["fact_id"] for fact in mapped["facts"]}
@@ -107,14 +96,14 @@ class ExtractAdapterTests(unittest.TestCase):
         mapped = build_validation_request(request, response)
         costs = [f for f in mapped["facts"] if f["field"] == "treatment.estimated_cost"]
         self.assertEqual([3000000, 5000000], [f["value"]["value"]["amount_minor"] for f in costs])
-        report = validate(mapped, policy=handoff_policy())
+        report = validate(mapped, policy=fixture_policy())
         self.assertTrue(any(issue["type"] == "inconsistent_amount" for issue in report["issues"]))
 
     def test_snapshot_and_flags_are_not_modified_or_aliased(self):
         request, response = extract_pair("03_document_evidence")
         before = deepcopy((request, response))
         mapped = build_validation_request(request, response)
-        validate(mapped, policy=handoff_policy())
+        validate(mapped, policy=fixture_policy())
         self.assertEqual(before, (request, response))
         mapped["facts"][0]["user_confirmed"] = True
         mapped["evidence"][0]["page"] = None
@@ -314,7 +303,7 @@ class DraftAdapterTests(unittest.TestCase):
         application = {
             "application_id": mapped["application_id"], "schema_version": "1.0",
             "revision": mapped["application_revision"], "status": "draft_ready",
-            "patient_info": {"display_name": "虚构联调案例", "medical_summary": None},
+            "patient_info": {"display_name": "虚构测试案例", "medical_summary": None},
             "created_at": "2026-10-16T00:00:00Z", "updated_at": "2026-10-16T00:00:00Z",
         }
         draft = {

@@ -12,7 +12,7 @@ from . import ContractValidationError, load_policy, validate, validate_for_expor
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Check CareFund-AI facts locally.")
     parser.add_argument("request", type=Path, help="ValidationRequest JSON file")
-    parser.add_argument("--policy", help="Explicit policy JSON path or demo_v1; no implicit fallback")
+    parser.add_argument("--policy", help="Explicit policy JSON path or carefund_v1; no implicit fallback")
     parser.add_argument("--application", type=Path)
     parser.add_argument("--draft", type=Path)
     parser.add_argument("--export-request", type=Path)

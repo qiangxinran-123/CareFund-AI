@@ -1,1 +1,1 @@
-"""Optional integration checks requiring backend/test dependencies."""
+"""Cross-component checks requiring Backend test dependencies."""

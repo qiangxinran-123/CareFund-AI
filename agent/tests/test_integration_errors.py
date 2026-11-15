@@ -1,4 +1,4 @@
-"""Stable, redacted failure categories for B background jobs."""
+"""Stable, redacted Agent failure categories for Backend jobs."""
 import io
 import json
 import unittest

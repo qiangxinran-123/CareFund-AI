@@ -1,7 +1,7 @@
-"""Local guards aligned to the A 755a0c2 handoff, not new shared schema.
+"""Local guards aligned with the current Agent boundary, not a new shared schema.
 
-Keep the bounded instruction patterns aligned with A's draft_input_policy.py.
-This never rewrites source facts, calls A, or claims complete semantic coverage.
+Keep the bounded instruction patterns aligned with Agent draft_input_policy.py.
+This never rewrites source facts, calls the model, or claims complete semantic coverage.
 """
 
 import re

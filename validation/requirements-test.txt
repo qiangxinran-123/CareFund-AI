@@ -1,0 +1,7 @@
+# Cross-component and API test dependencies; not required by the Validation runtime.
+-r requirements.txt
+pytest>=8,<9
+fastapi>=0.115,<1
+httpx>=0.27,<1
+python-multipart>=0.0.9,<1
+pymupdf>=1.24,<2

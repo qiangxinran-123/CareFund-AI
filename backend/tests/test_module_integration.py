@@ -133,7 +133,7 @@ def test_backend_adapter_calls_real_agent_draft_boundary() -> None:
 
 
 def test_backend_adapter_calls_real_validation_module(monkeypatch) -> None:
-    policy_path = Path("backend/config/validation-policy.integration.json").resolve()
+    policy_path = Path("backend/config/validation-policy.v1.json").resolve()
     monkeypatch.setenv("CAREFUND_VALIDATION_POLICY", str(policy_path))
     app = application()
     document = UploadedDocument(
@@ -183,7 +183,7 @@ def test_backend_adapter_calls_real_validation_module(monkeypatch) -> None:
     assert all(issue.severity != "blocking" for issue in result.issues)
 
 
-def test_real_validation_uses_backend_integration_policy_by_default(monkeypatch) -> None:
+def test_real_validation_uses_frozen_policy_by_default(monkeypatch) -> None:
     monkeypatch.delenv("CAREFUND_VALIDATION_POLICY", raising=False)
     service = RealValidationService()
     assert service._policy is not None

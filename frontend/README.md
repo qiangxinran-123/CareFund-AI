@@ -19,7 +19,7 @@ npm run build
 
 ## 配置与目录
 
-复制 `.env.example` 为 `.env.local`，按需设置公开的 `VITE_API_BASE_URL`。本地真实联调使用 `/api/v1`，与 `contracts/openapi.yaml` 一致；Vite 会将 `/api` 转发到 `http://127.0.0.1:8000`，因此需要先启动后端。若改用后端完整地址，后端还需要提供相应的 CORS 配置；密钥和服务端 Token 不得放在 `VITE_` 环境变量中。
+复制 `.env.example` 为 `.env.local`，按需设置公开的 `VITE_API_BASE_URL`。本地真实模式使用 `/api/v1`，与 `contracts/openapi.yaml` 一致；Vite 会将 `/api` 转发到 `http://127.0.0.1:8000`，因此需要先启动后端。若改用后端完整地址，后端还需要提供相应的 CORS 配置；密钥和服务端 Token 不得放在 `VITE_` 环境变量中。
 
 可在 `.env.local` 设置 `VITE_USE_MOCK_API=true` 使用 Mock，或设置为 `false` 使用真实 HTTP API。页面会明确显示 Mock 标识；真实请求失败时不会自动回退为 Mock 成功结果。Mock 仅保存在当前 JavaScript 运行环境中，不代表真实后端持久化。浏览器存储只记录不透明的 `application_id`，不保存病情自述。
 

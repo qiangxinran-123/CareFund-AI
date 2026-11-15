@@ -8,7 +8,7 @@ interface Props {
 
 const fields = [
   { key: 'paidCost', label: '已支付医疗费用（选填）', hint: '填写截至目前已经支付的医疗相关费用。' },
-  { key: 'estimatedCost', label: '预计后续治疗费用（选填）', hint: '如有医院预估或明确依据，可填写预计还需支付的费用。' },
+  { key: 'estimatedCost', label: '预计后续治疗费用（生成草稿前必填）', hint: '需要填写预计还需支付的费用，并上传能够明确支持该金额的材料。' },
   { key: 'fundingTarget', label: '筹款目标（选填）', hint: '请按实际需要自行填写，系统不会根据其他金额自动推算。' },
 ] as const
 

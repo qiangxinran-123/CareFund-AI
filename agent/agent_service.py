@@ -137,8 +137,8 @@ class AgentService:
     def draft(self, request, *, validation_result=None):
         self.last_draft_validation_result = None
         self.last_draft_gate_report = None
-        # Freeze both snapshots before the synchronous model call. B still owns
-        # the transaction checking whether the stored revision is current.
+        # Freeze both snapshots before the synchronous model call. The backend
+        # still owns the transaction that checks the current stored revision.
         request, validation_result = copy.deepcopy(request), copy.deepcopy(validation_result)
         eligible = self.validate_draft_request(request, validation_result=validation_result)
         model_request, gate_report = prepare_draft_gate(request, validation_result, self.validate_validation_result)

@@ -1,4 +1,4 @@
-"""Adapter between Backend models and A's AgentService interface."""
+"""Adapter between Backend models and the AgentService interface."""
 
 from __future__ import annotations
 
@@ -109,7 +109,7 @@ class MockAgentService:
 
 
 class RealAgentService:
-    """Calls A's checked AgentService and converts its contract dictionaries."""
+    """Call the checked AgentService and convert its contract dictionaries."""
 
     @staticmethod
     def _service(application_id: str):

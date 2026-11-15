@@ -58,7 +58,7 @@ required：布尔值。
 
 extracted_documents 为空，只能说明“本次输入未附材料”，不得据此断言用户没有材料、无法提供材料，或医院尚未出具材料。
 
-开发测试版字段约定（新增字段待团队确认）：
+CareFund V1 正式抽取字段约定：
 已有 candidate_facts 必须原样保留，包括原有 field；以下规则只用于新事实和新追问。
 同一含义必须使用同一字段名，禁止自行创造别名：
 - 与申请人关系：patient.relationship_to_applicant（暂定）

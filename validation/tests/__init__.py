@@ -1,1 +1,1 @@
-"""Independent tests for the D module."""
+"""Independent tests for deterministic Validation behavior."""

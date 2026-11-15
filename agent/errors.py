@@ -1,4 +1,4 @@
-"""Safe in-process error types for Backend integration; no wire-schema changes."""
+"""Safe in-process Agent errors that do not expose transport details."""
 
 
 class AgentError(ValueError):

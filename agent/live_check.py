@@ -40,7 +40,7 @@ def credentials(gui, *, operation='extract', case_count=4):
     from tkinter import ttk, messagebox
     window = tk.Tk()
     label = '抽取' if operation == 'extract' else '草稿'
-    window.title('CareFund - 本地 Dify ' + label + '联调')
+    window.title('CareFund - 本地 Dify ' + label + '连接测试')
     window.resizable(False, False)
     panel = ttk.Frame(window, padding=20)
     panel.grid()
@@ -67,7 +67,7 @@ def credentials(gui, *, operation='extract', case_count=4):
         key_var.set('')
         window.destroy()
 
-    ttk.Button(panel, text='开始真实联调', command=submit).grid(row=3, columnspan=2, pady=(16, 0))
+    ttk.Button(panel, text='开始连接测试', command=submit).grid(row=3, columnspan=2, pady=(16, 0))
     window.bind('<Return>', lambda event: submit())
     window.after(100, entry.focus_force)
     window.mainloop()
