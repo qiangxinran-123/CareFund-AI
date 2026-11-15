@@ -6,6 +6,7 @@ import type { AnalysisJob, AnalysisResult, Answer, Application, UploadedDocument
 import type { AnalysisPhase, AnalysisStepState } from '../workflow/workflowStatus'
 import { FactList } from './FactList'
 import { FollowUpQuestions } from './FollowUpQuestions'
+import { AnalysisProcessView } from './AnalysisProcessView'
 import { ValidationIssueList } from './ValidationIssueList'
 
 interface Props {
@@ -300,6 +301,8 @@ export function AnalysisPanel({
               </button>
             </div>
           </div>
+
+          <AnalysisProcessView documents={documents} phase={phase} result={result} />
 
           {result && (phase === 'succeeded' || phase === 'submitting') && (
             <div>

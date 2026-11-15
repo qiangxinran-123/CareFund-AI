@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { draftApi as defaultApi, isMockMode as defaultMockMode } from '../../api'
 import type { DraftApi } from '../../api/draft'
 import { ApiError } from '../../api/client'
+import { AiProcessTimeline, type AiProcessStep } from '../../components/ai/AiProcessTimeline'
 import type { AnalysisResult, Application, Draft, ExportResponse, UploadedDocument } from '../../types/contracts'
 import type { DraftPhase, DraftStepState } from '../workflow/workflowStatus'
 import { DraftConfirmation } from './DraftConfirmation'
@@ -190,6 +191,36 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
         : !canFinalize ? '当前仍有需要先处理的信息，暂不能导出。'
           : missingFacts.length > 0 ? '草稿有暂时不可用的关联信息，暂不能导出。'
             : null
+  const draftProcessSteps: AiProcessStep[] = [
+    {
+      id: 'draft-generation',
+      title: phase === 'generating' ? '正在生成草稿' : '生成事实约束草稿',
+      status: phase === 'generating' ? 'active' : draft && !stale ? 'complete' : generateBlocked ? 'blocked' : 'pending',
+      detail: phase === 'generating'
+        ? 'AI 只能整理已确认事实，不得补写材料中不存在的诊断、金额或经历。'
+        : draft && !stale
+          ? `已生成草稿版本 ${draft.draft_revision}，每个章节保留事实引用。`
+          : generateBlocked ?? '正式 Policy 通过后才会向模型发送已确认事实。',
+    },
+    {
+      id: 'draft-confirmation',
+      title: '等待用户确认',
+      status: phase === 'confirming' ? 'active' : draft?.status === 'confirmed' && !stale ? 'complete' : draft && !stale ? 'waiting_user' : 'pending',
+      detail: phase === 'confirming'
+        ? '正在使用当前申请快照重新校验草稿。'
+        : draft?.status === 'confirmed' && !stale
+          ? '用户确认已保存，确认时间和申请版本已记录。'
+          : draft && !stale ? '请逐节核对内容与来源，再主动勾选确认。' : '草稿生成后才进入人工确认。',
+    },
+    {
+      id: 'draft-export',
+      title: '生成可下载资料包',
+      status: phase === 'exporting' ? 'active' : downloadUrl ? 'complete' : exportBlocked && draft?.status === 'confirmed' ? 'blocked' : 'pending',
+      detail: phase === 'exporting'
+        ? '正在执行导出前最终 Policy 校验并生成 JSON 资料包。'
+        : downloadUrl ? '资料包已生成，可从当前页面下载。' : exportBlocked ?? '草稿确认后可执行最终校验和导出。',
+    },
+  ]
 
   return (
     <section aria-labelledby="draft-title" className="mt-8 rounded-2xl border border-blue-100 bg-white p-5 shadow-sm sm:p-8">
@@ -225,6 +256,12 @@ export function DraftPanel({ analysis, api = defaultApi, application, documents 
             {notice && <p className="text-sm text-emerald-800" role="status">{notice}</p>}
             {error && <p className="text-sm text-red-700" role="alert">{error}</p>}
           </div>
+
+          <AiProcessTimeline
+            caption="模型只负责整理已确认事实；确认和导出仍由用户操作与正式 Policy 共同控制。"
+            steps={draftProcessSteps}
+            title="草稿生成与人工确认过程"
+          />
 
           {draft && (
             <>

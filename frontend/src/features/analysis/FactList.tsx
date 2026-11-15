@@ -3,16 +3,22 @@ import { factValueText, fieldLabel } from './analysisDisplay'
 import { ValidationIssueCard } from './ValidationIssueList'
 
 const statusCopy = {
-  pending: { label: '待核对', detail: '这项信息还需要您确认。', style: 'bg-amber-100 text-amber-900' },
-  supported: { label: '有材料支持', detail: '当前材料中有相关内容支持这项信息，不代表材料真实性已认证。', style: 'bg-emerald-100 text-emerald-900' },
-  unsupported: { label: '暂无材料支持', detail: '暂未找到支持这项信息的材料，不代表信息有误。', style: 'bg-slate-200 text-slate-800' },
-  conflicting: { label: '信息有出入', detail: '不同来源的信息有出入，请核对。', style: 'bg-red-100 text-red-900' },
+  pending: { label: 'pending · 待核对', detail: '这项信息还需要您确认。', style: 'bg-amber-100 text-amber-900' },
+  supported: { label: 'supported · 有材料支持', detail: '当前材料中有相关内容支持这项信息，不代表材料真实性已认证。', style: 'bg-emerald-100 text-emerald-900' },
+  unsupported: { label: 'unsupported · 暂无材料支持', detail: '暂未找到支持这项信息的材料，不代表信息有误。', style: 'bg-slate-200 text-slate-800' },
+  conflicting: { label: 'conflicting · 信息有出入', detail: '不同来源的信息有出入，请核对。', style: 'bg-red-100 text-red-900' },
 } as const
 
 const sourceLabels = {
-  user_input: '用户自述',
-  document: '材料内容',
+  user_input: '用户输入',
+  document: '上传材料',
   user_correction: '用户补充说明',
+} as const
+
+const extractionLabels = {
+  ocr: 'OCR 识别',
+  manual: '人工录入',
+  structured_import: 'PDF 文本提取',
 } as const
 
 interface Props {
@@ -41,7 +47,11 @@ export function FactList({ documents, evidence, facts, issues = [], onAnswerQues
       <li className="min-w-0 rounded-xl border border-slate-200 bg-slate-50/60 p-4 sm:p-5" data-testid={`fact-${fact.fact_id}`} key={fact.fact_id}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <p className="break-words text-xs leading-5 text-slate-500">{fieldLabel(fact.field)} · 来源：{sourceLabels[fact.source_type]}</p>
+            <p className="break-words text-xs leading-5 text-slate-500">{fieldLabel(fact.field)}</p>
+            <div className="mt-1 flex flex-wrap gap-2 text-xs">
+              <span className="rounded-full bg-blue-100 px-2.5 py-1 font-medium text-blue-900">来源：{sourceLabels[fact.source_type]}</span>
+              <span className={`rounded-full px-2.5 py-1 font-medium ${fact.user_confirmed ? 'bg-emerald-100 text-emerald-900' : 'bg-amber-100 text-amber-900'}`}>{fact.user_confirmed ? '用户已确认' : '等待用户确认'}</span>
+            </div>
             <p className="mt-2 break-words whitespace-pre-wrap text-base font-medium leading-7 text-slate-900">{factValueText(fact.value)}</p>
           </div>
           <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium leading-5 ${status.style}`}>{status.label}</span>
@@ -64,12 +74,18 @@ export function FactList({ documents, evidence, facts, issues = [], onAnswerQues
                 return (
                   <li className="rounded-lg bg-white p-3 text-xs leading-5 text-slate-600" key={evidenceId}>
                     <p className="break-words font-medium text-slate-800">{filename}{item.page === null ? '' : ` · 第 ${item.page} 页`}</p>
-                    <p className="mt-1 break-words">相关内容：{item.text_excerpt}</p>
+                    <p className="mt-1 text-slate-500">提取方式：{extractionLabels[item.extraction_method]}</p>
+                    <blockquote className="mt-2 break-words border-l-2 border-blue-300 pl-3 text-slate-700"><span className="font-medium">原始 OCR/文本片段：</span>{item.text_excerpt}</blockquote>
                   </li>
                 )
               })}
             </ul>
           </div>
+        )}
+        {fact.evidence_ids.length === 0 && (
+          <p className="mt-4 border-t border-slate-200 pt-4 text-xs leading-5 text-slate-600">
+            {fact.source_type === 'document' ? '该材料事实没有可展示的 Evidence 引用，系统会将其作为需要处理的问题。' : '该事实来自用户输入，没有关联材料片段；是否允许继续由正式 Policy 决定。'}
+          </p>
         )}
       </li>
     )
