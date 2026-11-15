@@ -9,9 +9,10 @@ import { FinancialInfoStep } from './FinancialInfoStep'
 import { MedicalInfoStep } from './MedicalInfoStep'
 import { StepIndicator } from './StepIndicator'
 import {
-  fromPatientInfo,
+  fromApplicationInfo,
   initialFormValues,
   toPatientInfo,
+  toFinancialInfo,
   validateStep,
   type ApplicationFormValues,
   type FormErrors,
@@ -30,9 +31,12 @@ interface Props {
 function hasUnsavedChanges(values: ApplicationFormValues, savedApplication: Application | null): boolean {
   const current = toPatientInfo(values)
   const saved = savedApplication?.patient_info ?? toPatientInfo(initialFormValues)
+  const currentFinancial = toFinancialInfo(values)
+  const savedFinancial = savedApplication?.financial_info ?? toFinancialInfo(initialFormValues)
   return current.display_name !== saved.display_name
     || current.age_group !== saved.age_group
     || current.medical_summary !== saved.medical_summary
+    || JSON.stringify(currentFinancial) !== JSON.stringify(savedFinancial)
 }
 
 function describeError(error: unknown): string {
@@ -90,7 +94,7 @@ export function ApplicationForm({
         if (!active) return
         setSavedApplication(response.application)
         onApplicationChange?.(response.application)
-        setValues(fromPatientInfo(response.application.patient_info))
+        setValues(fromApplicationInfo(response.application.patient_info, response.application.financial_info))
         setMessage({ kind: 'success', text: `已恢复上次保存的申请信息（版本 ${response.application.revision}）。` })
       })
       .catch((error: unknown) => {
@@ -144,10 +148,10 @@ export function ApplicationForm({
       setMessage({ kind: 'info', text: '当前内容已保存，无需再次保存。' })
       return
     }
-    const allErrors = { ...validateStep(0, values), ...validateStep(1, values) }
+    const allErrors = { ...validateStep(0, values), ...validateStep(1, values), ...validateStep(2, values) }
     if (Object.keys(allErrors).length > 0) {
       setErrors(allErrors)
-      setCurrentStep(allErrors.displayName ? 0 : 1)
+      setCurrentStep(allErrors.displayName ? 0 : allErrors.medicalSummary ? 1 : 2)
       return
     }
 
@@ -156,18 +160,20 @@ export function ApplicationForm({
     const saveGeneration = editGeneration.current
     try {
       const patientInfo = toPatientInfo(values)
+      const financialInfo = toFinancialInfo(values)
       const response = savedApplication
         ? await api.update(savedApplication.application_id, {
             expected_revision: savedApplication.revision,
             patient_info: patientInfo,
+            financial_info: financialInfo,
           })
-        : await api.create({ patient_info: patientInfo })
+        : await api.create({ patient_info: patientInfo, financial_info: financialInfo })
 
       setSavedApplication(response.application)
       onApplicationChange?.(response.application)
       window.localStorage.setItem(storageKey, response.application.application_id)
       if (editGeneration.current === saveGeneration) {
-        setValues(fromPatientInfo(response.application.patient_info))
+        setValues(fromApplicationInfo(response.application.patient_info, response.application.financial_info))
         setMessage({
           kind: 'success',
           text: mockMode
@@ -205,7 +211,7 @@ export function ApplicationForm({
           <legend className="sr-only">申请信息</legend>
           {currentStep === 0 && <BasicInfoStep errors={errors} onChange={updateField} values={values} />}
           {currentStep === 1 && <MedicalInfoStep errors={errors} onChange={updateField} values={values} />}
-          {currentStep === 2 && <FinancialInfoStep />}
+          {currentStep === 2 && <FinancialInfoStep errors={errors} onChange={updateField} values={values} />}
         </fieldset>
 
         <div aria-live="polite" className="mt-6 min-h-6">

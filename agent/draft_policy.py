@@ -1,4 +1,4 @@
-"""Conservative, literal draft format; input truth remains B/D's responsibility."""
+"""Conservative literal draft format; input truth remains independently validated."""
 
 FIELD_LABELS = {
     'patient.relationship_to_applicant': '患者与申请人的关系',

@@ -53,6 +53,36 @@
       },
       "description": "Partial patient information update. Omitted properties remain unchanged; null explicitly clears an allowed nullable value."
     },
+    "FinancialInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["paid_cost", "estimated_cost", "funding_target"],
+      "properties": {
+        "paid_cost": {
+          "oneOf": [{"$ref": "common.schema.json#/$defs/Money"}, {"type": "null"}],
+          "description": "Medical costs already paid, as entered by the user."
+        },
+        "estimated_cost": {
+          "oneOf": [{"$ref": "common.schema.json#/$defs/Money"}, {"type": "null"}],
+          "description": "Estimated future treatment cost, as entered by the user."
+        },
+        "funding_target": {
+          "oneOf": [{"$ref": "common.schema.json#/$defs/Money"}, {"type": "null"}],
+          "description": "User-entered fundraising target; the system must not infer it from other amounts."
+        }
+      }
+    },
+    "FinancialInfoPatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "paid_cost": {"oneOf": [{"$ref": "common.schema.json#/$defs/Money"}, {"type": "null"}]},
+        "estimated_cost": {"oneOf": [{"$ref": "common.schema.json#/$defs/Money"}, {"type": "null"}]},
+        "funding_target": {"oneOf": [{"$ref": "common.schema.json#/$defs/Money"}, {"type": "null"}]}
+      },
+      "description": "Partial financial information update. Omitted properties remain unchanged; null explicitly clears a value."
+    },
     "Application": {
       "type": "object",
       "additionalProperties": false,
@@ -75,6 +105,7 @@
         },
         "status": {"$ref": "#/$defs/ApplicationStatus"},
         "patient_info": {"$ref": "#/$defs/PatientInfo"},
+        "financial_info": {"$ref": "#/$defs/FinancialInfo"},
         "created_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"},
         "updated_at": {"$ref": "common.schema.json#/$defs/UtcDateTime"}
       }
@@ -84,20 +115,26 @@
       "additionalProperties": false,
       "required": ["patient_info"],
       "properties": {
-        "patient_info": {"$ref": "#/$defs/PatientInfo"}
+        "patient_info": {"$ref": "#/$defs/PatientInfo"},
+        "financial_info": {"$ref": "#/$defs/FinancialInfo", "default": {"paid_cost": null, "estimated_cost": null, "funding_target": null}}
       }
     },
     "UpdateApplicationRequest": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["expected_revision", "patient_info"],
+      "required": ["expected_revision"],
+      "anyOf": [
+        {"required": ["patient_info"]},
+        {"required": ["financial_info"]}
+      ],
       "properties": {
         "expected_revision": {
           "type": "integer",
           "minimum": 1,
           "description": "Optimistic concurrency token. A mismatch must return HTTP 409 STATE_CONFLICT."
         },
-        "patient_info": {"$ref": "#/$defs/PatientInfoPatch"}
+        "patient_info": {"$ref": "#/$defs/PatientInfoPatch"},
+        "financial_info": {"$ref": "#/$defs/FinancialInfoPatch"}
       }
     },
     "ApplicationResponse": {

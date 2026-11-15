@@ -1,7 +1,7 @@
-"""Independent checker of A cc29e6d's literal candidate layout, not a generator.
+"""Independent checker of the literal candidate layout; not a generator.
 
 The labels/prefixes deliberately follow the supplied agent/draft_policy.py.
-Any A layout change must be reviewed against this local integration rule.
+Any draft layout change must be reviewed against this literal-content rule.
 """
 
 _LABELS = {

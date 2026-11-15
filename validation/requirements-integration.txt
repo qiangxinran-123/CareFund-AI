@@ -1,7 +1,0 @@
-# Optional offline B-adapter/API tests, not extra runtime requirements for D.
--r requirements.txt
-pytest>=8,<9
-fastapi>=0.115,<1
-httpx>=0.27,<1
-python-multipart>=0.0.9,<1
-pymupdf>=1.24,<2

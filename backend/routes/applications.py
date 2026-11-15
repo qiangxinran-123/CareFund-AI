@@ -329,6 +329,7 @@ async def create_application(payload: CreateApplicationRequest) -> ApplicationRe
         revision=1,
         status="collecting",
         patient_info=payload.patient_info,
+        financial_info=payload.financial_info,
         created_at=timestamp,
         updated_at=timestamp,
     )
@@ -356,10 +357,16 @@ async def update_application(application_id: str, payload: UpdateApplicationRequ
     with lock:
         record = get_record(application_id)
         require_revision(record, payload.expected_revision)
-        patch = payload.patient_info.model_dump(exclude_unset=True)
-        current = record.application.patient_info.model_dump()
-        current.update(patch)
-        record.application.patient_info = type(record.application.patient_info)(**current)
+        if payload.patient_info is not None:
+            patch = payload.patient_info.model_dump(exclude_unset=True)
+            current = record.application.patient_info.model_dump()
+            current.update(patch)
+            record.application.patient_info = type(record.application.patient_info)(**current)
+        if payload.financial_info is not None:
+            patch = payload.financial_info.model_dump(exclude_unset=True)
+            current = record.application.financial_info.model_dump()
+            current.update(patch)
+            record.application.financial_info = type(record.application.financial_info)(**current)
         record.application.revision += 1
         record.application.status = "collecting"
         record.application.updated_at = now()
@@ -500,7 +507,7 @@ async def generate_draft(application_id: str, payload: DraftGenerationRequest) -
             raise ApiError(422, "VALIDATION_FAILED", "Current application is not ready for draft generation")
         application_snapshot = record.application.model_copy(deep=True)
         facts_snapshot = [item.model_copy(deep=True) for item in analysis.facts]
-        issues_snapshot = [item.model_copy(deep=True) for item in analysis.validation.issues]
+        validation_snapshot = analysis.validation.model_copy(deep=True)
         prior_draft_revision = 0 if record.draft is None else record.draft.draft_revision
 
     try:
@@ -508,7 +515,7 @@ async def generate_draft(application_id: str, payload: DraftGenerationRequest) -
             agent_service.draft_sections,
             application_snapshot,
             facts_snapshot,
-            issues_snapshot,
+            validation_snapshot,
         )
     except AgentIntegrationError as exc:
         raise ApiError(503, "AGENT_UNAVAILABLE", str(exc)) from exc

@@ -17,7 +17,7 @@ def _check(
     check_model(application, "application.schema.json", "Application")
     check_model(draft, "draft.schema.json", "Draft")
     check_model(action, "draft.schema.json", "ExportRequest" if exporting else "DraftConfirmationRequest")
-    # Share A's fact confirmation/value gate across generation and final checks.
+    # Apply the same fact confirmation and value gate at every finalization stage.
     issues = _draft_issues(request, policy)
     if not application["patient_info"]["display_name"].strip():
         issues.append(issue("missing", "patient.display_name", "申请人显示名称不能为空白。"))
@@ -43,8 +43,8 @@ def _check(
         {key: section[key] for key in ("title", "content", "fact_ids")}
         for section in draft["sections"]
     ])
-    if policy is not None and policy.policy_name == "demo_v1" and not literal_layout:
-        issues.append(issue("unsupported", "draft.sections", "demo_v1 要求草稿完整保留当前事实原值、来源和限定词；编辑后需重新核验。"))
+    if policy is not None and policy.policy_name == "carefund_v1" and not literal_layout:
+        issues.append(issue("unsupported", "draft.sections", "CareFund V1 要求草稿完整保留当前事实原值、来源和限定词；编辑后需重新核验。"))
     section_ids = set()
     for section in draft["sections"]:
         if section["section_id"] in section_ids:
@@ -78,7 +78,7 @@ def _check(
             issues.append(issue("inconsistent_date", "draft.sections", "草稿含有其引用事实未支持的日期。", [f["fact_id"] for f in referenced]))
         if not literal_layout and numeric_mentions(prose) - numbers:
             issues.append(issue("unsupported", "draft.sections", "草稿含有其引用事实未支持的数字，请核实或删除。", [f["fact_id"] for f in referenced]))
-        # A small explicit guard, not a general medical-language classifier.
+        # This bounded phrase guard supplements, but does not replace, fact review.
         risky_phrases = ("确诊", "晚期", "危重", "病危", "生命垂危", "抢救", "治愈", "无法负担", "倾家荡产")
         if not literal_layout and any(phrase in normalize(prose) and not any(phrase in text for text in source_texts) for phrase in risky_phrases):
             issues.append(issue("unsupported", "draft.sections", "草稿新增了引用事实未支持的病情或困难程度表述。", [f["fact_id"] for f in referenced]))

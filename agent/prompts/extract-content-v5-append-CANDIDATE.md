@@ -1,8 +1,8 @@
-> 后续状态（2026-10-17）：本轮已由 A 固定展示模板与草稿输入策略处理发现的问题；此提示词方案保留为历史候选，并非当前必需发布步骤。详见 `agent/CURRENT_HANDOFF.md`。
+> 兼容性候选：用于验证抽取展示措辞；正式字段范围以 `extract_policy.py` 和 CareFund V1 Policy 为准。
 
 # 内容复核修订候选：尚未发布，尚无真实模型回归
 
-用途：将下方分隔线之后的规则追加到当前已核对的 DeepSeek 抽取 SYSTEM 末尾，保留全部既有规则。此文件不是线上 DSL，不要替换正式 workflow.deepseek-extract.yml。发布和有预算的真实回归完成之前，交付状态均为“待验证”。
+用途：验证可选的抽取展示措辞。此文件不是线上 DSL，不得替换正式 `workflow.deepseek-extract.yml`；正式行为以当前工作流、Python 边界和 CareFund V1 Policy 为准。
 
 ---
 

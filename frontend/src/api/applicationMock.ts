@@ -1,6 +1,6 @@
 import type { ApplicationApi } from './application'
 import { ApiError } from './client'
-import type { ApplicationResponse, ErrorCode, PatientInfo, UploadedDocument } from '../types/contracts'
+import type { ApplicationResponse, ErrorCode, FinancialInfo, PatientInfo, UploadedDocument } from '../types/contracts'
 
 let current: ApplicationResponse | null = null
 
@@ -15,7 +15,9 @@ function now(): string {
   return new Date().toISOString()
 }
 
-function snapshot(patientInfo: PatientInfo, revision: number): ApplicationResponse {
+const emptyFinancialInfo: FinancialInfo = { paid_cost: null, estimated_cost: null, funding_target: null }
+
+function snapshot(patientInfo: PatientInfo, financialInfo: FinancialInfo, revision: number): ApplicationResponse {
   const createdAt = current?.application.created_at ?? now()
   return {
     application: {
@@ -24,6 +26,7 @@ function snapshot(patientInfo: PatientInfo, revision: number): ApplicationRespon
       revision,
       status: 'collecting',
       patient_info: patientInfo,
+      financial_info: financialInfo,
       created_at: createdAt,
       updated_at: now(),
     },
@@ -35,7 +38,7 @@ function snapshot(patientInfo: PatientInfo, revision: number): ApplicationRespon
 export const mockApplicationApi: ApplicationApi = {
   async create(input) {
     current = null
-    current = snapshot(input.patient_info, 1)
+    current = snapshot(input.patient_info, input.financial_info ?? emptyFinancialInfo, 1)
     return structuredClone(current)
   },
   async get(applicationId) {
@@ -51,7 +54,11 @@ export const mockApplicationApi: ApplicationApi = {
     if (input.expected_revision !== current.application.revision) {
       throw mockError(409, 'STATE_CONFLICT', 'Mock 申请版本已变化，请重新加载。')
     }
-    current = snapshot({ ...current.application.patient_info, ...input.patient_info }, input.expected_revision + 1)
+    current = snapshot(
+      { ...current.application.patient_info, ...input.patient_info },
+      { ...current.application.financial_info, ...input.financial_info },
+      input.expected_revision + 1,
+    )
     return structuredClone(current)
   },
 }

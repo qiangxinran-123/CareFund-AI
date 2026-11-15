@@ -48,23 +48,39 @@ export interface PatientInfoPatch {
   medical_summary?: string | null
 }
 
+export interface Money {
+  currency: string
+  amount_minor: number
+}
+
+export interface FinancialInfo {
+  paid_cost: Money | null
+  estimated_cost: Money | null
+  funding_target: Money | null
+}
+
+export type FinancialInfoPatch = Partial<FinancialInfo>
+
 export interface Application {
   application_id: string
   schema_version: '1.0'
   revision: number
   status: ApplicationStatus
   patient_info: PatientInfo
+  financial_info: FinancialInfo
   created_at: string
   updated_at: string
 }
 
 export interface CreateApplicationRequest {
   patient_info: PatientInfo
+  financial_info?: FinancialInfo
 }
 
 export interface UpdateApplicationRequest {
   expected_revision: number
-  patient_info: PatientInfoPatch
+  patient_info?: PatientInfoPatch
+  financial_info?: FinancialInfoPatch
 }
 
 export type DocumentMediaType = 'image/jpeg' | 'image/png' | 'application/pdf'

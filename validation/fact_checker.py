@@ -32,8 +32,8 @@ def validate(request: dict, *, policy: ValidationPolicy | None = None) -> dict:
             issues.append(issue(kind, fact["field"], "事实尚有冲突或缺乏支持，需澄清后复核。", fact_ids))
         if fact["source_type"] == "document":
             sources = tracker.sources_for(fact)
-            # A must return new candidates as pending. Independently check their
-            # references/text here, without promoting or modifying the Fact.
+            # New model candidates remain pending. Check their references and
+            # text independently without promoting or modifying the Fact.
             if not sources or not all(supported_by(fact["value"], source["text_excerpt"]) for source in sources):
                 issues.append(issue("unsupported", fact["field"], "引用文本未明确支持该事实；不得猜测或夸大。", fact_ids))
             elif not all(supports_cost_field(fact["field"], fact["value"], source["text_excerpt"]) for source in sources):
@@ -59,19 +59,19 @@ def validate(request: dict, *, policy: ValidationPolicy | None = None) -> dict:
             issues.append(issue(kind, field, "同一事实字段存在不同取值，需人工澄清，系统不自动择一。", [f["fact_id"] for f in facts]))
 
     if policy is None:
-        issues.append(issue("missing", "validation.policy", "尚未配置经团队确认的必填事实与材料规则，禁止直接确认导出。"))
+        issues.append(issue("missing", "validation.policy", "未加载正式业务校验规则，禁止生成、确认或导出。"))
     else:
 
         for field in policy.recommended_document_fields:
             if not any(fact["source_type"] == "document" and fact["evidence_ids"] for fact in by_field[field]):
                 issues.append(issue(
-                    "missing", field, "演示建议补充该信息的材料来源；当前可保留为用户陈述，不作材料已证实结论。",
+                    "missing", field, "建议补充该信息的材料来源；当前可保留为用户陈述，不作材料已证实结论。",
                     [fact["fact_id"] for fact in by_field[field]], severity="warning",
                 ))
         for field in policy.recommended_fields:
             if not by_field[field]:
                 issues.append(issue(
-                    "missing", field, "未提供演示建议补充的信息；可保留未知，不是平台审批要求。",
+                    "missing", field, "未提供建议补充的信息；可保留未知，不作为生成、确认或导出的阻断条件。",
                     severity="warning",
                 ))
 

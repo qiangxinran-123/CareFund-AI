@@ -1,4 +1,4 @@
-"""Adapter between Backend models and A's AgentService interface."""
+"""Adapter between Backend models and the AgentService interface."""
 
 from __future__ import annotations
 
@@ -11,9 +11,11 @@ from ..models import (
     DraftSection,
     Evidence,
     Fact,
+    Money,
+    MoneyValue,
     TextValue,
     UploadedDocument,
-    ValidationIssue,
+    ValidationResult,
 )
 
 
@@ -44,6 +46,23 @@ class MockAgentService:
                 )
             )
 
+        for field, money in (
+            ("treatment.paid_cost", application.financial_info.paid_cost),
+            ("treatment.estimated_cost", application.financial_info.estimated_cost),
+        ):
+            if money is not None:
+                facts.append(
+                    Fact(
+                        fact_id=f"fact_{uuid4().hex}",
+                        field=field,
+                        value=MoneyValue(value=money),
+                        source_type="user_input",
+                        evidence_ids=[],
+                        verification_status="pending",
+                        user_confirmed=True,
+                    )
+                )
+
         for item in evidence:
             facts.append(
                 Fact(
@@ -71,7 +90,7 @@ class MockAgentService:
         return facts, questions
 
     def draft_sections(
-        self, application: Application, facts: list[Fact], issues: list[ValidationIssue]
+        self, application: Application, facts: list[Fact], validation: ValidationResult
     ) -> list[DraftSection]:
         summary_facts = [fact for fact in facts if fact.field == "patient.medical_summary"]
         content = (
@@ -90,7 +109,7 @@ class MockAgentService:
 
 
 class RealAgentService:
-    """Calls A's checked AgentService and converts its contract dictionaries."""
+    """Call the checked AgentService and convert its contract dictionaries."""
 
     @staticmethod
     def _service(application_id: str):
@@ -121,6 +140,9 @@ class RealAgentService:
             "display_name": application.patient_info.display_name,
             "age_group": application.patient_info.age_group,
             "description": application.patient_info.medical_summary,
+            "treatment.paid_cost": self._money_text(application.financial_info.paid_cost),
+            "treatment.estimated_cost": self._money_text(application.financial_info.estimated_cost),
+            "funding_target": self._money_text(application.financial_info.funding_target),
         }
         user_input.update({f"answer.{key}": value for key, value in answers.items()})
         request = {
@@ -147,19 +169,29 @@ class RealAgentService:
             [AgentQuestion.model_validate(item) for item in result["questions"]],
         )
 
+    @staticmethod
+    def _money_text(money: Money | None) -> str | None:
+        if money is None:
+            return None
+        major, minor = divmod(money.amount_minor, 100)
+        return f"{money.currency} {major}.{minor:02d}"
+
     def draft_sections(
-        self, application: Application, facts: list[Fact], issues: list[ValidationIssue]
+        self, application: Application, facts: list[Fact], validation: ValidationResult
     ) -> list[DraftSection]:
         request = {
             "schema_version": "1.0",
             "application_id": application.application_id,
             "application_revision": application.revision,
             "candidate_facts": [fact.model_dump(mode="json") for fact in facts],
-            "validation_issue_ids": [issue.issue_id for issue in issues],
+            "validation_issue_ids": [issue.issue_id for issue in validation.issues],
         }
         service, agent_error = self._service(application.application_id)
         try:
-            result = service.draft(request)
+            result = service.draft(
+                request,
+                validation_result=validation.model_dump(mode="json"),
+            )
         except agent_error as exc:
             raise AgentIntegrationError(str(exc)) from exc
         return [

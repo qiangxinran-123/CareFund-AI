@@ -1,4 +1,4 @@
-"""INT-08: paired D results, unchanged contracts, no model calls on rejection."""
+"""Validation pairing, severity projection and rejection before model calls."""
 import copy
 import json
 from pathlib import Path

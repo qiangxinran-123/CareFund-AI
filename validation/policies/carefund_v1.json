@@ -1,0 +1,19 @@
+{
+  "policy_name": "carefund_v1",
+  "notice": "CareFund 参赛版本的正式业务完整性与安全规则；用于约束 AI 生成，不代表医疗诊断、材料真伪认证或筹款平台审批。",
+  "required_fields": ["patient.medical_summary", "treatment.estimated_cost"],
+  "document_required_fields": ["treatment.estimated_cost"],
+  "recommended_fields": ["patient.relationship_to_applicant", "contact.city", "treatment.recorded_date"],
+  "recommended_document_fields": ["patient.medical_summary"],
+  "require_processed_document": true,
+  "require_user_confirmation": true,
+  "draft_issue_scope": "blocking",
+  "field_kinds": {
+    "patient.medical_summary": "text",
+    "patient.relationship_to_applicant": "text",
+    "treatment.estimated_cost": "money",
+    "treatment.paid_cost": "money",
+    "treatment.recorded_date": "date",
+    "contact.city": "text"
+  }
+}

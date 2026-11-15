@@ -1,6 +1,6 @@
-"""Second integration: at most two synthetic generations in A or unchanged B mode.
+"""Run at most two synthetic requests through the current Agent or Backend adapter.
 
-Requires the existing B/D checkout and their optional test dependencies. No
+Requires the complete CareFund checkout and optional cross-component test dependencies. No
 web server, OCR execution or frontend is claimed by this in-process check.
 Credentials stay in memory; reports contain only explicit synthetic fixtures.
 """
@@ -37,10 +37,10 @@ def credentials(gui, *, non_interactive=False):
     import tkinter as tk
     from tkinter import ttk
     window = tk.Tk()
-    window.title('CareFund：A 最终联调 — 本地密钥输入')
+    window.title('CareFund：Dify 工作流冒烟测试 — 本地密钥输入')
     panel = ttk.Frame(window, padding=20)
     panel.grid()
-    ttk.Label(panel, text='最多 2 次虚构案例生成：B → A → 真实 Dify。\n两把 Dify 应用密钥顺序不限，自动核对应用名。\n密钥仅存内存，不写文件，不发送到聊天；失败不自动重试。').grid(columnspan=2, pady=12)
+    ttk.Label(panel, text='最多 2 次虚构案例生成：Backend → Agent → 真实 Dify。\n两把 Dify 应用密钥顺序不限，自动核对应用名。\n密钥仅存内存，不写文件，不发送到聊天；失败不自动重试。').grid(columnspan=2, pady=12)
     address, key1, key2, error = tk.StringVar(value=base), tk.StringVar(), tk.StringVar(), tk.StringVar()
     for row, (label, variable, masked) in enumerate([('API 地址', address, False), ('Dify 应用密钥 1', key1, True), ('Dify 应用密钥 2', key2, True)], 1):
         ttk.Label(panel, text=label).grid(row=row, column=0, sticky='w')
@@ -104,7 +104,7 @@ def main():
     parser.add_argument('--non-interactive', action='store_true',
                         help='Require both keys in the environment; never prompt')
     parser.add_argument('--mode', choices=('agent', 'backend'), default='backend',
-                        help='agent: A with complete D context; backend: unchanged B adapter')
+                        help='agent: AgentService with complete Validation context; backend: Backend adapter')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     if args.gui and args.non_interactive:
@@ -113,8 +113,8 @@ def main():
     out = args.output or ROOT / 'agent/.local' / ('int06-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ'))
     out.mkdir(parents=True, exist_ok=False)
     report = dict(started_at=datetime.now(timezone.utc).isoformat(), status='preflight',
-        transport=('A AgentService -> real Dify Service API' if args.mode == 'agent'
-                   else 'B RealAgentService -> A AgentService -> real Dify Service API'),
+        transport=('AgentService -> real Dify Service API' if args.mode == 'agent'
+                   else 'Backend RealAgentService -> AgentService -> real Dify Service API'),
         mode=args.mode, backend_draft_issue_projection_applied=False,
         input_class='synthetic_only', max_generation_calls=2, calls_attempted=0, operations_attempted=0,
         automatic_retries=0, cases=[], backend_root=str(peer_root),
@@ -133,11 +133,11 @@ def main():
         if not (peer_root / 'backend/services/agent.py').is_file():
             raise AgentError('Provide a Backend checkout using --backend-root')
         sys.path.insert(0, str(peer_root))
-        from backend.models import Application, Evidence, Fact, UploadedDocument, ValidationIssue
+        from backend.models import Application, Evidence, Fact, UploadedDocument, ValidationResult
         from backend.services.agent import RealAgentService
         from validation import load_policy, prepare_agent_draft_request, validate_agent_draft
-        policy = load_policy('demo_v1')
-        # A has already been imported from this checkout; peer modules are read-only.
+        policy = load_policy('carefund_v1')
+        # Agent code is imported from this checkout; other components remain unmodified.
         report['backend_adapter_sha256'] = hashlib.sha256((peer_root / 'backend/services/agent.py').read_bytes()).hexdigest()
         report['a_runtime_sha256'] = {name: hashlib.sha256((ROOT / 'agent' / name).read_bytes()).hexdigest()
             for name in ('agent_service.py', 'draft_gate.py', 'errors.py', 'dify_runner.py')}
@@ -167,14 +167,14 @@ def main():
             return AgentService(counted_runner), AgentError
 
         adapter = RealAgentService()
-        # Inject only the in-memory credential factory, never mock B/A methods or HTTP.
+        # Inject only the in-memory credential factory; do not mock adapters or HTTP.
         adapter._service = factory
         extract = json.loads((ROOT / 'agent/examples/extract_cases/03_document_evidence.json').read_bytes())
         now = '2026-10-20T12:00:00Z'
 
         def application(identifier, revision, description):
             return Application.model_validate(dict(schema_version='1.0', application_id=identifier, revision=revision,
-                status='ready_for_draft', patient_info=dict(display_name='合成联调患者', age_group='adult', medical_summary=description),
+                status='ready_for_draft', patient_info=dict(display_name='合成测试患者', age_group='adult', medical_summary=description),
                 created_at=now, updated_at=now))
 
         app = application(extract['application_id'], extract['application_revision'], extract['user_input']['description'])
@@ -215,9 +215,9 @@ def main():
         prepared, checked = prepare_agent_draft_request(snapshot, policy=policy,
             application=app.model_dump(mode='json'), generation_request={'expected_revision': app.revision})
         if not checked['can_finalize']:
-            raise AgentError('Synthetic draft rejected by deterministic demo_v1 preflight')
+            raise AgentError('Synthetic draft rejected by the frozen CareFund V1 preflight')
         report['draft_validation'] = checked
-        full_issues = [ValidationIssue.model_validate(i) for i in checked['issues']]
+        full_validation = ValidationResult.model_validate(checked)
         record = dict(operation='draft', status='calling')
         report['cases'].append(record)
         report['operations_attempted'] += 1
@@ -228,14 +228,15 @@ def main():
             result = factory(app.application_id)[0].draft(full_request, validation_result=checked)
             sections_payload = result['candidate_sections']
         else:
-            # Match B's HTTP route: do not repair its severity mapping in this test.
-            sections = adapter.draft_sections(app, [Fact.model_validate(f) for f in draft['candidate_facts']], full_issues)
+            # Match the Backend route: preserve the full validation result so Agent can
+            # classify non-blocking issues and project only blocking IDs.
+            sections = adapter.draft_sections(app, [Fact.model_validate(f) for f in draft['candidate_facts']], full_validation)
             sections_payload = [s.model_dump(mode='json', exclude={'section_id'}) for s in sections]
         response = {k: draft[k] for k in ('schema_version', 'application_id', 'application_revision')}
         from .draft_policy import DRAFT_WARNING
         response.update(candidate_sections=sections_payload, warnings=[DRAFT_WARNING])
         if not validate_agent_draft(snapshot, response, policy=policy)['can_finalize']:
-            raise AgentError('D rejected the actual synthetic draft response')
+            raise AgentError('Validation rejected the actual synthetic draft response')
         record.update(status='literal_draft_and_D_candidate_checks_passed', elapsed_seconds=round(time.monotonic() - started, 3),
                       candidate_sections=response['candidate_sections'])
         report.update(status='two_real_calls_passed', finished_at=datetime.now(timezone.utc).isoformat())

@@ -1,4 +1,4 @@
-"""Local A/D adapters using the unchanged shared contracts. No network calls."""
+"""Adapters between model candidates and deterministic validation; no network calls."""
 
 from copy import deepcopy
 import json
@@ -28,7 +28,7 @@ def _unique(items: list[dict], key: str) -> dict:
 def build_validation_request(extract_request: dict, extract_response: dict) -> dict:
     """Map a complete same-revision extraction snapshot to ValidationRequest.
 
-    This validates the saved A boundary too; it does not infer missing history,
+    This validates the saved model boundary too; it does not infer missing history,
     assign IDs, merge increments, choose conflicts or promote verification flags.
     """
     check_model(extract_request, "agent.schema.json", "AgentExtractRequest")
@@ -75,15 +75,15 @@ def _draft_issues(request: dict, policy: ValidationPolicy | None) -> list[dict]:
         issues.append(issue("missing", "facts", "草稿生成需要至少一条当前有效事实。"))
     unconfirmed = [fact["fact_id"] for fact in request["facts"] if not fact["user_confirmed"]]
     if unconfirmed:
-        issues.append(issue("missing", "facts", "A 的草稿入口要求所有传入事实均经用户确认。", unconfirmed))
+        issues.append(issue("missing", "facts", "草稿入口要求所有传入事实均经用户确认。", unconfirmed))
     by_field = {}
     for fact in request["facts"]:
         by_field.setdefault(fact["field"], []).append(fact)
     for field, facts in by_field.items():
-        # Match A's exact comparison as well as D's normalized conflict checks.
+        # Apply exact comparison in addition to normalized conflict checks.
         if len({json.dumps(f["value"], sort_keys=True, ensure_ascii=True) for f in facts}) > 1:
             if not any(item["field"] == field and item["severity"] == "blocking" for item in issues):
-                issues.append(issue("conflict", field, "A 的草稿入口暂不接受同字段不同原始值。", [f["fact_id"] for f in facts]))
+                issues.append(issue("conflict", field, "草稿入口不接受同字段不同原始值。", [f["fact_id"] for f in facts]))
     return issues
 
 
@@ -93,10 +93,9 @@ def prepare_agent_draft_request(
 ) -> tuple[dict, dict]:
     """Return (AgentDraftRequest, ValidationResult) with explicit ID semantics.
 
-    Legacy policies retain all IDs. demo_v1 explicitly sends blocking IDs only;
-    the full, unmodified issue list stays in the paired result for UI/audit.
-    B must never call A if can_finalize is false. To check generation revision,
-    supply the current stored application and formal DraftGenerationRequest.
+    Policies may choose all IDs or blocking-only projection. CareFund V1 sends
+    only blocking IDs to the model while preserving the complete issue list for
+    display and audit. Generation is forbidden when can_finalize is false.
     """
     if (application is None) != (generation_request is None):
         raise AgentAdaptationError("Provide application and generation_request together.")
@@ -121,7 +120,7 @@ def validate_for_generation(
     request: dict, application: dict, generation_request: dict,
     *, policy: ValidationPolicy | None = None,
 ) -> dict:
-    """Check a fresh stored Application snapshot and expected revision before A."""
+    """Check the stored Application snapshot and expected revision before generation."""
     check_model(application, "application.schema.json", "Application")
     check_model(generation_request, "draft.schema.json", "DraftGenerationRequest")
     issues = _draft_issues(request, policy)
@@ -140,17 +139,17 @@ def validate_for_generation(
 def validate_agent_draft(
     request: dict, draft_response: dict, *, policy: ValidationPolicy | None = None,
 ) -> dict:
-    """Check candidate sections without pretending B has saved a formal Draft.
+    """Check candidate sections before the backend saves a formal Draft.
 
-    The literal layout matches the supplied A snapshot, not a new wire schema.
-    For B's saved Draft, continue to use confirmation/export checks separately.
+    The literal layout matches the supplied model snapshot, not a new wire schema.
+    Saved Draft objects must still pass confirmation/export checks separately.
     """
     check_model(draft_response, "agent.schema.json", "AgentDraftResponse")
     issues = _draft_issues(request, policy)
     if any(draft_response[key] != request[key] for key in _IDENTITY):
         issues.append(issue("conflict", "draft.revision", "候选草稿不属于当前申请版本。"))
     if not matches_literal_sections(request["facts"], draft_response["candidate_sections"]):
-        issues.append(issue("unsupported", "draft.sections", "候选草稿未按 A 当前逐事实格式完整保留原值、来源或限定词。"))
+        issues.append(issue("unsupported", "draft.sections", "候选草稿未按当前逐事实格式完整保留原值、来源或限定词。"))
     response = result(request, issues)
     check_model(response, "validation.schema.json", "ValidationResult")
     return response

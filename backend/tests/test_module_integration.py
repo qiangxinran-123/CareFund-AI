@@ -8,11 +8,14 @@ from backend.models import (
     Application,
     Evidence,
     Fact,
+    FinancialInfo,
     Money,
     MoneyValue,
     PatientInfo,
     TextValue,
     UploadedDocument,
+    ValidationIssue,
+    ValidationResult,
 )
 from backend.services.agent import RealAgentService
 from backend.services.validation import RealValidationService
@@ -30,6 +33,11 @@ def application() -> Application:
             display_name="合成测试用户",
             age_group="adult",
             medical_summary="用户自述正在接受示例性治疗。",
+        ),
+        financial_info=FinancialInfo(
+            paid_cost=Money(currency="CNY", amount_minor=120_050),
+            estimated_cost=Money(currency="CNY", amount_minor=300_000),
+            funding_target=Money(currency="CNY", amount_minor=250_000),
         ),
         created_at=NOW,
         updated_at=NOW,
@@ -68,6 +76,9 @@ def test_backend_adapter_calls_real_agent_service_contract() -> None:
 
     assert captured["operation"] == "extract"
     assert captured["request"]["user_input"]["description"] == existing.value.value
+    assert captured["request"]["user_input"]["treatment.paid_cost"] == "CNY 1200.50"
+    assert captured["request"]["user_input"]["treatment.estimated_cost"] == "CNY 3000.00"
+    assert captured["request"]["user_input"]["funding_target"] == "CNY 2500.00"
     assert facts == [existing]
     assert len(questions) <= 3
     assert all(question.required is False for question in questions)
@@ -86,6 +97,7 @@ def test_backend_adapter_calls_real_agent_draft_boundary() -> None:
 
     def runner(operation: str, request: dict) -> dict:
         assert operation == "draft"
+        assert request["validation_issue_ids"] == []
         return {
             "schema_version": request["schema_version"],
             "application_id": request["application_id"],
@@ -96,7 +108,24 @@ def test_backend_adapter_calls_real_agent_draft_boundary() -> None:
 
     adapter = RealAgentService()
     adapter._service = lambda _application_id: (AgentService(runner), AgentError)
-    sections = adapter.draft_sections(application(), [fact], [])
+    validation = ValidationResult(
+        validation_id="validation_integration_info",
+        application_id=application().application_id,
+        application_revision=application().revision,
+        issues=[
+            ValidationIssue(
+                issue_id="issue_integration_info",
+                type="unsupported",
+                severity="info",
+                field=fact.field,
+                message="该信息来自用户陈述，尚未由材料独立核实。",
+                related_fact_ids=[fact.fact_id],
+            )
+        ],
+        can_finalize=True,
+        evaluated_at=NOW,
+    )
+    sections = adapter.draft_sections(application(), [fact], validation)
 
     assert len(sections) == 1
     assert sections[0].fact_ids == [fact.fact_id]
@@ -104,7 +133,7 @@ def test_backend_adapter_calls_real_agent_draft_boundary() -> None:
 
 
 def test_backend_adapter_calls_real_validation_module(monkeypatch) -> None:
-    policy_path = Path("backend/config/validation-policy.integration.json").resolve()
+    policy_path = Path("backend/config/validation-policy.v1.json").resolve()
     monkeypatch.setenv("CAREFUND_VALIDATION_POLICY", str(policy_path))
     app = application()
     document = UploadedDocument(
@@ -154,7 +183,7 @@ def test_backend_adapter_calls_real_validation_module(monkeypatch) -> None:
     assert all(issue.severity != "blocking" for issue in result.issues)
 
 
-def test_real_validation_uses_backend_integration_policy_by_default(monkeypatch) -> None:
+def test_real_validation_uses_frozen_policy_by_default(monkeypatch) -> None:
     monkeypatch.delenv("CAREFUND_VALIDATION_POLICY", raising=False)
     service = RealValidationService()
     assert service._policy is not None

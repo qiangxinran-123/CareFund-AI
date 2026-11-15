@@ -16,6 +16,30 @@ class StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+class Money(StrictModel):
+    currency: Annotated[str, Field(pattern=r"^[A-Z]{3}$")]
+    amount_minor: Annotated[int, Field(ge=0)]
+
+
+class FinancialInfo(StrictModel):
+    paid_cost: Money | None = None
+    estimated_cost: Money | None = None
+    funding_target: Money | None = None
+
+
+class FinancialInfoPatch(StrictModel):
+    paid_cost: Money | None = None
+    estimated_cost: Money | None = None
+    funding_target: Money | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def require_at_least_one_field(cls, data: object) -> object:
+        if not isinstance(data, dict) or not data:
+            raise ValueError("financial_info must contain at least one field")
+        return data
+
+
 class PatientInfo(StrictModel):
     display_name: Annotated[str, Field(min_length=1, max_length=100)]
     age_group: Literal["child", "adult", "older_adult", "unknown"] | None = None
@@ -43,17 +67,26 @@ class Application(StrictModel):
         "collecting", "reviewing", "ready_for_draft", "draft_ready", "confirmed", "exported"
     ]
     patient_info: PatientInfo
+    financial_info: FinancialInfo = Field(default_factory=FinancialInfo)
     created_at: datetime
     updated_at: datetime
 
 
 class CreateApplicationRequest(StrictModel):
     patient_info: PatientInfo
+    financial_info: FinancialInfo = Field(default_factory=FinancialInfo)
 
 
 class UpdateApplicationRequest(StrictModel):
     expected_revision: Annotated[int, Field(ge=1)]
-    patient_info: PatientInfoPatch
+    patient_info: PatientInfoPatch | None = None
+    financial_info: FinancialInfoPatch | None = None
+
+    @model_validator(mode="after")
+    def require_an_update(self) -> UpdateApplicationRequest:
+        if self.patient_info is None and self.financial_info is None:
+            raise ValueError("patient_info or financial_info must be provided")
+        return self
 
 
 class UploadedDocument(StrictModel):
@@ -99,11 +132,6 @@ class BooleanValue(StrictModel):
 class IntegerValue(StrictModel):
     kind: Literal["integer"] = "integer"
     value: int
-
-
-class Money(StrictModel):
-    currency: Annotated[str, Field(pattern=r"^[A-Z]{3}$")]
-    amount_minor: Annotated[int, Field(ge=0)]
 
 
 class MoneyValue(StrictModel):

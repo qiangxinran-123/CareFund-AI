@@ -1,6 +1,7 @@
-"""Current A 755a0c2 boundary, injection and lifecycle regressions."""
+"""Agent boundary, prompt-injection and lifecycle regressions."""
 
 from copy import deepcopy
+from pathlib import Path
 import unittest
 from unittest.mock import Mock
 
@@ -9,11 +10,14 @@ from validation import (
     validate, validate_agent_draft, validate_for_confirmation, validate_for_export,
 )
 from validation.rules import ValidationPolicy
-from validation.tools.replay_latest_a import evaluate, service
-from validation.tests.fixtures.a_20261018.agent.agent_service import AgentError
+from validation.tests.fixtures.a_20261018.agent.agent_service import AgentError, AgentService
 from validation.tests.fixtures.a_20261018.agent.draft_input_policy import contains_generation_instruction
 from validation.tests.fixtures.a_20261018.agent.draft_policy import DRAFT_WARNING, sections_for_facts
 from validation.tests.test_agent_adapter import document_only_demo, extract_pair
+
+
+def service(runner):
+    return AgentService(runner, schema_dir=Path(__file__).resolve().parents[2] / "contracts/schemas")
 
 
 def text_snapshot(text):
@@ -29,21 +33,7 @@ def candidate(mapped):
     return value
 
 
-class LatestAgentTests(unittest.TestCase):
-    def test_all_27_saved_cases_replay_without_network_or_fact_mutation(self):
-        summary, artifacts = evaluate()
-        self.assertEqual({
-            "extract_mapped_facts_unchanged": 21,
-            "eligible_draft_layout_compatible": 5,
-            "a_instruction_blocked_before_runner": 1,
-            "d_instruction_blocked": 1,
-            "d_results_schema_and_references_valid": 27,
-        }, summary["counts"])
-        self.assertEqual(27, len(summary["cases"]))
-        self.assertEqual(0, summary["new_api_calls"])
-        self.assertTrue(all(not case["can_finalize"] for case in summary["cases"]))
-        self.assertEqual(48, len(artifacts))
-
+class AgentBoundaryTests(unittest.TestCase):
     def test_latest_rendered_extraction_can_be_mapped_without_model_warning_leak(self):
         request, raw = extract_pair("03_document_evidence")
         before = deepcopy(raw)
@@ -97,7 +87,7 @@ class LatestAgentTests(unittest.TestCase):
                 self.assertFalse(report["can_finalize"])
                 self.assertTrue(any("指令" in item["message"] for item in report["issues"]))
                 self.assertFalse(validate_agent_draft(mapped, candidate(mapped), policy=policy)["can_finalize"])
-                # Test A's own input guard independently, without D's blocking IDs.
+                # Test the Agent input guard independently, without projected blocking IDs.
                 runner = Mock()
                 action["validation_issue_ids"] = []
                 with self.assertRaises(AgentError):

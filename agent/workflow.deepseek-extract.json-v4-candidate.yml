@@ -1,5 +1,5 @@
 app:
-  description: 开发测试版；字段映射待团队确认，输出仍需后端Schema及证据校验。
+  description: CareFund V1 信息抽取候选；输出必须经过后端 Schema、证据和正式 Policy 校验。
   icon: 🤖
   icon_background: '#FFEAD5'
   icon_type: emoji
@@ -161,7 +161,7 @@ workflow:
             \n你只负责整理申请资料，不负责认定筹款合理性或审核通过。\n\n不确定性必须保留在每条事实的 value 中，不能只依赖字段名或另一条事实表达。\n\
             \n例如原文“医生说可能是肺部肿瘤，还在检查，没有确诊”，应保留为“用户自述医生表示可能是肺部肿瘤，仍在检查，尚未确诊”，不得单独提取为“肺部肿瘤”。\n\
             \n\n\n\nextracted_documents 为空，只能说明“本次输入未附材料”，不得据此断言用户没有材料、无法提供材料，或医院尚未出具材料。\n\
-            \n\n\n\n开发测试版字段约定（新增字段待团队确认）：\n\n已有 candidate_facts 必须原样保留，包括原有 field；以下规则只用于新事实和新追问。\n\
+            \n\n\n\nCareFund V1 正式抽取字段约定：\n\n已有 candidate_facts 必须原样保留，包括原有 field；以下规则只用于新事实和新追问。\n\
             \n同一含义必须使用同一字段名，禁止自行创造别名：\n\n- 与申请人关系：patient.relationship_to_applicant（暂定）\n\
             \n- 病情、诊断及其不确定性：patient.medical_summary（沿用仓库示例）\n\n- 已支付医疗费：treatment.paid_cost（暂定）\n\
             \n- 后续预估治疗费：treatment.estimated_cost（沿用仓库示例）\n\n- 治疗记录日期：treatment.recorded_date（沿用仓库示例）\n\

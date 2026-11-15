@@ -26,7 +26,7 @@ def build():
     workflow = {
         'kind': 'app', 'version': '0.7.0',
         'app': {'name': 'CareFund-已确认事实草稿-首版', 'mode': 'workflow',
-                'description': '事实逐条成稿；仅接收已确认事实。仍需 Python、B/D 校验；不是导出许可。',
+                'description': 'CareFund V1 事实逐条成稿；仅接收已确认事实，仍需正式 Policy 复核，不构成导出许可。',
                 'icon': '📝', 'icon_type': 'emoji', 'icon_background': '#E8F2EC',
                 'use_icon_as_answer_icon': False},
         'dependencies': [{'type': 'marketplace', 'current_identifier': None,
